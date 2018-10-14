@@ -7,29 +7,31 @@ import AppNavigator from './navigation/AppNavigator';
 
 import iCloudStorage from 'react-native-icloudstore';
 
-import { store } from './redux/Store';
+import { store, dispatch } from './redux/Store';
+import { restoreSync } from './redux/Actions';
 import { globalStyles } from './Style';
+
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
 
-  // componentWillMount() {
-  //   this.eventEmitter = new NativeEventEmitter(iCloudStorage);
-  //   this.eventEmitter.addListener('iCloudStoreDidChangeRemotely', this.loadData);
-  // }
+  componentWillMount() {
+    this.eventEmitter = new NativeEventEmitter(iCloudStorage);
+    this.eventEmitter.addListener('iCloudStoreDidChangeRemotely', this.loadData);
+  }
 
-  // componentWillUnmount() {
-  //   this.eventEmitter.remove();
-  // }
+  componentWillUnmount() {
+    this.eventEmitter.remove();
+  }
 
-  // loadData = (userInfo) => {
-  //   const changedKeys = userInfo.changedKeys;
-  //   if (changedKeys != null && changedKeys.includes('MY_STORAGE_KEY')) {
-  //     iCloudStorage.getItem('MY_STORAGE_KEY').then(result => this.setState({ storage: result }));
-  //   }
-  // }
+  loadData = (userInfo) => {
+    const changedKeys = userInfo.changedKeys;
+    if (changedKeys != null && changedKeys.includes('backup')) {
+      iCloudStorage.getItem('backup').then(result => dispatch(restoreSync(result)) );
+    }
+  }
 
   render() {
     /*if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {

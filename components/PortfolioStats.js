@@ -2,15 +2,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, SectionList, Text, Platform, TouchableOpacity } from 'react-native';
 import { FormattedCurrency } from 'react-native-globalize';
-import FeatherIcon from 'react-native-vector-icons/Feather';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import { globalStyles } from './../Style';
-import { globalColours } from './../Colours';
 import { AccountTypes } from '../models/Account';
 
-class PortfolioList extends React.Component {
+class PortfolioStats extends React.Component {
 
     constructor(props) {
         super(props);
@@ -24,16 +22,16 @@ class PortfolioList extends React.Component {
         this.props.navigation.navigate('Account', { accountId: accountId });
     }
 
-    renderItem = ({ item }) =>
-        (
+    renderItem = ({ item }) => {
+        return (
             <TouchableOpacity onPress={this.onPortfolioSelected.bind(this, item)}>
                 <View style={globalStyles.row}>
                     <View style={{
                         flex: 1,
                         flexDirection: 'column',
                         justifyContent: 'space-between',
-                        marginTop: 'auto',
-                        marginBottom: 'auto'
+                        marginTop: 16,
+                        marginBottom: 16
                     }}>
                         <Text>{item.name} </Text>
                         <Text>{item.provider} </Text>
@@ -44,17 +42,12 @@ class PortfolioList extends React.Component {
                             currency="GBP"
                             maximumFractionDigits={0}
                             minimumFractionDigits={0}
-                            style={[globalStyles.h2]} />
-                    </View>
-                    <View style={{
-                        marginTop: 'auto',
-                        marginBottom: 'auto'
-                    }}>
-                        <FeatherIcon name="chevron-right" color={globalColours.primary} />
+                            style={globalStyles.h2} />
                     </View>
                 </View>
             </TouchableOpacity>
         );
+    }
 
     render() {
         const accounts = (this.props.portfolio.accounts || []);
@@ -117,9 +110,9 @@ const styles = StyleSheet.create({
 
 });
 
-const mapStateToProps = (state) => {
-    const { portfolio } = state
-    return { portfolio }
-};
+// const mapStateToProps = (state) => {
+//     const { portfolio } = state
+//     return { portfolio }
+// };
 
-export default connect(mapStateToProps)(withNavigation(PortfolioList));
+// export default connect(mapStateToProps)(withNavigation(PortfolioList));

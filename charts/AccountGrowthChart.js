@@ -42,7 +42,7 @@ export class AccountGrowthChart extends React.PureComponent {
                 />
             )
 
-            return (
+            return data.length > 1 ? (
                 <AreaChart
                     style={{ height: 200 }}
                     data={data}
@@ -62,7 +62,7 @@ export class AccountGrowthChart extends React.PureComponent {
                         </LinearGradient>
                     </Defs>
                 </AreaChart>
-            )
+            ) : null
         } else {
             return null;
         }

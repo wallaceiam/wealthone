@@ -40,16 +40,30 @@ export const backup = () => (
   }
 );
 
+export const backupSync = (payload) => (
+  {
+    type: 'BACKUP_SYNC',
+    payload: payload
+  }
+)
+
 export const restore = () => (
   {
     type: 'RESTORE'
   }
 )
 
-export const dataRestored = (accounts) => (
+export const restoreData = (payload) => (
   {
     type: 'RESTORE_DATA',
-    payload: accounts
+    payload: payload
+  }
+)
+
+export const restoreSync = (payload) => (
+  {
+    type: 'RESTORE_SYNC',
+    payload: payload
   }
 )
 

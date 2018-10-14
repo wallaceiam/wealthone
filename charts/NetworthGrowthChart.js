@@ -36,7 +36,7 @@ export class NetworthGrowthChart extends React.Component {
             />
         )
 
-        return (
+        return data.length > 1 ? (
             <AreaChart
                 style={{ height: 200 }}
                 data={data}
@@ -56,6 +56,6 @@ export class NetworthGrowthChart extends React.Component {
                     </LinearGradient>
                 </Defs>
             </AreaChart>
-        )
+        ) : null
     }
 }

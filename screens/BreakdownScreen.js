@@ -1,15 +1,18 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
-export default class LinksScreen extends React.Component {
+import { AssetPieChart } from './../charts/AssetPieChart';
+
+export default class BreakdownScreen extends React.Component {
   static navigationOptions = {
-    title: 'Links',
+    title: 'Breakdown',
   };
 
   render() {
     return (
       <ScrollView style={styles.container}>
         
+        <AssetPieChart />
       </ScrollView>
     );
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, ScrollView, StyleSheet, TextInput, Button, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, ScrollView, TextInput, Button } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import { connect } from 'react-redux';
@@ -57,7 +57,7 @@ class EditAccountScreen extends React.Component {
 
     return (
       <SafeAreaView style={globalStyles.safeAreaView}>
-        <ScrollView style={style.container}>
+        <ScrollView style={globalStyles.container} contentContainerStyle={globalStyles.contentContainer}>
           <View style={{
             flex: 1,
             flexDirection: 'column',
@@ -101,16 +101,6 @@ class EditAccountScreen extends React.Component {
     );
   }
 }
-
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff',
-  },
-
-  textInput: { height: 40, marginBottom: 24, borderBottomWidth: 1, borderBottomColor: '#E7E7E7' }
-});
 
 const mapStateToProps = (state) => {
   const { accounts } = state

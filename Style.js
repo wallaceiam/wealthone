@@ -2,10 +2,6 @@ import { StyleSheet, Platform } from 'react-native';
 import { globalColours } from './Colours';
 
 export const globalStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
   developmentModeText: {
     marginBottom: 20,
     color: 'rgba(0,0,0,0.4)',
@@ -142,7 +138,37 @@ export const globalStyles = StyleSheet.create({
 
 
   /* Containers */
-  safeAreaView: { flex: 1, backgroundColor: '#fff' },
+  safeAreaView: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    marginBottom: 32
+  },
+  contentContainer: {
+    paddingTop: 30,
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: 32,
+    marginRight: 32
+  },
+
+  /* Padding & Margins */
+  sideMargins: {
+    marginLeft: 32, marginRight: 32
+  },
+  topMargin: {
+    marginTop: 16
+  },
+  bottomMargin: {
+    marginBottom: 16
+  },
+
 
 
   /* Typography */

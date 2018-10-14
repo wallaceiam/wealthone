@@ -10,7 +10,7 @@ import * as shortid from 'shortid';
 import { AccountTypes } from '../models/Account';
 import { justDate, sameDay } from '../helpers/Date';
 import { statsReducer } from './StatsReducer';
-import { dataRestored } from './Actions';
+import { restoreData } from './Actions';
 
 import { dispatch } from './Store';
 
@@ -51,25 +51,40 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
         case 'BACKUP': {
             iCloudStorage.setItem('backup', JSON.stringify(state))
                 .then(x => {
-                    Alert.alert('iCloud Backup', 'Success: ' + JSON.stringify(x));
+                    Alert.alert('iCloud Backup', 'Your data has been backed up to iCloud');
                 })
                 .catch(x => {
-                    Alert.alert('iCloud Backup', JSON.stringify(x));
+                    Alert.alert('iCloud Backup', 'An error occured while trying to backup to iCloud');
                 });
 
+            return state;
+        }
+        case 'BACKUP_SYNC': {
+            iCloudStorage.setItem('backup', JSON.stringify(state)).then(x => {})
+                .catch(x => {Alert.alert('iCloud Backup', 'An error occured while trying to backup to iCloud');});
             return state;
         }
         case 'RESTORE': {
             iCloudStorage.getItem('backup')
                 .then(x => {
-                    dispatch(dataRestored(JSON.parse(x)));
+                    if (x !== undefined && x !== null) {
+                        const json = JSON.parse(x);
+                        dispatch(restoreData(json));
+                        Alert.alert('iCloud restore', 'Your data has been restored from iCloud');
+                    } else {
+                        Alert.alert('iCloud restore', 'There is no data to restore');
+                    }
+
                 })
                 .catch(x => {
-                    Alert.alert('iCloud Restore', JSON.stringify(x));
+                    Alert.alert('iCloud restore', 'An error occured while trying to restore from iCloud');
                 });
             return state;
         }
         case 'RESTORE_DATA': {
+            return action.payload;
+        }
+        case 'RESTORE_SYNC': {
             return action.payload;
         }
         case 'IMPORT': {

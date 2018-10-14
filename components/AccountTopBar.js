@@ -1,11 +1,10 @@
 import React from 'react';
 import { Text, Animated, View, StyleSheet, Platform } from 'react-native';
-import { connect } from 'react-redux';
 import { FormattedCurrency } from 'react-native-globalize';
 
 import { globalStyles } from './../Style';
 
-class HomeTopBar extends React.Component {
+export default class AccountTopBar extends React.Component {
 
     constructor(props) {
         super(props);
@@ -16,7 +15,7 @@ class HomeTopBar extends React.Component {
         const accountId = this.props.accountId;
         const { byAccount } = (stats || { byAccount: [] });
         const account = (byAccount || []).length > 0 ? byAccount.find(x => x.id === accountId) : undefined;
-        const latest = (account !== undefined && account !== null) ? 
+        const latest = (account !== undefined && account !== null && account.records.length > 0) ? 
             account.records[account.records.length - 1].total : 0;
         const nAccount = accounts.find(x => x.id === accountId);
         const accountName = (nAccount !== undefined && nAccount !== null) ? `${nAccount.name} - ${nAccount.provider}`: '';
@@ -43,10 +42,3 @@ const styles = StyleSheet.create({
         paddingBottom: 0
     },
 });
-
-const mapStateToProps = (state) => {
-    const { portfolio } = state
-    return { portfolio }
-};
-
-export default connect(mapStateToProps)(HomeTopBar);

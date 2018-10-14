@@ -4,7 +4,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import BreakdownScreen from '../screens/BreakdownScreen';
 import GoalsScreen from '../screens/GoalsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import AboutScreen from '../screens/AboutScreen';
@@ -36,7 +36,7 @@ HomeStack.navigationOptions = {
 };
 
 const BreakdownStack = createStackNavigator({
-  Links: LinksScreen,
+  Breakdown: BreakdownScreen,
   Blank: BlankScreen,
 });
 

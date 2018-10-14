@@ -71,16 +71,18 @@ export class GoalChartExample extends React.PureComponent {
 
         const endDate = new Date(2035, 12, 0);
         const endAmount = 1000000;
+        const startDate = actuals.length > 0 ? actuals[0].date : new Date();
+        const endActualDate = actuals.length > 0 ? actuals[actuals.length - 1].date : new Date();
+        const startAmount = actuals.length > 0 ? actuals[0].value : 0;
 
         const preddates = this.getDataRange(
-            actuals[0].date,
-            this.addYearsUTC(actuals[actuals.length-1].date, 5));
+            startDate,
+            this.addYearsUTC(endActualDate, 5));
 
-        const start = actuals[0].value;
-        const interm = endAmount / start;
+        const interm = endAmount / (startAmount === 0 ? 1 : startAmount);
 
-        const monthlyRate = Math.pow(interm, 1 / this.getNumberOfMonths(endDate, actuals[0].date)) - 1;
-        var futureValue = start;
+        const monthlyRate = Math.pow(interm, 1 / this.getNumberOfMonths(endDate, startDate)) - 1;
+        var futureValue = startAmount;
         const prediction = preddates.map((v, i) => {
             futureValue = (futureValue) * (1 + monthlyRate);
             return {
@@ -91,7 +93,7 @@ export class GoalChartExample extends React.PureComponent {
 
         const xMin = new Date(Math.max(
             prediction[0].date.getTime(),
-            actuals[0].date.getTime(),
+            startDate.getTime(),
             this.addYearsUTC(new Date(), -2).getTime()));
         const xMax = new Date(prediction[prediction.length - 1].date.getTime());
             // new Date(Math.min(

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { globalStyles } from './../Style';
+import { globalColours } from './../Colours';
 
 import { backup, restore } from './../redux/Actions';
 import { AccountTypes } from '../models/Account';
@@ -20,25 +21,22 @@ class SettingsScreen extends React.Component {
   render() {
     // const { manifest } = Constants;
     const { accounts } = this.props.portfolio;
-    const accountSections = [
-      { data: (accounts || []).filter(x => x.accountType === AccountTypes.Asset), title: 'Assets' },
-      { data: (accounts || []).filter(x => x.accountType === AccountTypes.Liability), title: 'Liabilities' }
-    ];
-
-    const settingsSections = [
+    const sections = [
+      { data: (accounts || []).filter(x => x.accountType === AccountTypes.Asset), title: 'Assets', addFooter: true },
+      { data: (accounts || []).filter(x => x.accountType === AccountTypes.Liability), title: 'Liabilities', addFooter: true },
       {
         data: [
-          { action: 'backup', title: 'Backup to iCloud' },
-          { action: 'restore', title: 'Restore data' },
+          { action: 'backup', title: 'Backup to iCloud', icon: 'upload-cloud' },
+          { action: 'restore', title: 'Restore data', icon: 'download-cloud' },
           { action: 'export', title: 'Export' },
-          { action: 'import', title: 'Import'}
-        ], title: 'Your data'
+          { action: 'import', title: 'Import' }
+        ], title: 'Your data', addFooter: false
       }
     ];
 
     const ListHeader = () => {
       // const { manifest } = Constants;
-      const manifest = { iconUrl: '', name: '', slug: '', description: ''};
+      const manifest = { iconUrl: require('./../assets/appicon.png'), name: 'wealthone', slug: 'wallace ltd', description: 'Your net worth tracker' };
 
       return (
         <View style={styles.titleContainer}>
@@ -68,25 +66,16 @@ class SettingsScreen extends React.Component {
 
         <ListHeader />
 
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <ScrollView style={globalStyles.container} contentContainerStyle={globalStyles.contentContainer}>
 
           <SectionList
-            style={styles.container}
+            style={globalStyles.container}
             renderItem={this._renderItem}
-            renderSectionHeader={this._renderSectionHeader}
+            renderSectionHeader={({ section }) => <Text style={globalStyles.sectionHeaderStyle}> {section.title} </Text>}
             renderSectionFooter={this._readerSectionFooter}
             stickySectionHeadersEnabled={true}
             keyExtractor={(item, index) => index}
-            sections={accountSections}
-          />
-
-          <SectionList
-            style={styles.container}
-            renderItem={this._renderGenericItem}
-            renderSectionHeader={this._renderSectionHeader}
-            stickySectionHeadersEnabled={true}
-            keyExtractor={(item, index) => index}
-            sections={settingsSections}
+            sections={sections}
           />
 
         </ScrollView>
@@ -95,28 +84,35 @@ class SettingsScreen extends React.Component {
     );
   }
 
-  _renderItem = ({ item }) => {
-    return (
-      <SectionContent>
-        <TouchableOpacity onPress={this.onEditAccount.bind(this, item)}>
-          <Text style={styles.sectionContentText}>
-            {item.name} - {item.provider}
-          </Text>
-        </TouchableOpacity>
-      </SectionContent>
-    );
-  };
+  renderAccountName = ({ name, provider }) => {
+    return (name !== '' ? name : '') +
+      (provider !== '' && provider !== undefined && provider !== null ? ` - ${provider}` : '');
+  }
 
-  _renderGenericItem = ({ item }) => {
-    return (
-      <SectionContent>
+  _renderItem = ({ item }) => {
+
+    return item.action !== undefined ?
+      (
         <TouchableOpacity onPress={this.onGenericAction.bind(this, item.action)}>
-          <Text style={styles.sectionContentText}>
-            {item.title}
-          </Text>
+          <View style={globalStyles.row}>
+            <Text style={globalStyles.bottomMargin}>
+              {item.title}
+            </Text>
+            {
+              item.icon !== undefined ? (<FeatherIcon name={item.icon} color={globalColours.primary} />) : null
+            }
+          </View>
         </TouchableOpacity>
-      </SectionContent>
-    );
+      ) : (
+        <TouchableOpacity onPress={this.onEditAccount.bind(this, item)}>
+          <View style={globalStyles.row}>
+            <Text style={globalStyles.bottomMargin}>
+              {this.renderAccountName(item)}
+            </Text>
+            <FeatherIcon name="chevron-right" color={globalColours.primary} />
+          </View>
+        </TouchableOpacity>
+      );
   };
 
   _renderSectionHeader = ({ section }) => {
@@ -124,11 +120,13 @@ class SettingsScreen extends React.Component {
   };
 
   _readerSectionFooter = ({ section }) => {
-    return (<SectionContent>
+    return section.addFooter ? (
       <TouchableOpacity onPress={this.onAddAccount.bind(this, section)}>
-        <Text>Add</Text>
-      </TouchableOpacity>
-    </SectionContent>);
+        <View style={globalStyles.row}>
+          <Text style={globalStyles.bottomMargin}>Add</Text>
+          <FeatherIcon name="plus" color={globalColours.primary} />
+        </View>
+      </TouchableOpacity>) : null;
   }
 
   onAddAccount = (item) => {
@@ -168,14 +166,6 @@ const SectionHeader = ({ title }) => {
   );
 };
 
-const SectionContent = props => {
-  return (
-    <View style={styles.sectionContentContainer}>
-      {props.children}
-    </View>
-  );
-};
-
 const AppIconPreview = ({ iconUrl }) => {
   if (!iconUrl) {
     iconUrl =
@@ -184,7 +174,7 @@ const AppIconPreview = ({ iconUrl }) => {
 
   return (
     <Image
-      source={{ uri: iconUrl }}
+      source={require('./../assets/appicon.png')}
       style={{ width: 64, height: 64 }}
       resizeMode="cover"
     />

@@ -2,7 +2,6 @@ import React from 'react';
 import {
   SafeAreaView,
   ScrollView,
-  StyleSheet,
   View,
   TextInput,
   TouchableOpacity,
@@ -32,7 +31,7 @@ class EntryScreen extends React.Component {
     headerBackImage: <FeatherIcon name="chevron-left" size={28} color={globalColours.primary} />,
     headerRight: navigation.getParam('saveEntry') ? (
       <Button
-        onPress={() => navigation.getParam('saveEntry')}
+        onPress={navigation.getParam('saveEntry')}
         title="Save"
         color={globalColours.primary}
       />) : null
@@ -231,48 +230,6 @@ class EntryScreen extends React.Component {
         </View>
       </Animated.View>
     )
-    return (
-      <Animated.View
-        style={[{
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'flex-start',
-          marginLeft: 32,
-          marginRight: 32
-        }, { height: this.state.animation }]}>
-        <View onLayout={this._setMinHeight.bind(this)} >
-          <View style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginLeft: 32,
-            marginRight: 32
-          }}>
-            <View style={{
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              marginTop: 16,
-              marginBottom: 16
-            }}>
-              <Text>Date</Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <TouchableOpacity onPress={this.onToggleDate.bind(this)}>
-                <Text>{date.toDateString()}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-        <View onLayout={this._setMaxHeight.bind(this)}>
-          <DatePickerIOS
-            mode='date'
-            maximumDate={new Date()}
-            date={this.state.record.date}
-            onDateChange={this.setDate}
-          />
-        </View>
-      </Animated.View>);
   }
 
   _setMaxHeight(event) {
@@ -302,16 +259,16 @@ class EntryScreen extends React.Component {
     return (
       <SafeAreaView style={globalStyles.safeAreaView}>
 
-        <ScrollView style={styles.container} >
+        <ScrollView style={globalStyles.container} contentContainerStyle={globalStyles.contentContainer}>
 
           <SectionList
             sections={dateSections}
             renderItem={this.renderDateItem}
             keyExtractor={(item, index) => index}
-            style={{ marginBottom: 16 }}
+            style={globalStyles.bottomMargin}
           />
 
-          <View style={{ marginLeft: 32, marginRight: 32 }}>
+          <View style={globalStyles.sideMargins}>
             <SegmentedControlIOS
               values={['Total', 'Inflows', 'Outflows']}
               tintColor={globalColours.primary}
@@ -335,14 +292,6 @@ class EntryScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff',
-  },
-});
 
 const mapStateToProps = (state) => {
   const { portfolio } = state

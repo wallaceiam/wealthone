@@ -1,11 +1,13 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, View, StyleSheet } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { connect } from 'react-redux';
 
 import { AccountTypes } from './../models/Account';
 import AccountTopBar from './../components/AccountTopBar';
 import { AccountGrowthChart } from './../charts/AccountGrowthChart';
+import AccountStats from './../components/AccoutStats';
+
 import { globalStyles } from './../Style';
 import { globalColours } from '../Colours';
 
@@ -42,12 +44,12 @@ class AccountScreen extends React.Component {
     const { accountId } = this.state;
     return (
       <SafeAreaView style={globalStyles.safeAreaView}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <ScrollView style={globalStyles.container} contentContainerStyle={globalStyles.contentContainer}>
           <AccountTopBar portfolio={portfolio} accountId={accountId} />
           <View>
             <AccountGrowthChart portfolio={portfolio} accountId={accountId} />
           </View>
-
+          <AccountStats portfolio={portfolio} accountId={accountId} />
           <View>
           </View>
         </ScrollView>
@@ -55,14 +57,6 @@ class AccountScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff',
-  },
-});
 
 const mapStateToProps = (state) => {
   const { portfolio } = state
