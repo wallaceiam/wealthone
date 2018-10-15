@@ -16,6 +16,8 @@ import { NetworthGrowthChart } from '../charts/NetworthGrowthChart';
 import { globalColours } from './../Colours';
 import { globalStyles } from './../Style';
 
+import { justDate } from './../helpers/Date';
+
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigate, navigation }) => ({
     title: 'Home',
@@ -34,16 +36,12 @@ class HomeScreen extends React.Component {
     super(props);
   }
 
-  _justDate(d) {
-    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  }
-
   componentDidMount() {
     this.props.navigation.setParams({ navToEntry: this._navToEntry });
   }
 
   _navToEntry = () => {
-    this.props.navigation.navigate('Entry', { date: this._justDate(new Date()) });
+    this.props.navigation.navigate('HomeEntry', { date: justDate(new Date()) });
   }
 
   render() {

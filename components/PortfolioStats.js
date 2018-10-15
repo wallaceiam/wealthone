@@ -19,7 +19,7 @@ class PortfolioStats extends React.Component {
     }
 
     _navToAccount = (accountId) => {
-        this.props.navigation.navigate('Account', { accountId: accountId });
+        this.props.navigation.navigate('HomeAccount', { accountId: accountId });
     }
 
     renderItem = ({ item }) => {

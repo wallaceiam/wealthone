@@ -1,5 +1,6 @@
 export function justDate(d) {
-    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const da = d instanceof Date ? d : new Date(Date.parse(d));
+    return new Date(da.getFullYear(), da.getMonth(), da.getDate());
 }
 
 export function sameDay(d1, d2) {

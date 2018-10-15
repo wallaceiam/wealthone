@@ -9,6 +9,7 @@ import GoalsScreen from '../screens/GoalsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import AboutScreen from '../screens/AboutScreen';
 import EditAccountScreen from '../screens/EditAccountScreen';
+import HistoryScreen from '../screens/HistoryScreen';
 
 import EntryScreen from '../screens/EntryScreen';
 import AccountScreen from '../screens/AccountScreen';
@@ -21,8 +22,8 @@ import ImportScreen from '../screens/ImportScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
-  Entry: EntryScreen,
-  Account: AccountScreen
+  HomeEntry: EntryScreen,
+  HomeAccount: AccountScreen
 });
 
 HomeStack.navigationOptions = {
@@ -44,6 +45,18 @@ BreakdownStack.navigationOptions = {
   tabBarLabel: 'Breakdown',
   tabBarIcon: ({ focused }) => (
     <FeatherIcon name="bar-chart" size={24} color={focused ? globalColours.primary : globalColours.secondary} />
+  ),
+};
+
+const HistoryStack = createStackNavigator({
+  History: HistoryScreen,
+  HistoryEntry: EntryScreen,
+});
+
+HistoryStack.navigationOptions = {
+  tabBarLabel: 'History',
+  tabBarIcon: ({ focused }) => (
+    <FeatherIcon name="list" size={24} color={focused ? globalColours.primary : globalColours.secondary} />
   ),
 };
 
@@ -78,6 +91,7 @@ export default createBottomTabNavigator({
   HomeStack,
   BreakdownStack,
   GoalsStack,
+  HistoryStack,
   SettingsStack,
 }, {
   initialRouteName: 'HomeStack',

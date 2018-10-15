@@ -60,8 +60,9 @@ class EntryScreen extends React.Component {
 
   componentDidMount() {
     this.props.navigation.setParams({ saveEntry: this.onSaveEntry });
-    const entry = this.props.navigation.getParam('entry', { date: justDate(new Date()), totals: [], inflows: [], outflows: [] });
-    this._loadDate(entry.date);
+    // const entry = this.props.navigation.getParam('entry', { date: justDate(new Date()), totals: [], inflows: [], outflows: [] });
+    const date = this.props.navigation.getParam('date', new Date());
+    this._loadDate(date);
   }
 
   _loadDate(date) {

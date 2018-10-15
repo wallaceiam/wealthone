@@ -145,10 +145,10 @@ export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    marginBottom: 32
   },
   contentContainer: {
-    paddingTop: 30,
+    paddingTop: 32,
+    paddingBottom: 32
   },
   row: {
     flex: 1,
