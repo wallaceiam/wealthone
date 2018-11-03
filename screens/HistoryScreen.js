@@ -10,7 +10,7 @@ import { globalStyles } from './../Style';
 import { globalColours } from './../Colours';
 
 import { backup, restore } from './../redux/Actions';
-import { AccountTypes } from '../models/Account';
+import { IsAsset } from '../models/Account';
 
 import { justDate } from './../helpers/Date';
 
@@ -33,13 +33,13 @@ class HistoryScreen extends React.Component {
     const { stats } = this.props.portfolio;
     const { netWorth } = stats;
 
-    const allYears = netWorth.map((v) => justDate(v.date).getFullYear());
+    const allYears = (netWorth || []).map((v) => justDate(v.date).getFullYear());
     const uniqueYears = [...new Set(allYears)].reverse();
 
     const sections = uniqueYears.map((v) => {
       return {
         title: v.toString(),
-        data: netWorth.filter(x => justDate(x.date).getFullYear() === v).map((c) => {
+        data: (netWorth || []).filter(x => justDate(x.date).getFullYear() === v).map((c) => {
           return {
             date: c.date,
             total: c.total,

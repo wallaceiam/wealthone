@@ -1,7 +1,13 @@
 export const saveAccount = (account) => (
   {
     type: 'SAVE_ACCOUNT',
-    payload: { id: account.id, name: account.name, provider: account.provider, accountType: account.accountType },
+    payload: {
+      id: account.id,
+      name: account.name,
+      provider: account.provider,
+      isAsset: account.isAsset,
+      accountType: account.accountType
+    },
   }
 );
 
@@ -12,17 +18,11 @@ export const removeAccount = (id) => (
   }
 );
 
-export const saveGoal = (goal) => (
+export const saveGoal = (input) => (
   {
     type: 'SAVE_GOAL',
     payload: {
-      id: goal.id,
-      title: goal.title,
-      goalType: goal.goalType,
-      amount: goal.amount,
-      when: goal.when,
-      frequency: goal.frequency,
-      colour: goal.colour
+      input
     },
   }
 );
@@ -50,6 +50,12 @@ export const backupSync = (payload) => (
 export const restore = () => (
   {
     type: 'RESTORE'
+  }
+)
+
+export const update = () => (
+  {
+    type: 'UPDATE'
   }
 )
 

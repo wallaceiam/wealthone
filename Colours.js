@@ -1,6 +1,11 @@
 export const globalColours = {
     primary: '#1E2833',
     secondary: '#2A4054',
+    tertiary: '#5E7A92',
+    quaternary: '#A1B3C4',
+    quinary: '#CBD5E0',
+    senary: '#E5E7EE',
+
     alt: '#5E7A92',
     white: '#FFFFFF',
 

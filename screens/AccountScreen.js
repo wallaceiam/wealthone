@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, View } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { connect } from 'react-redux';
 
-import { AccountTypes } from './../models/Account';
+import { IsAsset } from './../models/Account';
 import AccountTopBar from './../components/AccountTopBar';
 import { AccountGrowthChart } from './../charts/AccountGrowthChart';
 import AccountStats from './../components/AccoutStats';
@@ -13,7 +13,7 @@ import { globalColours } from '../Colours';
 
 class AccountScreen extends React.Component {
   static navigationOptions = ({ navigate, navigation }) => {
-    const account = navigation.getParam('account', { id: undefined, name: '', provider: '', accountType: AccountTypes.Asset });
+    const account = navigation.getParam('account', { id: undefined, name: '', provider: '', isAsset: IsAsset.Asset });
     return {
       title: account.id !== undefined ? account.name : '',
       headerBackTitle: null,

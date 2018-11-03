@@ -12,6 +12,7 @@ import {
   Animated,
   SegmentedControlIOS
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import { connect } from 'react-redux';
@@ -21,8 +22,10 @@ import { globalStyles } from './../Style';
 import { globalColours } from './../Colours';
 
 import { saveEntry } from './../redux/Actions';
-import { AccountTypes } from '../models/Account';
+import { IsAsset } from '../models/Account';
 import { justDate, sameDay } from '../helpers/Date';
+import { FloatingLabelTextInput } from '../components/FloatingLabelTextInput';
+import { NumericInput } from '../components/NumericInput';
 
 class EntryScreen extends React.Component {
   static navigationOptions = ({ navigate, navigation }) => ({
@@ -127,7 +130,7 @@ class EntryScreen extends React.Component {
 
   setAmount(id, amount) {
     const tAmount = Number.parseInt(amount);
-    const dAmount = isNaN(tAmount) ? null : tAmount;
+    const dAmount = +(isNaN(tAmount) ? null : tAmount);
 
     const { date, totals, inflows, outflows } = this.state.record;
     switch (this.state.selectedIndex) {
@@ -176,8 +179,7 @@ class EntryScreen extends React.Component {
           <Text>{item.provider} </Text>
         </View>
         <View style={{ flex: 1 }}>
-          <TextInput
-            style={[globalStyles.textInput, globalStyles.numberInput]}
+          <NumericInput
             placeholder="0"
             onChangeText={(text) => this.setAmount(item.id, text)}
             value={this.getAmount(item.id)}
@@ -248,8 +250,8 @@ class EntryScreen extends React.Component {
   render() {
     const accounts = (this.props.portfolio.accounts || []);
     const accountSections = [
-      { data: accounts.filter(x => x.accountType === AccountTypes.Asset), title: 'Assets' },
-      { data: accounts.filter(x => x.accountType === AccountTypes.Liability), title: 'Liabilities' }
+      { data: accounts.filter(x => x.isAsset === IsAsset.Asset), title: 'Assets' },
+      { data: accounts.filter(x => x.isAsset === IsAsset.Liability), title: 'Liabilities' }
     ];
 
     const dateSections = [
@@ -260,8 +262,10 @@ class EntryScreen extends React.Component {
     return (
       <SafeAreaView style={globalStyles.safeAreaView}>
 
-        <ScrollView style={globalStyles.container} contentContainerStyle={globalStyles.contentContainer}>
-
+        <KeyboardAwareScrollView style={globalStyles.container}
+          contentContainerStyle={globalStyles.contentContainer}
+          keyboardOpeningTime={0}
+          extraHeight={128}>
           <SectionList
             sections={dateSections}
             renderItem={this.renderDateItem}
@@ -287,9 +291,9 @@ class EntryScreen extends React.Component {
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index}
           />
-
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </SafeAreaView>
+
     );
   }
 }

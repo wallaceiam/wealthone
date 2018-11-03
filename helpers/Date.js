@@ -8,3 +8,11 @@ export function sameDay(d1, d2) {
     const db = d2 instanceof Date ? d2 : new Date(Date.parse(d2));
     return da.getTime() === db.getTime();
 }
+
+export function addYears(d, y) {
+    var d = new Date();
+    var year = d.getFullYear();
+    var month = d.getMonth();
+    var day = d.getDate();
+    return new Date(year + y, month, day);
+}

@@ -7,16 +7,17 @@ import iCloudStorage from 'react-native-icloudstore';
 import { Alert } from 'react-native';
 
 import * as shortid from 'shortid';
-import { AccountTypes } from '../models/Account';
+import { IsAsset, AccountTypes } from '../models/Account';
 import { justDate, sameDay } from '../helpers/Date';
 import { statsReducer } from './StatsReducer';
+import { goalReducer } from  './GoalReducer';
 import { restoreData } from './Actions';
 
 import { dispatch } from './Store';
 
 const INITIAL_STATE = {
     accounts: [],
-    goals: [],
+    goal: [],
     records: [],
     stats: {}
 };
@@ -30,12 +31,16 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
                 const account = accounts.find(x => x.id === action.payload.id);
                 account.name = action.payload.name;
                 account.provider = action.payload.provider;
+                account.isAsset = action.payload.isAsset;
+                account.accountType = action.payload.accountType;
+            
             } else {
                 // new
                 accounts.push({
                     id: shortid.generate(),
                     name: action.payload.name,
                     provider: action.payload.provider,
+                    isAsset: action.payload.isAsset,
                     accountType: action.payload.accountType
                 });
 
@@ -60,8 +65,8 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
             return state;
         }
         case 'BACKUP_SYNC': {
-            iCloudStorage.setItem('backup', JSON.stringify(state)).then(x => {})
-                .catch(x => {Alert.alert('iCloud Backup', 'An error occured while trying to backup to iCloud');});
+            iCloudStorage.setItem('backup', JSON.stringify(state)).then(x => { })
+                .catch(x => { Alert.alert('iCloud Backup', 'An error occured while trying to backup to iCloud'); });
             return state;
         }
         case 'RESTORE': {
@@ -96,7 +101,7 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
                         id: shortid.generate(),
                         name: x.name,
                         provider: '',
-                        accountType: x.isAsset ? AccountTypes.Asset : AccountTypes.Liability
+                        isAsset: x.isAsset ? IsAsset.Asset : IsAsset.Liability
                     }
                 });
                 const offset = json.records[0].totals[0] === null ? 1 : 0;
@@ -146,6 +151,14 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
             const newState = { ...state, records: records };
             return newState;
         }
+        case 'UPDATE': {
+            const { accounts } = state;
+            const newAccounts = accounts.map(x => {
+                return { ...x, isAsset: IsAsset.Asset, accountType: 0 };
+            });
+            const newState = { ...state, accounts: newAccounts };
+            return newState;
+        }
         default:
             return state
     }
@@ -153,7 +166,8 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
 
 const chainReducer = (state = INITIAL_STATE, action) => {
     const newState = portfolioReducer(state, action);
-    const newerState = statsReducer(newState, action);
+    // const newerState = statsReducer(newState, action);
+    const newerState = goalReducer(statsReducer(newState, action), action);
     return newerState;
 }
 

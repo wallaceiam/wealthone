@@ -18,6 +18,7 @@ import BlankScreen from '../screens/BlankScreen';
 
 import { globalColours } from '../Colours';
 import ImportScreen from '../screens/ImportScreen';
+import EditGoalScreen from '../screens/EditGoalScreen';
 
 
 const HomeStack = createStackNavigator({
@@ -71,21 +72,22 @@ const SettingsStack = createStackNavigator({
 SettingsStack.navigationOptions = {
   tabBarLabel: 'Settings',
   tabBarIcon: ({ focused }) => (
-    <FeatherIcon name="sliders" size={24} color={focused ? globalColours.primary : globalColours.secondary} />
+    <FeatherIcon name="settings" size={24} color={focused ? globalColours.primary : globalColours.secondary} />
   ),
 };
 
 const GoalsStack = createStackNavigator({
   Goals: GoalsScreen,
-  Blank: BlankScreen
+  EditGoal: EditGoalScreen
 });
 
 GoalsStack.navigationOptions = {
   tabBarLabel: 'Goals',
   tabBarIcon: ({ focused }) => (
-    <FeatherIcon name="target" size={24} color={focused ? globalColours.primary : globalColours.secondary}  />    
+    <FeatherIcon name="target" size={24} color={focused ? globalColours.primary : globalColours.secondary} />
   ),
 };
+
 
 export default createBottomTabNavigator({
   HomeStack,
@@ -94,11 +96,13 @@ export default createBottomTabNavigator({
   HistoryStack,
   SettingsStack,
 }, {
-  initialRouteName: 'HomeStack',
-  tabBarOptions: {
-    activeTintColor: globalColours.primary,
-  },
-  navigationOptions: {
-    headerTintColor: globalColours.primary,
-  }
-});
+    initialRouteName: 'HomeStack',
+    lazy: true,
+    tabBarOptions: {
+      activeTintColor: globalColours.primary,
+    },
+    navigationOptions: {
+      headerTintColor: globalColours.primary,
+      headerBackTitle: null,
+    }
+  });

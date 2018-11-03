@@ -56,11 +56,33 @@ export class GoalChartExample extends React.PureComponent {
             (d1.getMonth() - d2.getMonth());
     }
 
+    createPrediction(startDate, startAmount, endDate, endAmount) {
+        const preddates = this.getDataRange(
+            startDate,
+            endDate);
+        //this.addYearsUTC(endActualDate, 5));
+
+        const interm = endAmount / (startAmount === 0 ? 1 : startAmount);
+
+        const monthlyRate = Math.pow(interm, 1 / this.getNumberOfMonths(endDate, startDate)) - 1;
+        var futureValue = startAmount;
+
+        return preddates.map((v, i) => {
+            futureValue = (futureValue) * (1 + monthlyRate);
+            return {
+                value: futureValue,
+                date: v
+            };
+        });
+    }
 
 
     render() {
-        const { stats } = this.props.portfolio;
+        const { stats, goal } = this.props.portfolio;
         const { netWorth } = (stats || { netWorth: [] });
+        const { input, result } = (goal || { input: {}, result: {} });
+
+
 
         const actuals = (netWorth || []).map((c) => {
             return {
@@ -69,44 +91,44 @@ export class GoalChartExample extends React.PureComponent {
             }
         });
 
-        const endDate = new Date(2035, 12, 0);
-        const endAmount = 1000000;
+        const endDate = this.addYearsUTC(new Date(), input.retirementAge - input.currentAge);
         const startDate = actuals.length > 0 ? actuals[0].date : new Date();
         const endActualDate = actuals.length > 0 ? actuals[actuals.length - 1].date : new Date();
         const startAmount = actuals.length > 0 ? actuals[0].value : 0;
 
-        const preddates = this.getDataRange(
-            startDate,
-            this.addYearsUTC(endActualDate, 5));
 
-        const interm = endAmount / (startAmount === 0 ? 1 : startAmount);
+        const predictionPoor = this.createPrediction(startDate, startAmount, endDate, result.projectedSavingsPoor);
+        const predictionAverage = this.createPrediction(startDate, startAmount, endDate, result.projectedSavingsAverage);
 
-        const monthlyRate = Math.pow(interm, 1 / this.getNumberOfMonths(endDate, startDate)) - 1;
-        var futureValue = startAmount;
-        const prediction = preddates.map((v, i) => {
-            futureValue = (futureValue) * (1 + monthlyRate);
-            return {
-                value: futureValue,
-                date: v
-            };
-        });
 
         const xMin = new Date(Math.max(
-            prediction[0].date.getTime(),
+            predictionPoor[0].date.getTime(),
             startDate.getTime(),
             this.addYearsUTC(new Date(), -2).getTime()));
-        const xMax = new Date(prediction[prediction.length - 1].date.getTime());
-            // new Date(Math.min(
-            // prediction[prediction.length - 1].date.getTime(),
-            // // actuals[actuals.length-1].date.getTime(), 
-            // this.addYearsUTC(new Date(), 5).getTime()));
+        const xMax = 
+            new Date(predictionPoor[predictionPoor.length - 1].date.getTime());
+            /*new Date(Math.min(
+                predictionPoor[predictionPoor.length - 1].date.getTime(),
+                // // actuals[actuals.length-1].date.getTime(), 
+                this.addYearsUTC(new Date(), 10).getTime()));
+            */
 
-        const yMin = Math.min(
-            Math.min(...prediction.filter((x) => x.date.getTime() >= xMin.getTime() && x.date.getTime() <= xMax.getTime()).map((v) => v.value))
-            , Math.min(...actuals.filter((x) => x.date.getTime() >= xMin.getTime() && x.date.getTime() <= xMax.getTime()).map((v) => v.value)));
-        const yMax = Math.max(
-            Math.max(...prediction.filter((x) => x.date.getTime() >= xMin.getTime() && x.date.getTime() <= xMax.getTime()).map((v) => v.value))
-            , Math.max(...actuals.filter((x) => x.date.getTime() >= xMin.getTime() && x.date.getTime() <= xMax.getTime()).map((v) => v.value)));
+        const getMinMax = (a) => (
+            a.filter((x) => x.date.getTime() >= xMin.getTime() && x.date.getTime() <= xMax.getTime())
+                .reduce((p, c) => {
+                    return {
+                        min: Math.min(c.value, p.min !== undefined ? p.min : c.value),
+                        max: Math.max(c.value, p.max !== undefined ? p.max : c.value)
+                    }
+                }, { min: undefined, max: undefined }));
+
+        const poorMinMax = getMinMax(predictionPoor);
+        const avgMinMax = getMinMax(predictionAverage);
+        const actMinMax = getMinMax(actuals);
+
+
+        const yMin = Math.min(poorMinMax.min, avgMinMax.min, actMinMax.min);
+        const yMax = Math.max(poorMinMax.max, avgMinMax.max, actMinMax.max);
 
 
         const ActualLine = ({ line }) => (
@@ -131,7 +153,7 @@ export class GoalChartExample extends React.PureComponent {
             <View style={{ height: 200 }}>
                 <AreaChart
                     style={{ height: 200 }}
-                    data={prediction}
+                    data={predictionPoor}
                     yAccessor={({ item }) => item.value}
                     xAccessor={({ item }) => item.date}
                     xScale={scale.scaleTime}
@@ -139,13 +161,13 @@ export class GoalChartExample extends React.PureComponent {
                     yMax={yMax}
                     xMin={xMin}
                     xMax={xMax}
-                    svg={{ fill: 'url(#gradient)' }}
+                    svg={{ fill: 'url(#gradientPoor)' }}
                     contentInset={{ top: 20, bottom: 20 }}
                     curve={shape.curveNatural}
                 >
                     <PredictLine />
-                    <Defs key={'gradient'}>
-                        <LinearGradient id={'gradient'} x1={'0%'} y={'0%'} x2={'0%'} y2={'100%'}>
+                    <Defs key={'gradientPoor'}>
+                        <LinearGradient id={'gradientPoor'} x1={'0%'} y={'0%'} x2={'0%'} y2={'100%'}>
                             <Stop offset={'0%'} stopColor={globalColours.alt} stopOpacity={0.2} />
                             <Stop offset={'75%'} stopColor={globalColours.alt} stopOpacity={0.0} />
                         </LinearGradient>
@@ -153,7 +175,30 @@ export class GoalChartExample extends React.PureComponent {
                 </AreaChart>
 
                 <AreaChart
-                    style={StyleSheet.absoluteFill }
+                    style={StyleSheet.absoluteFill}
+                    data={predictionAverage}
+                    yAccessor={({ item }) => item.value}
+                    xAccessor={({ item }) => item.date}
+                    xScale={scale.scaleTime}
+                    yMin={yMin}
+                    yMax={yMax}
+                    xMin={xMin}
+                    xMax={xMax}
+                    svg={{ fill: 'url(#gradientAvg)' }}
+                    contentInset={{ top: 20, bottom: 20 }}
+                    curve={shape.curveNatural}
+                >
+                    <PredictLine />
+                    <Defs key={'gradientAvg'}>
+                        <LinearGradient id={'gradientAvg'} x1={'0%'} y={'0%'} x2={'0%'} y2={'100%'}>
+                            <Stop offset={'0%'} stopColor={globalColours.primary} stopOpacity={0.2} />
+                            <Stop offset={'75%'} stopColor={globalColours.white} stopOpacity={0.0} />
+                        </LinearGradient>
+                    </Defs>
+                </AreaChart>
+
+                <AreaChart
+                    style={StyleSheet.absoluteFill}
                     data={actuals}
                     yAccessor={({ item }) => item.value}
                     xAccessor={({ item }) => item.date}

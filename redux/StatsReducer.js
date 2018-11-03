@@ -1,4 +1,4 @@
-import { AccountTypes } from "../models/Account";
+import { IsAsset } from "../models/Account";
 
 
 export const statsReducer = (state, action, dispatch) => {
@@ -11,11 +11,11 @@ export const statsReducer = (state, action, dispatch) => {
             date: c.date,
             assets: c.totals.reduce((tp, tc) => {
                 const account = state.accounts.find(x => x.id === tc.id);
-                return tp + (account !== null & account.accountType == AccountTypes.Asset ? tc.amount : 0);
+                return tp + (account !== null & account.isAsset == IsAsset.Asset ? tc.amount : 0);
             }, 0),
             liabilities: c.totals.reduce((tp, tc) => {
                 const account = state.accounts.find(x => x.id === tc.id);
-                return tp + (account !== null & account.accountType == AccountTypes.Liability ? tc.amount : 0);
+                return tp + (account !== null & account.isAsset == IsAsset.Liability ? tc.amount : 0);
             }, 0),
             inflows: c.inflows.reduce((tp, tc) => {
                 const account = state.accounts.find(x => x.id === tc.id);

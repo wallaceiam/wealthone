@@ -6,7 +6,7 @@ import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import { globalStyles } from './../Style';
-import { AccountTypes } from '../models/Account';
+import { IsAsset } from '../models/Account';
 
 class PortfolioStats extends React.Component {
 
@@ -54,7 +54,7 @@ class PortfolioStats extends React.Component {
         const records = (this.props.portfolio.records || []);
         const last = records.length - 1;
 
-        const assets = accounts.filter(x => x.accountType === AccountTypes.Asset).map(x => {
+        const assets = accounts.filter(x => x.isAsset === IsAsset.Asset).map(x => {
             return {
                 id: x.id,
                 name: x.name,
@@ -62,7 +62,7 @@ class PortfolioStats extends React.Component {
                 amount: last < 0 ? 0 : (records[last].totals.find(y => y.id === x.id).amount || 0)
             }
         });
-        const liabilities = accounts.filter(x => x.accountType === AccountTypes.Liability).map(x => {
+        const liabilities = accounts.filter(x => x.isAsset === IsAsset.Liability).map(x => {
             return {
                 id: x.id,
                 name: x.name,

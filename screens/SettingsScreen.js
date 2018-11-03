@@ -8,8 +8,8 @@ import { bindActionCreators } from 'redux';
 import { globalStyles } from './../Style';
 import { globalColours } from './../Colours';
 
-import { backup, restore } from './../redux/Actions';
-import { AccountTypes } from '../models/Account';
+import { backup, restore, update } from './../redux/Actions';
+import { IsAsset } from '../models/Account';
 
 class SettingsScreen extends React.Component {
   static navigationOptions = ({ navigate, navigation }) => ({
@@ -22,14 +22,15 @@ class SettingsScreen extends React.Component {
     // const { manifest } = Constants;
     const { accounts } = this.props.portfolio;
     const sections = [
-      { data: (accounts || []).filter(x => x.accountType === AccountTypes.Asset), title: 'Assets', addFooter: true },
-      { data: (accounts || []).filter(x => x.accountType === AccountTypes.Liability), title: 'Liabilities', addFooter: true },
+      { data: (accounts || []).filter(x => x.isAsset === IsAsset.Asset), title: 'Assets', addFooter: true },
+      { data: (accounts || []).filter(x => x.isAsset === IsAsset.Liability), title: 'Liabilities', addFooter: true },
       {
         data: [
           { action: 'backup', title: 'Backup to iCloud', icon: 'upload-cloud' },
           { action: 'restore', title: 'Restore data', icon: 'download-cloud' },
           { action: 'export', title: 'Export' },
-          { action: 'import', title: 'Import' }
+          { action: 'import', title: 'Import' },
+          { action: 'update', title: 'Update' },
         ], title: 'Your data', addFooter: false
       }
     ];
@@ -131,9 +132,9 @@ class SettingsScreen extends React.Component {
 
   onAddAccount = (item) => {
     if (item.title === 'Assets') {
-      this.props.navigation.navigate('EditAccount', { account: { id: undefined, name: '', provider: '', accountType: AccountTypes.Asset } });
+      this.props.navigation.navigate('EditAccount', { account: { id: undefined, name: '', provider: '', isAsset: IsAsset.Asset } });
     } else {
-      this.props.navigation.navigate('EditAccount', { account: { id: undefined, name: '', provider: '', accountType: AccountTypes.Liability } });
+      this.props.navigation.navigate('EditAccount', { account: { id: undefined, name: '', provider: '', isAsset: IsAsset.Liability } });
     }
   }
 
@@ -151,6 +152,9 @@ class SettingsScreen extends React.Component {
         break;
       case 'import':
         this.props.navigation.navigate('Import');
+        break;
+      case 'update':
+        this.props.update();
         break;
     }
   }
@@ -255,6 +259,7 @@ const mapDispatchToProps = dispatch => (
   bindActionCreators({
     backup,
     restore,
+    update
   }, dispatch)
 );
 

@@ -1,15 +1,20 @@
-export const AccountTypes = {
-    Asset: 0,
-    Liability: 1
+export const IsAsset = {
+    Asset: true,
+    Liability: false
 };
 
-export const AccountDefType = {
+export const AccountTypes = [
     // assets
-    Cash: 0,
-    Savings: 1,
-    GIA: 2,
-    ISA: 3,
-    LISA: 4,
-    Pension: 5,
-    Property: 6 
-}
+    { id: 0, name: 'Cash', isAsset: IsAsset.Asset },
+    { id: 1, name: 'Savings', isAsset: IsAsset.Asset },
+    { id: 2, name: 'General Investment Account', isAsset: IsAsset.Asset },
+    { id: 3, name: 'ISA', isAsset: IsAsset.Asset },
+    { id: 4, name: 'LISA', isAsset: IsAsset.Asset },
+    { id: 5, name: 'Pension', isAsset: IsAsset.Asset },
+    { id: 6, name: 'Property', isAsset: IsAsset.Asset },
+
+    //liabilities
+    { id: 7, name: 'Mortgage', isAsset: IsAsset.Liability },
+    { id: 8, name: 'Credit Card', isAsset: IsAsset.Liability },
+    { id: 9, name: 'Loan', isAsset: IsAsset.Liability }
+];

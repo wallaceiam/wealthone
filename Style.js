@@ -157,6 +157,13 @@ export const globalStyles = StyleSheet.create({
     marginLeft: 32,
     marginRight: 32
   },
+  altRow: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginLeft: 32,
+    marginRight: 32
+  },
 
   /* Padding & Margins */
   sideMargins: {
@@ -251,10 +258,22 @@ export const globalStyles = StyleSheet.create({
     height: 40,
     marginBottom: 24,
     borderBottomWidth: 1,
-    borderBottomColor: '#E7E7E7'
+    borderBottomColor: globalColours.quinary
+  },
+  textInputFocused: {
+    borderBottomColor: globalColours.primary
   },
   numberInput: {
     textAlign: 'right'
+  },
+  labelStyle: {
+    color: globalColours.quinary
+  },
+
+  bigHeader: {
+    padding: 32,
+    paddingTop: 16,
+    paddingBottom: 0
   },
 
   /* Lists */
@@ -263,5 +282,13 @@ export const globalStyles = StyleSheet.create({
     paddingLeft: 24,
     paddingRight: 24,
     fontWeight: 'bold'
+  },
+  subSectionHeaderStyle: {
+    paddingBottom: 16,
+    paddingTop: 0,
+    paddingLeft: 24,
+    paddingRight: 24,
+    fontWeight: 'normal',
+    textTransform: 'uppercase'
   },
 });

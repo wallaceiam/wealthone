@@ -10,6 +10,7 @@ import iCloudStorage from 'react-native-icloudstore';
 import { store, dispatch } from './redux/Store';
 import { restoreSync } from './redux/Actions';
 import { globalStyles } from './Style';
+import { AssetPieChart } from './charts/AssetPieChart';
 
 
 export default class App extends React.Component {
@@ -23,13 +24,13 @@ export default class App extends React.Component {
   }
 
   componentWillUnmount() {
-    this.eventEmitter.remove();
+    // this.eventEmitter.remove();
   }
 
   loadData = (userInfo) => {
     const changedKeys = userInfo.changedKeys;
     if (changedKeys != null && changedKeys.includes('backup')) {
-      iCloudStorage.getItem('backup').then(result => dispatch(restoreSync(result)) );
+      iCloudStorage.getItem('backup').then(result => dispatch(restoreSync(result)));
     }
   }
 

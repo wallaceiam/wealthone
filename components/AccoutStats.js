@@ -6,7 +6,7 @@ import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import { globalStyles } from './../Style';
-import { AccountTypes } from '../models/Account';
+import { IsAsset } from '../models/Account';
 
 export default class AccountStats extends React.Component {
 
