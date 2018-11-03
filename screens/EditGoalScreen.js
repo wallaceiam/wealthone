@@ -26,11 +26,12 @@ class EditGoalScreen extends React.Component {
   static navigationOptions = ({ navigate, navigation }) => ({
     title: 'Edit Goal',
     headerBackTitle: null,
-    headerBackImage: <FeatherIcon name="chevron-left" size={28} color={globalColours.primary} />,
+    headerBackImage: <FeatherIcon name="chevron-left" size={24} color={globalColours.primary} />,
     headerRight: navigation.getParam('saveGoal') ? (
       <Button
         onPress={navigation.getParam('saveGoal')}
         title="Save"
+        style={{ marginRight: 8 }}
         color={globalColours.primary}
       />) : null
   });

@@ -31,11 +31,12 @@ class EntryScreen extends React.Component {
   static navigationOptions = ({ navigate, navigation }) => ({
     title: 'Entry',
     headerBackTitle: null,
-    headerBackImage: <FeatherIcon name="chevron-left" size={28} color={globalColours.primary} />,
+    headerBackImage: <FeatherIcon name="chevron-left" size={24} color={globalColours.primary} />,
     headerRight: navigation.getParam('saveEntry') ? (
       <Button
         onPress={navigation.getParam('saveEntry')}
         title="Save"
+        style={{ marginRight: 8 }}
         color={globalColours.primary}
       />) : null
   });

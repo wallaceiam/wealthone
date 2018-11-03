@@ -17,7 +17,7 @@ class AccountScreen extends React.Component {
     return {
       title: account.id !== undefined ? account.name : '',
       headerBackTitle: null,
-      headerBackImage: <FeatherIcon name="chevron-left" size={28} color={globalColours.primary} />
+      headerBackImage: <FeatherIcon name="chevron-left" size={24} color={globalColours.primary} />
     }
   };
 

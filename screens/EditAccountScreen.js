@@ -19,7 +19,7 @@ class EditAccountScreen extends React.Component {
     return {
       title: account.id !== undefined ? 'Edit ' + account.name : 'Add ' + (account.isAsset === IsAsset.Asset ? 'asset' : 'liability'),
       headerBackTitle: null,
-      headerBackImage: <FeatherIcon name="chevron-left" size={28} color={globalColours.primary} />,
+      headerBackImage: <FeatherIcon name="chevron-left" size={24} color={globalColours.primary} />,
       headerRight: navigation.getParam('saveAccount') ? (
         <Button
           onPress={navigation.getParam('saveAccount')}

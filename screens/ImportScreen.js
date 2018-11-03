@@ -13,11 +13,12 @@ class ImportScreen extends React.Component {
   static navigationOptions = ({ navigate, navigation }) => ({
     title: 'Import',
     headerBackTitle: null,
-    headerBackImage: <FeatherIcon name="chevron-left" size={28} color={globalColours.primary} />,
+    headerBackImage: <FeatherIcon name="chevron-left" size={24} color={globalColours.primary} />,
     headerRight: navigation.getParam('import') ? (
       <Button
         onPress={navigation.getParam('import')}
         title="Save"
+        style={{ marginRight: 8 }}
         color={globalColours.primary}
       />) : null
   });

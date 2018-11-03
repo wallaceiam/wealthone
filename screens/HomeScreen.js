@@ -25,9 +25,10 @@ class HomeScreen extends React.Component {
     headerBackTitle: null,
     headerRight: navigation.getParam('navToEntry') ? (
       <TouchableOpacity
+        style={{ marginRight: 8 }}
         onPress={navigation.getParam('navToEntry')}
       >
-        <FeatherIcon name="plus" size={28} color={globalColours.primary} />
+        <FeatherIcon name="plus" size={24} color={globalColours.primary} />
       </TouchableOpacity>) : null
   });
 

@@ -6,7 +6,7 @@ export default class BlankScreen extends React.Component {
   static navigationOptions = {
     title: 'Blank',
     headerBackTitle: null,
-    headerBackImage: <FeatherIcon name="chevron-left" size={28} />
+    headerBackImage: <FeatherIcon name="chevron-left" size={24} />
   };
 
   render() {

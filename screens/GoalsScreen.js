@@ -24,9 +24,10 @@ class GoalsScreen extends React.Component {
     headerBackTitle: null,
     headerRight: navigation.getParam('navToEdit') ? (
       <TouchableOpacity
+        style={{ marginRight: 8 }}
         onPress={navigation.getParam('navToEdit')}
       >
-        <FeatherIcon name="sliders" size={28} color={globalColours.primary} />
+        <FeatherIcon name="sliders" size={24} color={globalColours.primary} />
       </TouchableOpacity>) : null
   });
 
@@ -93,8 +94,8 @@ class GoalsScreen extends React.Component {
                 currency="GBP"
                 maximumFractionDigits={0}
                 minimumFractionDigits={0}
-                style={[globalStyles.h1, { paddingBottom: 0, marginBottom: 8}]} />
-              <Text>if the market performs <Text style={{fontWeight: "bold"}}>poorly</Text></Text>
+                style={[globalStyles.h1, { paddingBottom: 0, marginBottom: 8 }]} />
+              <Text>if the market performs <Text style={{ fontWeight: "bold" }}>poorly</Text></Text>
             </View>
             <View>
               <FormattedCurrency
@@ -102,8 +103,8 @@ class GoalsScreen extends React.Component {
                 currency="GBP"
                 maximumFractionDigits={0}
                 minimumFractionDigits={0}
-                style={[globalStyles.h1, { paddingBottom: 0, marginBottom: 8}]} />
-              <Text>if the market performs <Text style={{fontWeight: "bold"}}>average</Text></Text>
+                style={[globalStyles.h1, { paddingBottom: 0, marginBottom: 8 }]} />
+              <Text>if the market performs <Text style={{ fontWeight: "bold" }}>average</Text></Text>
             </View>
           </View>
 
