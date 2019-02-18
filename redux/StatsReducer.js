@@ -59,13 +59,13 @@ export const statsReducer = (state, action, dispatch) => {
 }
 
 const reduceCalc = (p, c, i) => {
-    const twrr = i > 0 && p[i - 1].total !== 0 ? ((c.total - c.netflows) - p[i - 1].total) / p[i - 1].total : 1
-    const twrrPercent = p.reduce((tp, tc) => 1 + (tp * tc.twrrRaw), 1) * (1 + twrr) - 1;
+    const twrr = i > 0 && p[i - 1].total !== 0 ? ((c.total - c.netflows) - p[i - 1].total) / p[i - 1].total : 0;
+    const twrrPercent = p.reduce((tp, tc) => tp * (1 + tc.twrrRaw), 1) * (1 + twrr) - 1;
 
     const yearlyTwrrPercent = p.filter(x => sameYear(x.date, c.date)).reduce((tp, tc) => 1 + (tp * tc.twrrRaw), 1) * (1 + twrr) - 1;
-    const beginningOfTheYear = (p.find(x => sameYear(x.date, c.date)) || { total: 0, yearlyNetflows: 0 });
+    const beginningOfTheYear = (p.find(x => sameYear(x.date, c.date)) || { total: 0, yearlyNetflows: 0, taxYearNetflows: 0 });
     const yearlyGrowth = c.total - beginningOfTheYear.total;
-    const yearlyGrowthPercent = beginningOfTheYear !== 0 ? (c.total - beginningOfTheYear.total) / beginningOfTheYear.taxYearNetflows : 0;
+    const yearlyGrowthPercent = beginningOfTheYear.taxYearNetflows !== 0 ? (c.total - beginningOfTheYear.total) / beginningOfTheYear.taxYearNetflows : 0;
 
     const totalNetflows = (i > 0 ? p[i - 1].totalNetflows : 0) + c.netflows;
     const yearlyNetflows = ((i > 0 && sameYear(p[i - 1].date, c.date)) ? p[i - 1].yearlyNetflows : 0) + c.netflows;

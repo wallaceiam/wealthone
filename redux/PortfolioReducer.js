@@ -7,7 +7,7 @@ import iCloudStorage from 'react-native-icloudstore';
 import { Alert } from 'react-native';
 
 import * as shortid from 'shortid';
-import { IsAsset, AccountTypes } from '../models/Account';
+import { IsAsset } from '../models/Account';
 import { justDate, sameDay } from '../helpers/Date';
 import { statsReducer } from './StatsReducer';
 import { goalReducer } from  './GoalReducer';
@@ -127,7 +127,13 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
                 })
 
                 return Object.assign({}, state, { accounts, records });
+            } else {
+                return json;
             }
+        }
+
+        case 'EXPORT': {
+            return state;
         }
         case 'SAVE_ENTRY': {
             const { records } = state;

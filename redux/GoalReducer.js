@@ -19,7 +19,7 @@ export const goalReducer = (state, action, dispatch) => {
         lifestyle: 40,
         retirementAge: 65,
     };
-    var input = defaultInput;
+    var input = (state && state.goal && state.goal.input) ? state.goal.input : defaultInput;
 
     if (action.type === 'SAVE_GOAL') {
         input = action.payload.input;
