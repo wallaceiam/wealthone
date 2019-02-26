@@ -27,7 +27,7 @@ export class AccountGrowthChart extends React.PureComponent {
             const Gradient = ({ index }) => (
                 <Defs key={index}>
                     <LinearGradient id={'gradient'} x1={'0%'} y={'0%'} x2={'0%'} y2={'100%'}>
-                        <Stop offset={'0%'} stopColor={globalColours.primary} stopOpacity={0.2} />
+                        <Stop offset={'0%'} stopColor={globalColours.secondary} stopOpacity={0.2} />
                         <Stop offset={'75%'} stopColor={globalColours.white} stopOpacity={0.0} />
                     </LinearGradient>
                 </Defs>

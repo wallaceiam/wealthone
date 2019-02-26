@@ -17,6 +17,7 @@ import { globalColours } from './../Colours';
 import { globalStyles } from './../Style';
 
 import { justDate } from './../helpers/Date';
+import LineChart from '../charts/LineChart';
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigate, navigation }) => ({
@@ -57,6 +58,10 @@ class HomeScreen extends React.Component {
 
           <View>
             <PortfolioList />
+          </View>
+
+          <View>
+            <LineChart />
           </View>
 
 
