@@ -7,7 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "expo": "^30.0.1",
+    "expo": "^35.0.0",
     "globalize": "joshswan/globalize",
     "moment": "^2.22.2",
     "react": "16.6.0-alpha.8af6728",
