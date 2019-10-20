@@ -60,9 +60,9 @@ class HomeScreen extends React.Component {
             <PortfolioList />
           </View>
 
-          <View>
+          {/* <View>
             <LineChart />
-          </View>
+          </View> */}
 
 
         </ScrollView>

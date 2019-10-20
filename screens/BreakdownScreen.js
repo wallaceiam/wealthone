@@ -119,7 +119,7 @@ class BreakdownScreen extends React.PureComponent {
         <Text style={globalStyles.subSectionHeaderStyle}> By Type </Text>
         <AssetPieChart data={assetGroupData} />
          {/* <StackedAccountGrowthChart data={assetGroupGrowthData} keys={assetGroupGrowthKeys} />  */}
-        <Text style={[globalStyles.subSectionHeaderStyle, { marginTop: '20' }]}> By Account </Text>
+        <Text style={[globalStyles.subSectionHeaderStyle, { marginTop: 20 }]}> By Account </Text>
         <AssetPieChart data={assetData} />
         {/* <StackedAccountGrowthChart data={assetGrowthData} keys={assetGrowthKeys} /> */}
         
