@@ -10,7 +10,9 @@ export const globalColours = {
     white: '#FFFFFF',
 
     inactive: '#2A4054',
-    primary_o20: 'rgba(47,185,174,0.2)'
+    primary_o20: 'rgba(47,185,174,0.2)',
+
+    primary_alpha: 'rgba(30, 40, 51, 0.5)'
 };
 
 /*

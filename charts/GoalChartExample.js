@@ -82,7 +82,9 @@ export class GoalChartExample extends React.PureComponent {
         const { netWorth } = (stats || { netWorth: [] });
         const { input, result } = (goal || { input: {}, result: {} });
 
-
+        if(!result) {
+            return null;
+        }
 
         const actuals = (netWorth || []).map((c) => {
             return {
@@ -91,7 +93,7 @@ export class GoalChartExample extends React.PureComponent {
             }
         });
 
-        const endDate = this.addYearsUTC(new Date(), input.retirementAge - input.currentAge);
+        const endDate = this.addYearsUTC(new Date(), input ? (input.retirementAge - input.currentAge) : 0);
         const startDate = actuals.length > 0 ? actuals[0].date : new Date();
         const endActualDate = actuals.length > 0 ? actuals[actuals.length - 1].date : new Date();
         const startAmount = actuals.length > 0 ? actuals[0].value : 0;

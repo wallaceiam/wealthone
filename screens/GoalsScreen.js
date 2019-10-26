@@ -5,9 +5,9 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
-  SegmentedControlIOS
+  View
 } from 'react-native';
+import SegmentedControlIOS from "@react-native-community/segmented-control";
 import { FormattedCurrency } from 'react-native-globalize';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { connect } from 'react-redux';
@@ -50,15 +50,16 @@ class GoalsScreen extends React.Component {
   render() {
     const { portfolio } = this.props;
     const { goal } = portfolio;
-    const { result } = (goal || { result: {} });
+    const { result } = (goal || { result: { } });
 
-    const goalVal = this.state.selectedIndex === 0 ?
-      (result.projectedSavingsGoal || 0) : (result.projectedIncomeGoal || 0);
+    const goalVal = result ? (this.state.selectedIndex === 0 ?
+      (result.projectedSavingsGoal || 0) : (result.projectedIncomeGoal || 0)) : 0;
 
-    const poorVal = this.state.selectedIndex === 0 ?
-      (result.projectedSavingsPoor || 0) : (result.projectedIncomePoor || 0);
-    const avgVal = this.state.selectedIndex === 0 ?
-      (result.projectedSavingsAverage || 0) : (result.projectedIncomeAverage || 0);
+    const poorVal = result ? (this.state.selectedIndex === 0 ?
+      (result.projectedSavingsPoor || 0) : (result.projectedIncomePoor || 0)) : 0;
+
+    const avgVal = result ? (this.state.selectedIndex === 0 ?
+      (result.projectedSavingsAverage || 0) : (result.projectedIncomeAverage || 0)) : 0;
 
     return (
       <SafeAreaView style={globalStyles.safeAreaView}>

@@ -30,7 +30,7 @@ const HomeStack = createStackNavigator({
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
-    <FeatherIcon name="home" size={24} color={focused ? globalColours.primary : globalColours.secondary} />
+    <FeatherIcon name="home" size={24} color={focused ? globalColours.primary : globalColours.primary_alpha} />
   ),
   headerTintColor: globalColours.primary,
   headerBackTitleVisible: false,
@@ -45,7 +45,7 @@ const BreakdownStack = createStackNavigator({
 BreakdownStack.navigationOptions = {
   tabBarLabel: 'Breakdown',
   tabBarIcon: ({ focused }) => (
-    <FeatherIcon name="bar-chart" size={24} color={focused ? globalColours.primary : globalColours.secondary} />
+    <FeatherIcon name="bar-chart" size={24} color={focused ? globalColours.primary : globalColours.primary_alpha} />
   ),
 };
 
@@ -57,7 +57,7 @@ const HistoryStack = createStackNavigator({
 HistoryStack.navigationOptions = {
   tabBarLabel: 'History',
   tabBarIcon: ({ focused }) => (
-    <FeatherIcon name="list" size={24} color={focused ? globalColours.primary : globalColours.secondary} />
+    <FeatherIcon name="list" size={24} color={focused ? globalColours.primary : globalColours.primary_alpha} />
   ),
 };
 
@@ -72,7 +72,7 @@ const SettingsStack = createStackNavigator({
 SettingsStack.navigationOptions = {
   tabBarLabel: 'Settings',
   tabBarIcon: ({ focused }) => (
-    <FeatherIcon name="settings" size={24} color={focused ? globalColours.primary : globalColours.secondary} />
+    <FeatherIcon name="settings" size={24} color={focused ? globalColours.primary : globalColours.primary_alpha} />
   ),
 };
 
@@ -84,7 +84,7 @@ const GoalsStack = createStackNavigator({
 GoalsStack.navigationOptions = {
   tabBarLabel: 'Goals',
   tabBarIcon: ({ focused }) => (
-    <FeatherIcon name="target" size={24} color={focused ? globalColours.primary : globalColours.secondary} />
+    <FeatherIcon name="target" size={24} color={focused ? globalColours.primary : globalColours.primary_alpha} />
   ),
 };
 

@@ -1,5 +1,13 @@
 import React from 'react';
-import { SafeAreaView, SectionList, Text, View, ScrollView, TouchableOpacity, SegmentedControlIOS } from 'react-native';
+import { 
+  SafeAreaView, 
+  SectionList, 
+  Text, 
+  View, 
+  ScrollView, 
+  TouchableOpacity 
+} from 'react-native';
+import SegmentedControlIOS from "@react-native-community/segmented-control";
 import { FormattedCurrency } from 'react-native-globalize';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
@@ -61,7 +69,7 @@ class HistoryScreen extends React.Component {
           <View style={globalStyles.sideMargins}>
             <SegmentedControlIOS
               values={['Total', '+/-', '%', 'Netflows']}
-              tintColor={globalColours.primary}
+              // tintColor={globalColours.primary}
               selectedIndex={this.state.selectedIndex}
               onChange={(event) => {
                 this.setState({ selectedIndex: event.nativeEvent.selectedSegmentIndex });

@@ -35,6 +35,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    const statusBar = Platform.OS === 'ios' ? <StatusBar backgroundColor="blue" barStyle="dark-content" /> : null;
     /*if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         // <AppLoading
@@ -49,7 +50,7 @@ export default class App extends React.Component {
       <Provider store={store}>
         <FormattedProvider locale="en" currency="GBP">
           <View style={[styles.container, globalStyles.body]}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            {statusBar}
 
             <AppNavigator />
           </View>

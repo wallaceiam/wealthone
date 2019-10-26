@@ -9,9 +9,9 @@ import {
   Text,
   DatePickerIOS,
   Button,
-  Animated,
-  SegmentedControlIOS
+  Animated
 } from 'react-native';
+import SegmentedControlIOS from "@react-native-community/segmented-control";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
