@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -14,34 +14,39 @@ import { connect } from 'react-redux';
 import { saveGoal } from '../../Redux/Actions';
 
 import { useStyle, useTheme } from '../../Theme';
-import SectionHeader from '../../Components/SectionHeader';
+import { SectionHeader, DateInput } from '../../Components';
 import SaveIcon from '../../Components/Icons/SaveIcon';
+import { toUtc } from '../../Redux/DateHelpers';
 
-const EditGoalScreen = ({ input, dispatch }) => {
+const EditGoalScreen = ({ goal, dispatch }) => {
   const navigation = useNavigation();
   const theme = useTheme();
   const style = useStyle();
 
-  const [currentAge, setCurrentAge] = useState(input.currentAge || 40);
-  const [retirementAge, setRetirementAge] = useState(input.retirementAge || 68);
-  const [earnings, setEarnings] = useState(input.earnings || 55000);
-  const [contributions, setContributions] = useState(
-    input.contributions || 1700,
-  );
-  const [pension, setPension] = useState(input.pension || 0);
-  const [investmentStyle, setInvestmentStyle] = useState(input.investment || 3);
-  const [lifeStyle, setLifeStyle] = useState(input.lifestyle || 40);
+  console.log(goal);
+  console.log(goal.investmentStyle || 3);
+
+  const [currentAge, setCurrentAge] = useState<number>(goal.currentAge);
+  const [retirementAge, setRetirementAge] = useState(goal.retirementAge);
+  const [earnings, setEarnings] = useState(goal.earnings);
+  const [contributions, setContributions] = useState(    goal.contributions);
+  const [pension, setPension] = useState(goal.pension);
+  const [investmentStyle, setInvestmentStyle] = useState(goal.investmentStyle);
+  const [lifeStyle, setLifeStyle] = useState(goal.lifeStyle);
+
+  const [birthDate, setBirthDate] = useState<Date>(new Date(goal.birthDate));
 
   const onSaveGoal = () => {
     dispatch(
       saveGoal({
+        birthDate,
         currentAge,
         retirementAge,
         earnings,
         contributions,
         pension,
-        investment: investmentStyle,
-        lifestyle: lifeStyle,
+        investmentStyle,
+        lifeStyle,
       }),
     );
     navigation.goBack();
@@ -59,6 +64,14 @@ const EditGoalScreen = ({ input, dispatch }) => {
       ),
     });
   }, [navigation, onSaveGoal]);
+
+  useEffect(() => {
+    const ageDifMs = Date.now() - birthDate.getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    const v = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+    setCurrentAge(v);
+  }, [birthDate]);
 
   const titleForItem = (item) => {
     switch (item) {
@@ -89,7 +102,8 @@ const EditGoalScreen = ({ input, dispatch }) => {
             minimumValue={18}
             maximumValue={retirementAge}
             minimumTrackTintColor={theme.colors.primary}
-            onValueChange={(v) => setCurrentAge(Math.min(v, retirementAge))}
+            disabled={true}
+            // onValueChange={(v) => setCurrentAge(Math.min(v, retirementAge))}
             value={currentAge}
           />
         );
@@ -196,6 +210,14 @@ const EditGoalScreen = ({ input, dispatch }) => {
   };
 
   const renderItem = ({ item }) => {
+    if (item === 'birthDate') {
+      return (
+        <View style={style.bottomMargin}>
+          <DateInput date={birthDate} onDateChanged={(d) => setBirthDate(d)} />
+        </View>
+      );
+    }
+
     const title = titleForItem(item);
     const slider = sliderForItem(item);
     const val = valueForItem(item);
@@ -211,7 +233,7 @@ const EditGoalScreen = ({ input, dispatch }) => {
   };
 
   const sections = [
-    { title: 'Time', data: ['age', 'retirementAge'] },
+    { title: 'Time', data: ['birthDate', 'age', 'retirementAge'] },
     {
       title: 'Money',
       data: ['salary', 'contributions', 'retirementLifeStyle'],
@@ -236,11 +258,8 @@ const EditGoalScreen = ({ input, dispatch }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { portfolio } = state;
-  const { goal } = portfolio;
-  const { input } = goal || { input: {} };
-
-  return { input };
+  const { goal } = state;
+  return { goal };
 };
 
 export default connect(mapStateToProps)(EditGoalScreen);

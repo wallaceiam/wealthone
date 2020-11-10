@@ -7,7 +7,7 @@ import { GlobalizeProvider, loadCldr } from 'react-native-globalize';
 import { store, dispatch } from './src/Redux/Store';
 import Screens from './src/Screens';
 import { restoreSync } from './src/Redux/Actions';
-import { StyleProvider, ThemeProvider } from './src/Theme';
+import { ThemeProvider } from './src/Theme';
 
 loadCldr(require('react-native-globalize/locale-data/en'));
 

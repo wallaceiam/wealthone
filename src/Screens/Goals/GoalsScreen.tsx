@@ -14,8 +14,9 @@ import { connect } from 'react-redux';
 import { useTheme, useStyle } from '../../Theme';
 import SlidersIcon from '../../Components/Icons/SlidersIcon';
 import GoalChart from './components/GoalChart';
+import { goalResultSelector } from '../../Redux/Selectors';
 
-const GoalsScreen = ({portfolio}) => {
+const GoalsScreen = ({ result }) => {
   const navigation = useNavigation();
   const theme = useTheme();
   const style = useStyle();
@@ -32,14 +33,11 @@ const GoalsScreen = ({portfolio}) => {
         <TouchableOpacity
           style={style.rightMargin}
           onPress={() => onGoToSettings()}>
-            <SlidersIcon />
+          <SlidersIcon />
         </TouchableOpacity>
       ),
     });
   }, [navigation]);
-
-  const { goal } = portfolio;
-  const { result } = goal || { result: {} };
 
   const goalVal = result
     ? selectedIndex === 0
@@ -106,7 +104,14 @@ const GoalsScreen = ({portfolio}) => {
               currency="GBP"
               maximumFractionDigits={0}
               minimumFractionDigits={0}
-              style={[style.h1, { color: theme.colors.secondary, paddingBottom: 0, marginBottom: 8 }]}
+              style={[
+                style.h1,
+                {
+                  color: theme.colors.secondary,
+                  paddingBottom: 0,
+                  marginBottom: 8,
+                },
+              ]}
             />
             <Text style={style.text}>
               if the market performs{' '}
@@ -116,7 +121,10 @@ const GoalsScreen = ({portfolio}) => {
         </View>
 
         <View>
-          <GoalChart portfolio={portfolio} />
+          <GoalChart
+            projectedSavingsPoor={result.projectedSavingsPoor}
+            projectedSavingsAverage={result.projectedSavingsAverage}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -124,8 +132,8 @@ const GoalsScreen = ({portfolio}) => {
 };
 
 const mapStateToProps = (state) => {
-  const { portfolio, goal } = state;
-  return { portfolio, goal };
+  const result = goalResultSelector(state);
+  return { result };
 };
 
 export default connect(mapStateToProps)(GoalsScreen);

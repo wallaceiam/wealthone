@@ -1,8 +1,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
+
 import { DefaultTheme, DarkTheme } from './Theming';
-import { DarkStyle, DefaultStyle, StyleProvider } from './Styling';
+import { DefaultStyle, DarkStyle, StyleProvider } from './Styling';
 
 export const ThemeProvider = ({ children }) => {
   const scheme = useColorScheme();

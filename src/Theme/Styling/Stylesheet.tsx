@@ -1,15 +1,14 @@
-import { StyleSheet } from 'react-native';
-import { DefaultTheme } from '../Theming';
+import { ITheme } from '../Theming/ITheme';
 
-export const GlobalStyles = {
+const css = (theme: ITheme) => ({
   /* Containers */
   safeAreaView: {
     flex: 1,
-    backgroundColor: DefaultTheme.colors.background,
+    backgroundColor: theme.colors.background,
   },
   container: {
     flex: 1,
-    backgroundColor: DefaultTheme.colors.background,
+    backgroundColor: theme.colors.background,
   },
   contentContainer: {
     paddingTop: 32,
@@ -59,10 +58,10 @@ export const GlobalStyles = {
     lineHeight: 16,
     margin: 'auto',
     fontFamily: 'montserrat',
-    color: DefaultTheme.colors.text,
+    color: theme.colors.text,
   },
   text: {
-    color: DefaultTheme.colors.text,
+    color: theme.colors.text,
   },
   h1: {
     fontSize: 51,
@@ -70,7 +69,7 @@ export const GlobalStyles = {
     marginTop: 16,
     marginBottom: 32,
     fontFamily: 'karla',
-    color: DefaultTheme.colors.secondary,
+    color: theme.colors.secondary,
   },
   h2: {
     fontSize: 31,
@@ -78,7 +77,7 @@ export const GlobalStyles = {
     marginTop: 16,
     marginBottom: 16,
     fontFamily: 'karla',
-    color: DefaultTheme.colors.text,
+    color: theme.colors.text,
   },
   h3: {
     fontSize: 29,
@@ -86,42 +85,42 @@ export const GlobalStyles = {
     marginTop: 23,
     marginBottom: 0,
     fontFamily: 'karla',
-    color: DefaultTheme.colors.text,
+    color: theme.colors.text,
   },
   h4: {
     fontSize: 18,
     lineHeight: 23,
     marginTop: 23,
     marginBottom: 0,
-    color: DefaultTheme.colors.text,
+    color: theme.colors.text,
   },
   h5: {
     fontSize: 18,
     lineHeight: 23,
     marginTop: 23,
     marginBottom: 0,
-    color: DefaultTheme.colors.text,
+    color: theme.colors.text,
   },
   p: {
     marginTop: 0,
     marginBottom: 23,
-    color: DefaultTheme.colors.text,
+    color: theme.colors.text,
   },
   ul: {
     marginTop: 0,
     marginBottom: 0,
-    color: DefaultTheme.colors.text,
+    color: theme.colors.text,
   },
 
   /* Input */
   label: {
-    color: DefaultTheme.colors.primary,
+    color: theme.colors.primary,
   },
   textInput: {
     height: 40,
     marginBottom: 24,
     borderBottomWidth: 1,
-    color: DefaultTheme.colors.primary,
+    color: theme.colors.primary,
   },
   numberInput: {
     textAlign: 'right',
@@ -139,8 +138,8 @@ export const GlobalStyles = {
     paddingLeft: 32,
     paddingRight: 24,
     fontWeight: 'bold',
-    color: DefaultTheme.colors.secondary,
-    backgroundColor: DefaultTheme.colors.background,
+    color: theme.colors.secondary,
+    backgroundColor: theme.colors.background,
   },
   subSectionHeaderStyle: {
     paddingBottom: 16,
@@ -152,14 +151,12 @@ export const GlobalStyles = {
   },
 
   active: {
-    color: DefaultTheme.colors.primary
+    color: theme.colors.primary
   },
   inactive: {
-    color: DefaultTheme.colors.primary_alpha
+    color: theme.colors.primary_alpha
   },
-};
+});
 
-const DefaultStyle = StyleSheet.create(GlobalStyles);
-
-export default DefaultStyle;
+export default css;
 

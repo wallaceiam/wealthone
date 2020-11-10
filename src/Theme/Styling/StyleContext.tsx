@@ -1,7 +1,8 @@
 import * as React from 'react';
-import DefaulStyle from './DefaultStyle';
 import type { Style } from './Style';
+import { DefaultStyle } from './Styles';
 
-const StyleContext = React.createContext<Style>(DefaulStyle);
+
+const StyleContext = React.createContext<Style>(DefaultStyle);
 
 export default StyleContext;

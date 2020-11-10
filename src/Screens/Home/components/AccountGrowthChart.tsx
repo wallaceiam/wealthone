@@ -4,11 +4,10 @@ import { AreaChart } from 'react-native-svg-charts';
 import { Defs, LinearGradient, Stop } from 'react-native-svg';
 import * as shape from 'd3-shape';
 import * as scale from 'd3-scale';
-import { useTheme } from '@react-navigation/native';
-import { ITheme } from '../../../Theme';
+import { useTheme } from '../../../Theme';
 
 const AccountGrowthChart = ({ portfolio, accountId }) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme();
 
   const { stats } = portfolio;
 

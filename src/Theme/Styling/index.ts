@@ -1,13 +1,6 @@
-import DarkStyle from './DarkStyle';
-import DefaultStyle from './DefaultStyle';
 import StyleContext from './StyleContext';
 import StyleProvider from './StyleProvider';
 import useStyle from './useStyle';
+import { DefaultStyle, DarkStyle } from './Styles';
 
-export {
-  DarkStyle,
-  DefaultStyle,
-  StyleContext,
-  StyleProvider,
-  useStyle
-};
+export { DefaultStyle, DarkStyle, StyleContext, StyleProvider, useStyle };

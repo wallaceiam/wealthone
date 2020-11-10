@@ -15,6 +15,7 @@ import { useStyle } from '../../../Theme';
 import { IsAsset } from '../../..//Models/Account';
 import SectionHeader from '../../../Components/SectionHeader';
 import ForwardIcon from '../../../Components/Icons/ForwardIcon';
+import { IState } from '../../../Redux/IState';
 
 const PortfolioList = ({ portfolio }) => {
   const navigation = useNavigation();

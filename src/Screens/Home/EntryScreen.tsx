@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   SectionList,
   Text,
-  Button,
   Animated,
 } from 'react-native';
 import SegmentedControlIOS from '@react-native-community/segmented-control';
@@ -15,19 +14,17 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { connect } from 'react-redux';
 
-import { useStyle, useTheme } from '../../Theme';
+import { useStyle } from '../../Theme';
 
 import { saveEntry } from '../../Redux/Actions';
 import { justDate, sameDay, toUtc } from '../../Redux/DateHelpers';
 import { IsAsset } from '../../Models/Account';
-import NumericInput from '../../Components/NumericInput';
-import SectionHeader from '../../Components/SectionHeader';
+import { DateInput, NumericInput, SectionHeader } from '../../Components';
 import SaveIcon from '../../Components/Icons/SaveIcon';
 
 const EntryScreen = ({ portfolio, dispatch }) => {
   const navigation = useNavigation();
   const route = useRoute();
-  const theme = useTheme();
   const style = useStyle();
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -38,12 +35,6 @@ const EntryScreen = ({ portfolio, dispatch }) => {
   const [totals, setTotals] = useState([]);
   const [inflows, setInflows] = useState([]);
   const [outflows, setOutflows] = useState([]);
-
-  const [isDateExpanded, setDateExpanded] = useState(false);
-
-  const [minHeight, setMinHeight] = useState(0);
-  const [maxHeight, setMaxHeight] = useState(0);
-  const [animation, setAnimationValue] = useState(new Animated.Value(32));
 
   const onSaveEntry = () => {
     dispatch(saveEntry({ date, totals, inflows, outflows }));
@@ -105,24 +96,6 @@ const EntryScreen = ({ portfolio, dispatch }) => {
     setOutflows(_outflows);
   }, [date, setTotals, setInflows, setOutflows, portfolio]);
 
-  const onToggleDate = () => {
-    //Step 1
-    let initialValue = isDateExpanded ? maxHeight + minHeight : minHeight,
-      finalValue = isDateExpanded ? minHeight : maxHeight + minHeight;
-
-    setDateExpanded(!isDateExpanded); //Step 2
-
-    animation.setValue(initialValue); //Step 3
-    Animated.spring(
-      //Step 4
-      animation,
-      {
-        toValue: finalValue,
-        useNativeDriver: false,
-      },
-    ).start(); //Step 5
-  };
-
   const setAmount = (id, amount) => {
     const tAmount = Number.parseInt(amount);
     const dAmount = +(isNaN(tAmount) ? null : tAmount);
@@ -163,10 +136,8 @@ const EntryScreen = ({ portfolio, dispatch }) => {
 
   const renderItem = ({ item }) => {
     return (
-      <View
-        style={style.row}>
-        <View
-          style={[style.column, style.noMargins]}>
+      <View style={style.row}>
+        <View style={[style.column, style.noMargins]}>
           <Text style={style.text}>{item.name} </Text>
           <Text style={style.text}>{item.provider} </Text>
         </View>
@@ -182,53 +153,6 @@ const EntryScreen = ({ portfolio, dispatch }) => {
     );
   };
 
-  const renderDateItem = () => {
-    return (
-      <Animated.View
-        style={[
-          style.column,
-          { height: animation },
-        ]}>
-        <View
-          onLayout={(event) => setMinHeight(event.nativeEvent.layout.height)}
-          style={{ height: 32 }}>
-          <View
-            style={[style.row, style.noMargins]}>
-            <View
-              style={[style.column, style.noMargins]}>
-              <Text style={style.label}>Date</Text>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                borderBottomWidth: 1,
-                borderBottomColor: '#E7E7E7',
-              }}>
-              <TouchableOpacity onPress={onToggleDate}>
-                <Text style={[style.textInput, { textAlign: 'right' }]}>
-                  {date.toDateString()}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-        <View
-          onLayout={(event) => setMaxHeight(event.nativeEvent.layout.height)}>
-          <DatePickerIOS
-            textColor={theme.colors.primary}
-            mode="date"
-            display="spinner"
-            maximumDate={new Date()}
-            value={date}
-            onChange={(_event, newDate) =>
-              newDate !== undefined && setDate(toUtc(newDate))
-            }
-          />
-        </View>
-      </Animated.View>
-    );
-  };
-
   const accounts = portfolio.accounts || [];
   const accountSections = [
     {
@@ -241,20 +165,6 @@ const EntryScreen = ({ portfolio, dispatch }) => {
     },
   ];
 
-  const dateSections = [
-    {
-      data: [
-        {
-          value: {
-            date,
-            isDateExpanded,
-          },
-        },
-      ],
-      title: 'Date',
-    },
-  ];
-
   return (
     <SafeAreaView style={style.safeAreaView}>
       <KeyboardAwareScrollView
@@ -262,12 +172,9 @@ const EntryScreen = ({ portfolio, dispatch }) => {
         contentContainerStyle={style.contentContainer}
         keyboardOpeningTime={0}
         extraHeight={128}>
-        <SectionList
-          sections={dateSections}
-          renderItem={renderDateItem}
-          keyExtractor={(_item, index) => `${index}`}
-          style={style.bottomMargin}
-        />
+        <View style={style.bottomMargin}>
+          <DateInput date={date} onDateChanged={(d) => setDate(d)} />
+        </View>
 
         <View style={style.sideMargins}>
           <SegmentedControlIOS
@@ -285,6 +192,7 @@ const EntryScreen = ({ portfolio, dispatch }) => {
             <SectionHeader title={section.title} />
           )}
           renderItem={(item) => renderItem(item)}
+          
           keyExtractor={(_item, index) => `${index}-${selectedIndex}`}
         />
       </KeyboardAwareScrollView>

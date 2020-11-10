@@ -1,3 +1,5 @@
+import { IGoalInput } from "./IGoalInput";
+
 export const saveAccount = (account) => ({
   type: 'SAVE_ACCOUNT',
   payload: {
@@ -14,11 +16,9 @@ export const removeAccount = (id) => ({
   payload: { id: id },
 });
 
-export const saveGoal = (input) => ({
+export const saveGoal = (input: IGoalInput) => ({
   type: 'SAVE_GOAL',
-  payload: {
-    input,
-  },
+  payload: input,
 });
 
 export const removeGoal = (id) => ({

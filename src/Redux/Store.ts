@@ -5,12 +5,11 @@ import createSensitiveStorage from 'redux-persist-sensitive-storage';
 
 import rootReducer from './PortfolioReducer';
 
-
 const persistConfig = {
   key: 'data',
   storage: createSensitiveStorage({
-    keychainService: 'myKeychain',
-    sharedPreferencesName: 'mySharedPrefs',
+    keychainService: 'keychainService',
+    sharedPreferencesName: 'ca.mymojo.wealthone',
   }),
 };
 

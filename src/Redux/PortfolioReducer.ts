@@ -5,34 +5,18 @@ import iCloudStorage from 'react-native-icloudstore';
 import { Alert } from 'react-native';
 
 import * as shortid from 'shortid';
-import { IAccountType, IsAsset } from '../Models/Account';
+import { IsAsset } from '../Models';
 import { justDate, sameDay } from './DateHelpers';
 import { statsReducer } from './StatsReducer';
 import { goalReducer } from './GoalReducer';
 import { restoreData } from './Actions';
 
 import { dispatch } from './Store';
+import { IState } from './IState';
 
-interface IAccount {
-  id: string;
-  name: string;
-  provider: string;
-  isAsset: boolean,
-  accountType: IAccountType
-}
-
-interface State {
-  accounts: IAccount[];
-  goal: any[],
-  records: any[],
-  stats: any,
-}
-
-const INITIAL_STATE: State = {
+const INITIAL_STATE: IState = {
   accounts: [],
-  goal: [],
   records: [],
-  stats: {},
 };
 
 const portfolioReducer = (state = INITIAL_STATE, action) => {
@@ -56,13 +40,13 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
           accountType: action.payload.accountType,
         });
       }
-      return { ...state, accounts: accounts };
+      return { ...state, accounts };
     }
     case 'REMOVE_ACCOUNT': {
       const { accounts } = state;
       const indexOf = accounts.findIndex((x) => x.id === action.payload.id);
       accounts.splice(indexOf, 1);
-      return Object.assign({}, state, { accounts });
+      return { ...state, accounts };
     }
     case 'BACKUP': {
       iCloudStorage
@@ -201,11 +185,8 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
       return newState;
     }
     case 'UPDATE': {
-      const { accounts } = state;
-      const newAccounts = accounts.map((x) => {
-        return { ...x, isAsset: IsAsset.Asset, accountType: 0 };
-      });
-      const newState = { ...state, accounts: newAccounts };
+      const { accounts, records } = state;
+      const newState = { accounts, records };
       return newState;
     }
     default:
@@ -221,5 +202,6 @@ const chainReducer = (state = INITIAL_STATE, action) => {
 };
 
 export default combineReducers({
-  portfolio: chainReducer,
+  portfolio: portfolioReducer,
+  goal: goalReducer,
 });
