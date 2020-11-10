@@ -1,4 +1,5 @@
 {
   "name": "wealthone",
-  "displayName": "wealthone"
+  "displayName": "wealthone",
+  "ios": {"userInterfaceStyle": "automatic"}
 }
