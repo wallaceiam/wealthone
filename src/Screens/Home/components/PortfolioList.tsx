@@ -11,11 +11,9 @@ import { FormattedCurrency } from 'react-native-globalize';
 import { connect } from 'react-redux';
 
 import { useStyle } from '../../../Theme';
-import { IsAsset } from '../../..//Models/Account';
 import SectionHeader from '../../../Components/SectionHeader';
 import ForwardIcon from '../../../Components/Icons/ForwardIcon';
 import {
-  getAccounts,
   getAssetAccounts,
   getLiabilityAccounts,
   getRecords,
@@ -58,38 +56,36 @@ const PortfolioList = ({ assetAccounts, liabilityAccounts, records }) => {
 
   const last = records.length - 1;
 
-  const assets = assetAccounts
-    .map((x) => {
-      const lastRecord =
-        last >= 0 ? records[last].totals.find((y) => y.id === x.id) : undefined;
-      return {
-        id: x.id,
-        name: x.name,
-        provider: x.provider,
-        amount:
-          last < 0
-            ? 0
-            : lastRecord !== undefined && lastRecord !== null
-            ? lastRecord.amount
-            : 0,
-      };
-    });
-  const liabilities = liabilityAccounts
-    .map((x) => {
-      const lastRecord =
-        last >= 0 ? records[last].totals.find((y) => y.id === x.id) : undefined;
-      return {
-        id: x.id,
-        name: x.name,
-        provider: x.provider,
-        amount:
-          last < 0
-            ? 0
-            : lastRecord !== undefined && lastRecord !== null
-            ? lastRecord.amount
-            : 0,
-      };
-    });
+  const assets = assetAccounts.map((x) => {
+    const lastRecord =
+      last >= 0 ? records[last].totals.find((y) => y.id === x.id) : undefined;
+    return {
+      id: x.id,
+      name: x.name,
+      provider: x.provider,
+      amount:
+        last < 0
+          ? 0
+          : lastRecord !== undefined && lastRecord !== null
+          ? lastRecord.amount
+          : 0,
+    };
+  });
+  const liabilities = liabilityAccounts.map((x) => {
+    const lastRecord =
+      last >= 0 ? records[last].totals.find((y) => y.id === x.id) : undefined;
+    return {
+      id: x.id,
+      name: x.name,
+      provider: x.provider,
+      amount:
+        last < 0
+          ? 0
+          : lastRecord !== undefined && lastRecord !== null
+          ? lastRecord.amount
+          : 0,
+    };
+  });
 
   const sections =
     assets.length > 0 && liabilities.length > 0

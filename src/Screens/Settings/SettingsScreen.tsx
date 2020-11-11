@@ -1,29 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, SectionList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
+import formatRelative from 'date-fns/formatRelative';
 
 import { useStyle } from '../../Theme';
 
-import { backup, restore, update } from '../../Redux/Actions';
+import {
+  backup,
+  fetchLastBackupDate,
+  restore,
+  restorePrevious,
+  update,
+} from '../../Redux/Actions';
 import { IsAsset } from '../../Models/Account';
 import { SectionFooter, SectionHeader } from '../../Components';
 import MenuItem from './components/MenuItem';
 import AppHeader from './components/AppHeader';
-import { getAssetAccounts, getLiabilityAccounts } from '../../Redux/Selectors';
+import { getAccounts, getLastBackupDate } from '../../Redux/Selectors';
 
-const AccountName = ({ name, provider }) => {
-  return (
-    (name !== '' ? name : '') +
-    (provider !== '' && provider !== undefined && provider !== null
-      ? ` - ${provider}`
-      : '')
-  );
-};
-
-const SettingsScreen = ({ assets, liabilities, dispatch }) => {
+const SettingsScreen = ({ assets, liabilities, lastBackupDate, dispatch }) => {
   const navigation = useNavigation();
   const style = useStyle();
+
+  useEffect(() => {
+    if (lastBackupDate === undefined) {
+      dispatch(fetchLastBackupDate());
+    }
+  }, [lastBackupDate, dispatch]);
+
+  const lastBackup = lastBackupDate
+    ? `Last backup ${formatRelative(new Date(lastBackupDate), new Date())}`
+    : '';
+
   const sections = [
     {
       data: assets,
@@ -37,11 +46,21 @@ const SettingsScreen = ({ assets, liabilities, dispatch }) => {
     },
     {
       data: [
-        { action: 'backup', title: 'Backup to iCloud', icon: 'upload-cloud' },
-        { action: 'restore', title: 'Restore data', icon: 'download-cloud' },
+        {
+          action: 'backup',
+          title: 'Backup to iCloud',
+          icon: 'upload-cloud',
+        },
+        {
+          action: 'restore',
+          title: 'Restore data',
+          subText: lastBackup,
+          icon: 'download-cloud',
+        },
         { action: 'export', title: 'Export' },
         { action: 'import', title: 'Import', icon: 'chevron-right' },
         { action: 'update', title: 'Update' },
+        { action: 'migrate', title: 'Migrate' },
       ],
       title: 'Your data',
       addFooter: false,
@@ -71,6 +90,9 @@ const SettingsScreen = ({ assets, liabilities, dispatch }) => {
       case 'update':
         dispatch(update());
         break;
+      case 'migrate':
+        dispatch(restorePrevious());
+        break;
       case 'about':
         navigation.navigate('About');
         break;
@@ -98,12 +120,14 @@ const SettingsScreen = ({ assets, liabilities, dispatch }) => {
           item.action !== undefined ? (
             <MenuItem
               text={item.title}
+              subText={item.subText}
               icon={item.icon}
               onClick={() => onGenericAction(item.action)}
             />
           ) : (
             <MenuItem
-              text={AccountName(item)}
+              text={item.name}
+              subText={item.provider}
               icon={'chevron-right'}
               onClick={() => onEditAccount(item)}
             />
@@ -126,9 +150,13 @@ const SettingsScreen = ({ assets, liabilities, dispatch }) => {
 };
 
 const mapStateToProps = (state) => {
-  const assets = getAssetAccounts(state);
-  const liabilities = getLiabilityAccounts(state);
-  return { assets, liabilities };
+  const accounts = getAccounts(state);
+  const assets = (accounts || []).filter((a) => a.isAsset === IsAsset.Asset);
+  const liabilities = (accounts || []).filter(
+    (a) => a.isAsset === IsAsset.Liability,
+  );
+  const lastBackupDate = getLastBackupDate(state);
+  return { assets, liabilities, lastBackupDate };
 };
 
 export default connect(mapStateToProps)(SettingsScreen);

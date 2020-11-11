@@ -17,12 +17,9 @@ const Navigation = () => {
   const style = useStyle();
   return (
     <Tab.Navigator
-      sceneContainerStyle={[
-        style.container,
-        style.body,
-      ]}
+      sceneContainerStyle={[style.container, style.body]}
       screenOptions={({ route }) => ({
-        unmountOnBlur: true, // set this props in your tab screen options
+        unmountOnBlur: true,
         tabBarIcon: ({ color, size }) => {
           let iconName;
 

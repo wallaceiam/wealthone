@@ -63,6 +63,10 @@ const css = (theme: ITheme) => ({
   text: {
     color: theme.colors.text,
   },
+  subText: {
+    fontSize: 10,
+    color: theme.colors.secondary,
+  },
   h1: {
     fontSize: 51,
     lineHeight: 64,

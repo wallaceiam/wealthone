@@ -10,6 +10,7 @@ import {
   getCurrentNetWorth,
   getNetWorthByAccount,
 } from './NetWorthSelector';
+import { getLastBackupDate } from './BackupSelector';
 
 export {
   getGoalInput,
@@ -21,4 +22,5 @@ export {
   getNetWorth,
   getCurrentNetWorth,
   getNetWorthByAccount,
+  getLastBackupDate,
 };

@@ -1,16 +1,7 @@
-import { combineReducers } from 'redux';
-
-import iCloudStorage from 'react-native-icloudstore';
-
-import { Alert } from 'react-native';
-
 import * as shortid from 'shortid';
 import { IsAsset } from '../Models';
 import { justDate, sameDay } from './DateHelpers';
-import { goalReducer } from './GoalReducer';
-import { restoreData } from './Actions';
 
-import { dispatch } from './Store';
 import { IState } from './IState';
 
 const INITIAL_STATE: IState = {
@@ -55,59 +46,6 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
         .filter((x) => x.totals.length > 0);
       return { ...state, accounts: newAccounts, records: newRecords };
     }
-    case 'BACKUP': {
-      iCloudStorage
-        .setItem('backup', JSON.stringify(state))
-        .then((_) => {
-          Alert.alert(
-            'iCloud Backup',
-            'Your data has been backed up to iCloud',
-          );
-        })
-        .catch((_) => {
-          Alert.alert(
-            'iCloud Backup',
-            'An error occured while trying to backup to iCloud',
-          );
-        });
-
-      return state;
-    }
-    case 'BACKUP_SYNC': {
-      iCloudStorage
-        .setItem('backup', JSON.stringify(state))
-        .then((_) => {})
-        .catch((_) => {
-          Alert.alert(
-            'iCloud Backup',
-            'An error occured while trying to backup to iCloud',
-          );
-        });
-      return state;
-    }
-    case 'RESTORE': {
-      iCloudStorage
-        .getItem('backup')
-        .then((x) => {
-          if (x !== undefined && x !== null) {
-            const json = JSON.parse(x);
-            dispatch(restoreData(json));
-            Alert.alert(
-              'iCloud restore',
-              'Your data has been restored from iCloud',
-            );
-          } else {
-            Alert.alert('iCloud restore', 'There is no data to restore');
-          }
-        })
-        .catch((_) => {
-          Alert.alert(
-            'iCloud restore',
-            'An error occured while trying to restore from iCloud',
-          );
-        });
-      return state;
-    }
     case 'RESTORE_DATA': {
       const { accounts, records } = action.payload;
       const updatedRecords = (records || []).map((r) => ({
@@ -115,9 +53,6 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
         date: new Date(r.date),
       }));
       return { accounts, records: updatedRecords };
-    }
-    case 'RESTORE_SYNC': {
-      return action.payload;
     }
     case 'IMPORT': {
       const json = JSON.parse(action.payload.json);
@@ -170,10 +105,6 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
         return json;
       }
     }
-
-    case 'EXPORT': {
-      return state;
-    }
     case 'SAVE_ENTRY': {
       const { records } = state;
       const index = records.findIndex((x) =>
@@ -206,7 +137,4 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default combineReducers({
-  portfolio: portfolioReducer,
-  goal: goalReducer,
-});
+export default portfolioReducer;
