@@ -1,4 +1,9 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import {
   SafeAreaView,
   View,
@@ -26,14 +31,14 @@ const EditGoalScreen = ({ goal, dispatch }) => {
   const [currentAge, setCurrentAge] = useState<number>(goal.currentAge);
   const [retirementAge, setRetirementAge] = useState(goal.retirementAge);
   const [earnings, setEarnings] = useState(goal.earnings);
-  const [contributions, setContributions] = useState(    goal.contributions);
-  const [pension, setPension] = useState(goal.pension);
+  const [contributions, setContributions] = useState(goal.contributions);
+  const [pension] = useState(goal.pension);
   const [investmentStyle, setInvestmentStyle] = useState(goal.investmentStyle);
   const [lifeStyle, setLifeStyle] = useState(goal.lifeStyle);
 
   const [birthDate, setBirthDate] = useState<Date>(new Date(goal.birthDate));
 
-  const onSaveGoal = () => {
+  const onSaveGoal = useCallback(() => {
     dispatch(
       saveGoal({
         birthDate,
@@ -47,7 +52,18 @@ const EditGoalScreen = ({ goal, dispatch }) => {
       }),
     );
     navigation.goBack();
-  };
+  }, [
+    birthDate,
+    contributions,
+    currentAge,
+    dispatch,
+    earnings,
+    investmentStyle,
+    lifeStyle,
+    navigation,
+    pension,
+    retirementAge,
+  ]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -60,7 +76,7 @@ const EditGoalScreen = ({ goal, dispatch }) => {
         </TouchableOpacity>
       ),
     });
-  }, [navigation, onSaveGoal]);
+  }, [navigation, onSaveGoal, style.rightMargin]);
 
   useEffect(() => {
     const ageDifMs = Date.now() - birthDate.getTime();

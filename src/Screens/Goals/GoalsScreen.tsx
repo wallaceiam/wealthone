@@ -37,7 +37,7 @@ const GoalsScreen = ({ result }) => {
         </TouchableOpacity>
       ),
     });
-  }, [navigation]);
+  }, [navigation, style.rightMargin]);
 
   const goalVal = result
     ? selectedIndex === 0

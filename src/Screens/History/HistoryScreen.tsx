@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import {
-  SafeAreaView,
-  SectionList,
-  View,
-} from 'react-native';
+import { SafeAreaView, SectionList, View } from 'react-native';
 import SegmentedControlIOS from '@react-native-community/segmented-control';
 import { useNavigation } from '@react-navigation/native';
 
@@ -64,14 +60,20 @@ const HistoryScreen = ({ netWorth }) => {
 
         <SectionList
           style={style.container}
-          renderItem={(item) => (
-            <HistoryItem item={item.item} selectedIndex={selectedIndex} onClick={() => onEntrySelected(item)} />
+          renderItem={({ item }) => (
+            <HistoryItem
+              item={item}
+              selectedIndex={selectedIndex}
+              onClick={() => onEntrySelected(item)}
+            />
           )}
           renderSectionHeader={({ section }) => (
             <SectionHeader title={section.title} />
           )}
           stickySectionHeadersEnabled={true}
-          keyExtractor={(item, index) => `${index}-${selectedIndex}`}
+          keyExtractor={(item, index) =>
+            `${index}-${selectedIndex}-${item.date}`
+          }
           sections={sections}
         />
       </View>

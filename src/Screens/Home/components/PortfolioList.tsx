@@ -33,7 +33,7 @@ const PortfolioList = ({ assetAccounts, liabilityAccounts, records }) => {
         <View style={[style.column, style.noMargins, style.autoMargins]}>
           <Text style={style.text}>{item.name} </Text>
           {item.provider !== undefined && item.provider !== '' && (
-            <Text style={style.text}>{item.provider} </Text>
+            <Text style={style.subText}>{item.provider} </Text>
           )}
         </View>
         <View>

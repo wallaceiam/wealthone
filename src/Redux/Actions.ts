@@ -1,6 +1,5 @@
 import { Alert } from 'react-native';
 import iCloudStorage from 'react-native-icloudstore';
-import { toUtc } from './DateHelpers';
 import { IGoalInput } from './IGoalInput';
 
 export const saveAccount = (account) => ({

@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import { SafeAreaView, ScrollView, View, Text } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 
 import AccountTopBar from './components/AccountTopBar';
@@ -9,8 +9,13 @@ import AccountStats from './components/AccountStats';
 import { useStyle } from './../../Theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { getAccounts } from '../../Redux/Selectors';
+import { IAccount } from '../../Redux/IAccount';
 
-const AccountScreen = ({ accounts }) => {
+interface props {
+  accounts: IAccount[];
+}
+
+const AccountScreen = ({ accounts }: props) => {
   const navigation = useNavigation();
   const router = useRoute();
   const style = useStyle();
@@ -20,9 +25,9 @@ const AccountScreen = ({ accounts }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: account?.name || '',
+      title: account.name || '',
     });
-  }, [account]);
+  }, [navigation, account]);
 
   return (
     <SafeAreaView style={style.safeAreaView}>

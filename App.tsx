@@ -6,7 +6,7 @@ import { GlobalizeProvider, loadCldr } from 'react-native-globalize';
 
 import { store, dispatch } from './src/Redux/Store';
 import Screens from './src/Screens';
-import { restoreSync } from './src/Redux/Actions';
+// import { restoreSync } from './src/Redux/Actions';
 import { ThemeProvider } from './src/Theme';
 
 loadCldr(require('react-native-globalize/locale-data/en'));
@@ -15,10 +15,10 @@ const App = () => {
   useEffect(() => {
     const loadData = (userInfo) => {
       const changedKeys = userInfo.changedKeys;
-      if (changedKeys != null && changedKeys.includes('backup')) {
-        iCloudStorage
-          .getItem('backup')
-          .then((result) => dispatch(restoreSync(result)));
+      if (changedKeys != null && changedKeys.includes('wealthone_data')) {
+        iCloudStorage.getItem('backup').then((result) => {
+          // dispatch(restoreSync(result));
+        });
       }
     };
 
@@ -37,8 +37,8 @@ const App = () => {
     <GlobalizeProvider locale="en" currency="USD">
       <Provider store={store}>
         <ThemeProvider>
-            {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
-            <Screens />
+          {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+          <Screens />
         </ThemeProvider>
       </Provider>
     </GlobalizeProvider>

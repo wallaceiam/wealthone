@@ -1,19 +1,15 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import logger from 'redux-logger';
-import createSensitiveStorage from 'redux-persist-sensitive-storage';
+// import createSensitiveStorage from 'redux-persist-sensitive-storage';
+import iCloudStorage from 'react-native-icloudstore';
 
-import portfolioReducer from './PortfolioReducer';
-import goalReducer from './GoalReducer';
-import backupReducer from './BackupReducer';
+import { backupReducer, goalReducer, portfolioReducer } from './Reducers';
 import thunk from 'redux-thunk';
 
 const persistConfig = {
-  key: 'data',
-  storage: createSensitiveStorage({
-    keychainService: 'keychainService',
-    sharedPreferencesName: 'ca.mymojo.wealthone',
-  }),
+  key: 'wealthone_data',
+  storage: iCloudStorage,
 };
 
 const rootReducer = combineReducers({

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { FormattedCurrency } from 'react-native-globalize';
@@ -6,7 +5,7 @@ import ForwardIcon from '../../../Components/Icons/ForwardIcon';
 import { justDate } from '../../../Redux/DateHelpers';
 import { useStyle } from '../../../Theme';
 
-const HistoryItem = ({ item, selectedIndex, onClick}) => {
+const HistoryItem = ({ item, selectedIndex, onClick }) => {
   const style = useStyle();
   return (
     <TouchableOpacity onPress={onClick}>

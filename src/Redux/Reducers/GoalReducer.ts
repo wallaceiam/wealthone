@@ -1,4 +1,4 @@
-import { toUtc } from './DateHelpers';
+import { toUtc } from '../DateHelpers';
 
 const INITIAL_STATE = {
   birthDate: toUtc(new Date(1978, 11, 26)),

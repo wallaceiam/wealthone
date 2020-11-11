@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useLayoutEffect } from 'react';
+import React, { useCallback, useLayoutEffect } from 'react';
 import { SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 
 import { justDate, toUtc } from '../../Redux/DateHelpers';
@@ -13,11 +13,12 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const style = useStyle();
 
-  const onNavToEntry = () => {
+  const onNavToEntry = useCallback(() => {
     navigation.navigate('HomeEntry', {
       date: toUtc(justDate(new Date())).getTime(),
     });
-  };
+  }, [navigation]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: null,
@@ -29,7 +30,7 @@ const HomeScreen = () => {
         </TouchableOpacity>
       ),
     });
-  }, [navigation]);
+  }, [navigation, onNavToEntry, style.rightMargin]);
 
   return (
     <SafeAreaView style={style.safeAreaView}>

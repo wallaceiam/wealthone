@@ -1,11 +1,15 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import {
   SafeAreaView,
   View,
   TouchableOpacity,
   SectionList,
   Text,
-  Animated,
 } from 'react-native';
 import SegmentedControlIOS from '@react-native-community/segmented-control';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -36,10 +40,10 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
   const [inflows, setInflows] = useState([]);
   const [outflows, setOutflows] = useState([]);
 
-  const onSaveEntry = () => {
+  const onSaveEntry = useCallback(() => {
     dispatch(saveEntry({ date, totals, inflows, outflows }));
     navigation.goBack();
-  };
+  }, [navigation, dispatch, date, totals, inflows, outflows]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -52,7 +56,7 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
         </TouchableOpacity>
       ),
     });
-  }, [navigation, onSaveEntry]);
+  }, [navigation, onSaveEntry, style.rightMargin]);
 
   useEffect(() => {
     const _totals = accounts.map((x) => {
@@ -135,9 +139,11 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
   const renderItem = ({ item }) => {
     return (
       <View style={style.row}>
-        <View style={[style.column, style.noMargins]}>
+        <View style={[style.column, style.noMargins, style.autoMargins]}>
           <Text style={style.text}>{item.name} </Text>
-          <Text style={style.text}>{item.provider} </Text>
+          {item.provider !== undefined && item.provider !== '' && (
+            <Text style={style.subText}>{item.provider} </Text>
+          )}
         </View>
         <View style={{ flex: 1 }}>
           <NumericInput
@@ -189,7 +195,6 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
             <SectionHeader title={section.title} />
           )}
           renderItem={(item) => renderItem(item)}
-          
           keyExtractor={(_item, index) => `${index}-${selectedIndex}`}
         />
       </KeyboardAwareScrollView>
