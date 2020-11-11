@@ -4,13 +4,13 @@ import { Path, Defs, LinearGradient, Stop, Rect, Line } from 'react-native-svg';
 import * as shape from 'd3-shape';
 import * as scale from 'd3-scale';
 import { connect } from 'react-redux';
-import { useTheme } from '@react-navigation/native';
-import { ITheme } from '../../../Theme';
 
-const NetworthGrowthChart = ({ portfolio }) => {
-  const theme = useTheme() as ITheme;
-  const { stats } = portfolio;
-  const { netWorth } = stats || { netWorth: [] };
+import { useTheme } from '../../../Theme';
+import { getNetWorth } from '../../../Redux/Selectors';
+
+const NetworthGrowthChart = ({ netWorth }) => {
+  const theme = useTheme();
+ 
   const data = (netWorth || []).map((c) => {
     return {
       date: new Date(Date.parse(c.date)),
@@ -99,8 +99,8 @@ const NetworthGrowthChart = ({ portfolio }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { portfolio } = state;
-  return { portfolio };
+  const netWorth = getNetWorth(state);
+  return { netWorth };
 };
 
 export default connect(mapStateToProps)(NetworthGrowthChart);

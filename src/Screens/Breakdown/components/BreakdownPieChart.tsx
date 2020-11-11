@@ -47,7 +47,6 @@ const BreakdownPieChart = ({ data }) => {
 
   const pieData = data.map((item, index) => {
     const perc = total !== 0 ? (item.value / total) * 100 : 0;
-    console.log(perc);
     return {
       key: item.key,
       value: perc,

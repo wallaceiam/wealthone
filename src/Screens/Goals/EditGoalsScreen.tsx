@@ -16,15 +16,12 @@ import { saveGoal } from '../../Redux/Actions';
 import { useStyle, useTheme } from '../../Theme';
 import { SectionHeader, DateInput } from '../../Components';
 import SaveIcon from '../../Components/Icons/SaveIcon';
-import { toUtc } from '../../Redux/DateHelpers';
+import { getGoalInput } from '../../Redux/Selectors';
 
 const EditGoalScreen = ({ goal, dispatch }) => {
   const navigation = useNavigation();
   const theme = useTheme();
   const style = useStyle();
-
-  console.log(goal);
-  console.log(goal.investmentStyle || 3);
 
   const [currentAge, setCurrentAge] = useState<number>(goal.currentAge);
   const [retirementAge, setRetirementAge] = useState(goal.retirementAge);
@@ -258,7 +255,7 @@ const EditGoalScreen = ({ goal, dispatch }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { goal } = state;
+  const goal = getGoalInput(state);
   return { goal };
 };
 

@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import { useTheme, useStyle } from '../../Theme';
 import SlidersIcon from '../../Components/Icons/SlidersIcon';
 import GoalChart from './components/GoalChart';
-import { goalResultSelector } from '../../Redux/Selectors';
+import { getGoalResults } from '../../Redux/Selectors';
 
 const GoalsScreen = ({ result }) => {
   const navigation = useNavigation();
@@ -132,7 +132,7 @@ const GoalsScreen = ({ result }) => {
 };
 
 const mapStateToProps = (state) => {
-  const result = goalResultSelector(state);
+  const result = getGoalResults(state);
   return { result };
 };
 

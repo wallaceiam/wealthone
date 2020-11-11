@@ -6,7 +6,7 @@ import PlusIcon from './Icons/PlusIcon';
 
 interface ISectionFooterProps {
   text: string;
-  onClick: () => void
+  onClick: () => void;
 }
 
 const SectionFooter = ({ text, onClick }: ISectionFooterProps) => {
@@ -14,8 +14,10 @@ const SectionFooter = ({ text, onClick }: ISectionFooterProps) => {
   return (
     <TouchableOpacity onPress={onClick}>
       <View style={style.row}>
-        <Text style={[style.bottomMargin, style.text, style.active]}>{text}</Text>
-        <PlusIcon />
+        <Text style={[style.bottomMargin, style.text, style.active]}>
+          {text}
+        </Text>
+        <PlusIcon size={20} />
       </View>
     </TouchableOpacity>
   );

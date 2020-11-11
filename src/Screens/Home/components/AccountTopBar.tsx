@@ -1,17 +1,17 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { FormattedCurrency } from 'react-native-globalize';
+import { connect } from 'react-redux';
 
+import { getAccounts, getNetWorthByAccount } from '../../../Redux/Selectors';
 import { useStyle } from './../../../Theme';
 
-const AccountTopBar = ({ portfolio, accountId }) => {
+const AccountTopBar = ({ accounts, netWorthByAccount, accountId }) => {
   const style = useStyle();
 
-  const { stats, accounts } = portfolio;
-  const { byAccount } = stats || { byAccount: [] };
   const account =
-    (byAccount || []).length > 0
-      ? byAccount.find((x) => x.id === accountId)
+    (netWorthByAccount || []).length > 0
+      ? netWorthByAccount.find((x) => x.id === accountId)
       : undefined;
   const latest =
     account !== undefined && account !== null && account.records.length > 0
@@ -20,7 +20,7 @@ const AccountTopBar = ({ portfolio, accountId }) => {
   const nAccount = accounts.find((x) => x.id === accountId);
   const accountName =
     nAccount !== undefined && nAccount !== null
-      ? `${nAccount.name} - ${nAccount.provider}`
+      ? `${nAccount.name}${nAccount.provider ? ` - ${nAccount.provider}` : ''}`
       : '';
 
   return (
@@ -37,4 +37,11 @@ const AccountTopBar = ({ portfolio, accountId }) => {
   );
 };
 
-export default AccountTopBar;
+const mapStateToProps = (state) => {
+  const accounts = getAccounts(state);
+  const netWorthByAccount = getNetWorthByAccount(state);
+  return { accounts, netWorthByAccount };
+};
+
+export default connect(mapStateToProps)(AccountTopBar);
+

@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
-  StyleSheet,
   View,
   SectionList,
   Text,
@@ -15,9 +14,14 @@ import { useStyle } from '../../../Theme';
 import { IsAsset } from '../../..//Models/Account';
 import SectionHeader from '../../../Components/SectionHeader';
 import ForwardIcon from '../../../Components/Icons/ForwardIcon';
-import { IState } from '../../../Redux/IState';
+import {
+  getAccounts,
+  getAssetAccounts,
+  getLiabilityAccounts,
+  getRecords,
+} from '../../../Redux/Selectors';
 
-const PortfolioList = ({ portfolio }) => {
+const PortfolioList = ({ assetAccounts, liabilityAccounts, records }) => {
   const navigation = useNavigation();
   const style = useStyle();
 
@@ -30,7 +34,9 @@ const PortfolioList = ({ portfolio }) => {
       <View style={style.row}>
         <View style={[style.column, style.noMargins, style.autoMargins]}>
           <Text style={style.text}>{item.name} </Text>
-          {item.provider !== undefined && item.provider !== '' && <Text style={style.text}>{item.provider} </Text>}
+          {item.provider !== undefined && item.provider !== '' && (
+            <Text style={style.text}>{item.provider} </Text>
+          )}
         </View>
         <View>
           {!isNaN(+item.amount) && (
@@ -49,11 +55,10 @@ const PortfolioList = ({ portfolio }) => {
       </View>
     </TouchableOpacity>
   );
-  const { accounts = [], records = [] } = portfolio;
+
   const last = records.length - 1;
 
-  const assets = accounts
-    .filter((x) => x.isAsset === IsAsset.Asset)
+  const assets = assetAccounts
     .map((x) => {
       const lastRecord =
         last >= 0 ? records[last].totals.find((y) => y.id === x.id) : undefined;
@@ -69,8 +74,7 @@ const PortfolioList = ({ portfolio }) => {
             : 0,
       };
     });
-  const liabilities = accounts
-    .filter((x) => x.isAsset === IsAsset.Liability)
+  const liabilities = liabilityAccounts
     .map((x) => {
       const lastRecord =
         last >= 0 ? records[last].totals.find((y) => y.id === x.id) : undefined;
@@ -113,20 +117,11 @@ const PortfolioList = ({ portfolio }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  sectionListItemStyle: {
-    padding: 24,
-  },
-  elementsContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-});
-
 const mapStateToProps = (state) => {
-  const { portfolio } = state;
-  return { portfolio };
+  const assetAccounts = getAssetAccounts(state);
+  const liabilityAccounts = getLiabilityAccounts(state);
+  const records = getRecords(state);
+  return { assetAccounts, liabilityAccounts, records };
 };
 
 export default connect(mapStateToProps)(PortfolioList);

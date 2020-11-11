@@ -7,15 +7,13 @@ import PieChart from './components/BreakdownPieChart';
 import { useStyle, useTheme } from '../../Theme';
 
 import { IsAsset, AccountTypes } from '../../Models';
+import { getAccounts, getNetWorthByAccount } from '../../Redux/Selectors';
 
-const BreakdownScreen = ({ portfolio }) => {
+const BreakdownScreen = ({ accounts, netWorthByAccount }) => {
   const theme = useTheme();
   const style = useStyle();
 
-  const { stats, accounts } = portfolio;
-  const { byAccount } = stats || { byAccount: [] };
-
-  const accountKeys = (byAccount || [])
+  const accountKeys = (netWorthByAccount || [])
     .map((v) => ({
       id: v.id,
       value:
@@ -93,8 +91,9 @@ const BreakdownScreen = ({ portfolio }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { portfolio } = state;
-  return { portfolio };
+  const accounts = getAccounts(state);
+  const netWorthByAccount = getNetWorthByAccount(state);
+  return { accounts, netWorthByAccount };
 };
 
 export default connect(mapStateToProps)(BreakdownScreen);

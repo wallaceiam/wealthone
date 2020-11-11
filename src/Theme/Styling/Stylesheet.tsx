@@ -151,12 +151,41 @@ const css = (theme: ITheme) => ({
   },
 
   active: {
-    color: theme.colors.primary
+    color: theme.colors.primary,
   },
   inactive: {
-    color: theme.colors.primary_alpha
+    color: theme.colors.primary_alpha,
+  },
+
+  /* App Header */
+  appIcon: {
+    width: 64,
+    height: 64,
+  },
+  appHeaderContainer: {
+    flexDirection: 'row',
+    marginLeft: 32,
+    marginRight: 32,
+  },
+  appHeaderIconContainer: {
+    marginRight: 16,
+    paddingTop: 2,
+  },
+  nameText: {
+    fontWeight: '600',
+    fontSize: 18,
+    color: theme.colors.primary,
+  },
+  companyText: {
+    color: theme.colors.secondary,
+    fontSize: 14,
+    backgroundColor: 'transparent',
+  },
+  descriptionText: {
+    fontSize: 14,
+    marginTop: 6,
+    color: theme.colors.secondary,
   },
 });
 
 export default css;
-

@@ -8,9 +8,11 @@ import * as shape from 'd3-shape';
 
 import { useTheme } from '../../../Theme';
 import { toUtc } from '../../../Redux/DateHelpers';
+import { CAGR } from './Finance';
+import { getGoalInput, getNetWorth } from '../../../Redux/Selectors';
 
 const GoallChart = ({
-  portfolio,
+  netWorth,
   goal,
   projectedSavingsPoor,
   projectedSavingsAverage,
@@ -49,13 +51,6 @@ const GoallChart = ({
       ),
     );
 
-  const getNumberOfMonths = (d1, d2) => {
-    return (
-      (d1.getFullYear() - d2.getFullYear()) * 12 +
-      (d1.getMonth() - d2.getMonth())
-    );
-  };
-
   const createPrediction = (
     startDate,
     startAmount,
@@ -64,61 +59,23 @@ const GoallChart = ({
     monthlyContributions,
   ) => {
     const preddates = getDataRange(startDate, endDate);
-    //this.addYearsUTC(endActualDate, 5));
-
-    /*
-    const interm = endAmount / (startAmount === 0 ? 1 : startAmount);
-
-    const monthlyRate =
-      Math.pow(interm, 1 / getNumberOfMonths(endDate, startDate)) - 1;
-    let futureValue = startAmount === 0 ? 1 : startAmount;
-
-    return preddates.map((v, i) => {
-      futureValue = futureValue * (1 + monthlyRate);
-      return {
-        value: futureValue,
-        date: v,
-      };
-    });*/
-
-    // https://github.com/ebradyjobory/finance.js/blob/master/finance.js
-    // Compound Interest (CI)
-    const CI = (rate, numOfCompoundings, principal, numOfPeriods) => {
-      const ci =
-        principal *
-        Math.pow(
-          1 + rate / 100 / numOfCompoundings,
-          numOfCompoundings * numOfPeriods,
-        );
-      return Math.round(ci * 100) / 100;
-    };
-
-    // Compound Annual Growth Rate (CAGR)
-    const CAGR = (beginningValue, endingValue, numOfPeriods) => {
-      var cagr = Math.pow(endingValue / beginningValue, 1 / numOfPeriods) - 1;
-      return Math.round(cagr * 10000) / 100;
-    };
-
+    const totalContributions = monthlyContributions * (preddates.length - 1);
     const rate = CAGR(
-      startAmount === 0 ? 1 : startAmount,
+      startAmount + totalContributions,
       endAmount,
-      preddates.length + 1,
-    );
+      Math.floor(preddates.length / 12),
+    ) / 100 / 7;
+    let amount = startAmount + monthlyContributions;
     console.log(rate);
-    return preddates.map((v, i) => {
-      const amount = monthlyContributions * (i + 1) * (1 + rate / 100 / 12);
-      if (amount > endAmount) {
-        throw new Error(`${amount} > ${endAmount}`);
-      }
+    const result = preddates.map((v, i) => {
+      amount += monthlyContributions + (amount * rate);
       return {
         value: amount,
         date: v,
       };
     });
+    return result;
   };
-
-  const { stats } = portfolio;
-  const { netWorth } = stats || { netWorth: [] };
 
   const actuals = (netWorth || []).map((c) => {
     return {
@@ -303,9 +260,10 @@ const GoallChart = ({
 };
 
 const mapStateToProps = (state) => {
-  const portfolio = state.portfolio;
-  const goal = state.goal;
-  return { portfolio, goal };
+  const netWorth = getNetWorth(state);
+  const goal = getGoalInput(state);
+
+  return { netWorth, goal };
 };
 
 export default connect(mapStateToProps)(GoallChart);

@@ -3,12 +3,11 @@ import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { FormattedCurrency } from 'react-native-globalize';
 import { useStyle } from '../../../Theme';
+import { getNetWorth } from '../../../Redux/Selectors';
 
-const HomeTopBar = ({ portfolio }) => {
+const HomeTopBar = ({ netWorth }) => {
   const style = useStyle();
 
-  const { stats } = portfolio;
-  const { netWorth } = stats || { netWorth: [] };
   const interm =
     (netWorth || []).length > 0 ? netWorth[netWorth.length - 1].total : 0;
   const latest = interm || 0;
@@ -28,8 +27,8 @@ const HomeTopBar = ({ portfolio }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { portfolio } = state;
-  return { portfolio };
+  const netWorth = getNetWorth(state);
+  return { netWorth };
 };
 
 export default connect(mapStateToProps)(HomeTopBar);

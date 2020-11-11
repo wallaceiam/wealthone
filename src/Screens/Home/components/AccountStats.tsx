@@ -1,11 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, SectionList, Text, Platform } from 'react-native';
 import { FormattedCurrency } from 'react-native-globalize';
+import { connect } from 'react-redux';
+
 import SectionHeader from '../../../Components/SectionHeader';
+import { getNetWorthByAccount } from '../../../Redux/Selectors';
 
 import { useStyle } from './../../../Theme';
 
-const AccountStats = ({ portfolio, accountId }) => {
+const AccountStats = ({ netWorthByAccount, accountId }) => {
   const style = useStyle();
 
   const renderItem = ({ item }) => {
@@ -31,12 +34,10 @@ const AccountStats = ({ portfolio, accountId }) => {
     );
   };
 
-  const { stats } = portfolio;
-
   if (accountId === null || accountId === undefined || accountId === '') {
     return null;
   }
-  const accountStats = stats.byAccount.find((x) => x.id === accountId);
+  const accountStats = (netWorthByAccount || []).find((x) => x.id === accountId);
   if (accountStats === null || accountStats === undefined) {
     return null;
   }
@@ -104,4 +105,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AccountStats;
+const mapStateToProps = (state) => {
+  const netWorthByAccount = getNetWorthByAccount(state);
+  return { netWorthByAccount };
+};
+
+export default connect(mapStateToProps)(AccountStats);

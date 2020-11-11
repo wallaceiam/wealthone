@@ -2,9 +2,9 @@ import { createSelector } from 'reselect';
 import { BALANCE_DATA, CONTRIBUTION_DATA, DISTRIBUTION_DATA } from '../Data';
 import { toUtc } from '../DateHelpers';
 import { IGoalInput } from '../IGoalInput';
+import { getCurrentNetWorth } from './NetWorthSelector';
 
-const getGoalInput = (state) => {
-  console.log(state);
+export const getGoalInput = (state) => {
   return (
     state.goal || {
       birthDate: new Date(1978, 11, 26),
@@ -21,13 +21,11 @@ const getGoalInput = (state) => {
 };
 
 const getDate = (_state) => toUtc(new Date()).toString();
-const savings = (state) =>
-  (state.portfolio.stats?.netWorth || []).reduce((_p, c) => c.total, 0);
 
-const goalResultSelector = createSelector(
-  [getGoalInput, savings, getDate],
-  (input, savings, _date) => {
-    const result = calculate(input, 'pound', savings);
+export const getGoalResults = createSelector(
+  [getGoalInput, getCurrentNetWorth, getDate],
+  (input, netWorth, _date) => {
+    const result = calculate(input, 'pound', netWorth);
 
     return result;
   },
@@ -36,7 +34,8 @@ const goalResultSelector = createSelector(
 const Config = {
   calculation: {
     lifeExpectancy: 96,
-    inflation: 0.02,
+    // inflation: 0.02,
+    inflation: 0,
     realSalaryGrowth: 0.01,
     statePension: 8500,
     useComputedAccumulationArrays: false,
@@ -44,32 +43,32 @@ const Config = {
 };
 
 const calculate = (input: IGoalInput, currency: string, savings: number) => {
-  const ageDifMs = Date.now() - (new Date(input.birthDate)).getTime();
-  var ageDate = new Date(ageDifMs); // miliseconds from epoch
+  const ageDifMs = Date.now() - new Date(input.birthDate).getTime();
+  const ageDate = new Date(ageDifMs); // miliseconds from epoch
   const currentAge = Math.abs(ageDate.getUTCFullYear() - 1970);
 
-  let accumData = computeAccumArrays(currency),
+  const accumData = computeAccumArrays(currency),
     balanceData = Config.calculation.useComputedAccumulationArrays
       ? accumData.balanceData
-      : BALANCE_DATA,
-    contributionData = Config.calculation.useComputedAccumulationArrays
-      ? accumData.contributionData
-      : CONTRIBUTION_DATA;
+      : BALANCE_DATA;
+  const contributionData = Config.calculation.useComputedAccumulationArrays
+    ? accumData.contributionData
+    : CONTRIBUTION_DATA;
 
-  let yrsTill = input.retirementAge - currentAge,
-    retireYrs = Math.max(
-      0,
-      Config.calculation.lifeExpectancy - input.retirementAge,
-    ),
-    inflationFactor = Math.pow(1 + Config.calculation.inflation, -yrsTill),
-    e =
-      Config.calculation.realSalaryGrowth +
-      Config.calculation.inflation +
-      Config.calculation.realSalaryGrowth * Config.calculation.inflation,
-    preRetIncomeProjected = input.earnings * Math.pow(1 + e, yrsTill),
-    incomeGoalProjected = (input.lifeStyle / 100) * preRetIncomeProjected,
-    incomeGoal = incomeGoalProjected * inflationFactor,
-    stateBenRet = Config.calculation.statePension / inflationFactor,
+  const yrsTill = input.retirementAge - currentAge;
+  const retireYrs = Math.max(
+    0,
+    Config.calculation.lifeExpectancy - input.retirementAge,
+  );
+  const inflationFactor = Math.pow(1 + Config.calculation.inflation, -yrsTill);
+  const e =
+    Config.calculation.realSalaryGrowth +
+    Config.calculation.inflation +
+    Config.calculation.realSalaryGrowth * Config.calculation.inflation;
+  const preRetIncomeProjected = input.earnings * Math.pow(1 + e, yrsTill);
+  const incomeGoalProjected = (input.lifeStyle / 100) * preRetIncomeProjected;
+  const incomeGoal = incomeGoalProjected * inflationFactor;
+  let stateBenRet = Config.calculation.statePension / inflationFactor,
     savingsGoal,
     unitsOfAssets,
     unitsOfContrib,
@@ -84,7 +83,6 @@ const calculate = (input: IGoalInput, currency: string, savings: number) => {
     projectedIncomeAveragePercentage,
     projectedSavingsAveragePercentage;
 
-  //if (inputData.retirementAge < 68 || Config.calculation.useComputedAccumulationArrays) {
   if (
     input.retirementAge < 68 ||
     Config.calculation.useComputedAccumulationArrays
@@ -273,5 +271,3 @@ const computeAccumArrays = (currency) => {
     contributionData: contribution_accum_array,
   };
 };
-
-export default goalResultSelector;

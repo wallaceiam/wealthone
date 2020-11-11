@@ -1,61 +1,16 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  SectionList,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { SafeAreaView, SectionList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
 
-import { useStyle, useTheme } from '../../Theme';
+import { useStyle } from '../../Theme';
 
 import { backup, restore, update } from '../../Redux/Actions';
 import { IsAsset } from '../../Models/Account';
 import { SectionFooter, SectionHeader } from '../../Components';
-import Item from './Item';
-
-const AppHeader = () => {
-  // const { manifest } = Constants;
-  const manifest = {
-    name: 'wealthone',
-    slug: 'wallace ltd',
-    description: 'Your net worth tracker',
-  };
-
-  return (
-    <View style={styles.titleContainer}>
-      <View style={styles.titleIconContainer}>
-        <AppIconPreview />
-      </View>
-
-      {/* <View style={styles.titleTextContainer}> */}
-      <View>
-        <Text style={styles.nameText} numberOfLines={1}>
-          {manifest.name}
-        </Text>
-
-        <Text style={styles.slugText} numberOfLines={1}>
-          {manifest.slug}
-        </Text>
-
-        <Text style={styles.descriptionText}>{manifest.description}</Text>
-      </View>
-    </View>
-  );
-};
-
-const AppIconPreview = () => {
-  return (
-    <Image
-      source={require('../../Assets/appicon.png')}
-      style={styles.appIcon}
-      resizeMode="cover"
-    />
-  );
-};
+import MenuItem from './components/MenuItem';
+import AppHeader from './components/AppHeader';
+import { getAssetAccounts, getLiabilityAccounts } from '../../Redux/Selectors';
 
 const AccountName = ({ name, provider }) => {
   return (
@@ -66,20 +21,17 @@ const AccountName = ({ name, provider }) => {
   );
 };
 
-const SettingsScreen = ({ portfolio, dispatch }) => {
+const SettingsScreen = ({ assets, liabilities, dispatch }) => {
   const navigation = useNavigation();
-  const theme = useTheme();
   const style = useStyle();
-
-  const { accounts } = portfolio;
   const sections = [
     {
-      data: (accounts || []).filter((x) => x.isAsset === IsAsset.Asset),
+      data: assets,
       title: 'Assets',
       addFooter: true,
     },
     {
-      data: (accounts || []).filter((x) => x.isAsset === IsAsset.Liability),
+      data: liabilities,
       title: 'Liabilities',
       addFooter: true,
     },
@@ -126,32 +78,14 @@ const SettingsScreen = ({ portfolio, dispatch }) => {
   };
 
   const onAddAccount = ({ section }) => {
-      navigation.navigate('EditAccount', {
-        account: {
-          id: undefined,
-          name: '',
-          provider: '',
-          isAsset: section.title === 'Assets' ? IsAsset.Asset : IsAsset.Liability,
-        },
-      });
-  };
-
-  const SettingsItem = ({ item }) => {
-    return item.action !== undefined ? (
-      <Item
-        text={item.title}
-        icon={item.icon}
-        onClick={() => onGenericAction(item.action)}
-        color={theme.colors.primary}
-      />
-    ) : (
-      <Item
-        text={AccountName(item)}
-        icon={'chevron-right'}
-        onClick={() => onEditAccount(item)}
-        color={theme.colors.primary}
-      />
-    );
+    navigation.navigate('EditAccount', {
+      account: {
+        id: undefined,
+        name: '',
+        provider: '',
+        isAsset: section.title === 'Assets' ? IsAsset.Asset : IsAsset.Liability,
+      },
+    });
   };
 
   return (
@@ -160,7 +94,21 @@ const SettingsScreen = ({ portfolio, dispatch }) => {
       <SectionList
         style={style.container}
         contentContainerStyle={style.contentContainer}
-        renderItem={(item) => SettingsItem(item)}
+        renderItem={({ item }) =>
+          item.action !== undefined ? (
+            <MenuItem
+              text={item.title}
+              icon={item.icon}
+              onClick={() => onGenericAction(item.action)}
+            />
+          ) : (
+            <MenuItem
+              text={AccountName(item)}
+              icon={'chevron-right'}
+              onClick={() => onEditAccount(item)}
+            />
+          )
+        }
         renderSectionHeader={({ section }) => (
           <SectionHeader title={section.title} />
         )}
@@ -177,40 +125,10 @@ const SettingsScreen = ({ portfolio, dispatch }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  appIcon: {
-    width: 64,
-    height: 64,
-  },
-  titleContainer: {
-    paddingHorizontal: 15,
-    paddingTop: 15,
-    paddingBottom: 15,
-    flexDirection: 'row',
-  },
-  titleIconContainer: {
-    marginRight: 15,
-    paddingTop: 2,
-  },
-  nameText: {
-    fontWeight: '600',
-    fontSize: 18,
-  },
-  slugText: {
-    color: '#a39f9f',
-    fontSize: 14,
-    backgroundColor: 'transparent',
-  },
-  descriptionText: {
-    fontSize: 14,
-    marginTop: 6,
-    color: '#4d4d4d',
-  },
-});
-
 const mapStateToProps = (state) => {
-  const { portfolio } = state;
-  return { portfolio };
+  const assets = getAssetAccounts(state);
+  const liabilities = getLiabilityAccounts(state);
+  return { assets, liabilities };
 };
 
 export default connect(mapStateToProps)(SettingsScreen);

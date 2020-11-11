@@ -146,7 +146,6 @@ const PieChart = ({
             <G x={width / 2} y={height / 2}>
               {pieSlices.map((slice, index) => {
                 const { key, onPress, svg } = data[index];
-                console.log(data[index]);
                 return (
                   <Path
                     key={key}

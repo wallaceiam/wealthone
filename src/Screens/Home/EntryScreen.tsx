@@ -8,7 +8,6 @@ import {
   Animated,
 } from 'react-native';
 import SegmentedControlIOS from '@react-native-community/segmented-control';
-import DatePickerIOS from '@react-native-community/datetimepicker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -21,8 +20,9 @@ import { justDate, sameDay, toUtc } from '../../Redux/DateHelpers';
 import { IsAsset } from '../../Models/Account';
 import { DateInput, NumericInput, SectionHeader } from '../../Components';
 import SaveIcon from '../../Components/Icons/SaveIcon';
+import { getAccounts, getRecords } from '../../Redux/Selectors';
 
-const EntryScreen = ({ portfolio, dispatch }) => {
+const EntryScreen = ({ accounts, records, dispatch }) => {
   const navigation = useNavigation();
   const route = useRoute();
   const style = useStyle();
@@ -55,8 +55,6 @@ const EntryScreen = ({ portfolio, dispatch }) => {
   }, [navigation, onSaveEntry]);
 
   useEffect(() => {
-    const accounts = portfolio.accounts || [];
-    const records = portfolio.records || [];
     const _totals = accounts.map((x) => {
       const r = records.find((y) => sameDay(y.date, date));
       const re =
@@ -94,7 +92,7 @@ const EntryScreen = ({ portfolio, dispatch }) => {
     setTotals(_totals);
     setInflows(_inflows);
     setOutflows(_outflows);
-  }, [date, setTotals, setInflows, setOutflows, portfolio]);
+  }, [date, accounts, records]);
 
   const setAmount = (id, amount) => {
     const tAmount = Number.parseInt(amount);
@@ -112,7 +110,7 @@ const EntryScreen = ({ portfolio, dispatch }) => {
         const _inflows = inflows.map((x) =>
           x.id === id ? { id, amount: dAmount } : { ...x },
         );
-        setInflows(inflows);
+        setInflows(_inflows);
         break;
       }
       case 2: {
@@ -153,7 +151,6 @@ const EntryScreen = ({ portfolio, dispatch }) => {
     );
   };
 
-  const accounts = portfolio.accounts || [];
   const accountSections = [
     {
       data: accounts.filter((x) => x.isAsset === IsAsset.Asset),
@@ -201,8 +198,9 @@ const EntryScreen = ({ portfolio, dispatch }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { portfolio } = state;
-  return { portfolio };
+  const accounts = getAccounts(state);
+  const records = getRecords(state);
+  return { accounts, records };
 };
 
 export default connect(mapStateToProps)(EntryScreen);

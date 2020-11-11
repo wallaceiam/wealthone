@@ -7,7 +7,6 @@ import { Alert } from 'react-native';
 import * as shortid from 'shortid';
 import { IsAsset } from '../Models';
 import { justDate, sameDay } from './DateHelpers';
-import { statsReducer } from './StatsReducer';
 import { goalReducer } from './GoalReducer';
 import { restoreData } from './Actions';
 
@@ -43,21 +42,29 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
       return { ...state, accounts };
     }
     case 'REMOVE_ACCOUNT': {
-      const { accounts } = state;
-      const indexOf = accounts.findIndex((x) => x.id === action.payload.id);
-      accounts.splice(indexOf, 1);
-      return { ...state, accounts };
+      const accountId = action.payload.id;
+      const { accounts, records } = state;
+      const newAccounts = accounts.filter((x) => x.id !== action.payload.id);
+      const newRecords = records
+        .map((r) => ({
+          date: r.date,
+          totals: r.totals.filter((t) => t.id !== accountId),
+          inflows: r.inflows.filter((t) => t.id !== accountId),
+          outflows: r.outflows.filter((t) => t.id !== accountId),
+        }))
+        .filter((x) => x.totals.length > 0);
+      return { ...state, accounts: newAccounts, records: newRecords };
     }
     case 'BACKUP': {
       iCloudStorage
         .setItem('backup', JSON.stringify(state))
-        .then((x) => {
+        .then((_) => {
           Alert.alert(
             'iCloud Backup',
             'Your data has been backed up to iCloud',
           );
         })
-        .catch((x) => {
+        .catch((_) => {
           Alert.alert(
             'iCloud Backup',
             'An error occured while trying to backup to iCloud',
@@ -69,8 +76,8 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
     case 'BACKUP_SYNC': {
       iCloudStorage
         .setItem('backup', JSON.stringify(state))
-        .then((x) => {})
-        .catch((x) => {
+        .then((_) => {})
+        .catch((_) => {
           Alert.alert(
             'iCloud Backup',
             'An error occured while trying to backup to iCloud',
@@ -93,7 +100,7 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
             Alert.alert('iCloud restore', 'There is no data to restore');
           }
         })
-        .catch((x) => {
+        .catch((_) => {
           Alert.alert(
             'iCloud restore',
             'An error occured while trying to restore from iCloud',
@@ -102,7 +109,12 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
       return state;
     }
     case 'RESTORE_DATA': {
-      return action.payload;
+      const { accounts, records } = action.payload;
+      const updatedRecords = (records || []).map((r) => ({
+        ...r,
+        date: new Date(r.date),
+      }));
+      return { accounts, records: updatedRecords };
     }
     case 'RESTORE_SYNC': {
       return action.payload;
@@ -181,7 +193,7 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
           outflows: action.payload.outflows,
         });
       }
-      const newState = { ...state, records: records };
+      const newState = { ...state, records };
       return newState;
     }
     case 'UPDATE': {
@@ -192,13 +204,6 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
     default:
       return state;
   }
-};
-
-const chainReducer = (state = INITIAL_STATE, action) => {
-  const newState = portfolioReducer(state, action);
-  // const newerState = statsReducer(newState, action);
-  const newerState = goalReducer(statsReducer(newState, action), action);
-  return newerState;
 };
 
 export default combineReducers({

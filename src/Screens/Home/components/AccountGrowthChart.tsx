@@ -1,20 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Path } from 'react-native-svg';
 import { AreaChart } from 'react-native-svg-charts';
 import { Defs, LinearGradient, Stop } from 'react-native-svg';
 import * as shape from 'd3-shape';
 import * as scale from 'd3-scale';
-import { useTheme } from '../../../Theme';
 
-const AccountGrowthChart = ({ portfolio, accountId }) => {
+import { useTheme } from '../../../Theme';
+import { getNetWorthByAccount } from '../../../Redux/Selectors';
+
+const AccountGrowthChart = ({ netWorthByAccount, accountId }) => {
   const theme = useTheme();
 
-  const { stats } = portfolio;
-
-  const { byAccount } = stats || { byAccount: [] };
   const account =
-    (byAccount || []).length > 0
-      ? byAccount.find((x) => x.id === accountId)
+    (netWorthByAccount || []).length > 0
+      ? netWorthByAccount.find((x) => x.id === accountId)
       : undefined;
 
   if (account === undefined) {
@@ -84,4 +84,9 @@ const AccountGrowthChart = ({ portfolio, accountId }) => {
   ) : null;
 };
 
-export default AccountGrowthChart;
+const mapStateToProps = (state) => {
+  const netWorthByAccount = getNetWorthByAccount(state);
+  return { netWorthByAccount };
+};
+
+export default connect(mapStateToProps)(AccountGrowthChart);

@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import {
   SafeAreaView,
   SectionList,
-  Text,
   View,
-  TouchableOpacity,
 } from 'react-native';
 import SegmentedControlIOS from '@react-native-community/segmented-control';
-import { FormattedCurrency } from 'react-native-globalize';
 import { useNavigation } from '@react-navigation/native';
 
 import { connect } from 'react-redux';
@@ -16,60 +13,10 @@ import { useStyle } from '../../Theme';
 
 import { justDate } from '../../Redux/DateHelpers';
 import SectionHeader from '../../Components/SectionHeader';
-import ForwardIcon from '../../Components/Icons/ForwardIcon';
+import HistoryItem from './components/HistoryItem';
+import { getNetWorth } from '../../Redux/Selectors';
 
-const HistoryItem = ({ item, selectedIndex, onClick}) => {
-  const style = useStyle();
-  return (
-    <TouchableOpacity onPress={onClick}>
-      <View style={style.row}>
-        <View style={[style.column, style.noMargins, style.autoMargins]}>
-          <Text style={style.text}>{justDate(item.date).toDateString()} </Text>
-        </View>
-        <View>
-          {selectedIndex === 0 ? (
-            <FormattedCurrency
-              value={item.total}
-              currency="GBP"
-              maximumFractionDigits={0}
-              minimumFractionDigits={0}
-              style={[style.h2]}
-            />
-          ) : selectedIndex === 1 ? (
-            <FormattedCurrency
-              value={item.changeAmount}
-              currency="GBP"
-              maximumFractionDigits={0}
-              minimumFractionDigits={0}
-              style={[style.h2]}
-            />
-          ) : selectedIndex === 2 ? (
-            <Text style={[style.h2]}>
-              {(item.changePercent * 100).toFixed(2)}%
-            </Text>
-          ) : (
-            <FormattedCurrency
-              value={item.netflows}
-              currency="GBP"
-              maximumFractionDigits={0}
-              minimumFractionDigits={0}
-              style={[style.h2]}
-            />
-          )}
-        </View>
-        <View
-          style={{
-            marginTop: 'auto',
-            marginBottom: 'auto',
-          }}>
-          <ForwardIcon />
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-const HistoryScreen = ({ portfolio }) => {
+const HistoryScreen = ({ netWorth }) => {
   const navigation = useNavigation();
   const style = useStyle();
 
@@ -80,9 +27,6 @@ const HistoryScreen = ({ portfolio }) => {
       date: new Date(item.date).getTime(),
     });
   };
-
-  const { stats } = portfolio;
-  const { netWorth } = stats;
 
   const allYears = (netWorth || []).map((v) => justDate(v.date).getFullYear());
   const uniqueYears = [...new Set(allYears)].reverse();
@@ -136,8 +80,8 @@ const HistoryScreen = ({ portfolio }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { portfolio } = state;
-  return { portfolio };
+  const netWorth = getNetWorth(state);
+  return { netWorth };
 };
 
 export default connect(mapStateToProps)(HistoryScreen);
