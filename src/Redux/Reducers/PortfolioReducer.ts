@@ -30,7 +30,7 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
           accountType: action.payload.accountType,
         });
       }
-      return { ...state, accounts };
+      return { ...state, accounts: [...accounts] };
     }
     case 'REMOVE_ACCOUNT': {
       const accountId = action.payload.id;
@@ -124,7 +124,7 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
           outflows: action.payload.outflows,
         });
       }
-      const newState = { ...state, records };
+      const newState = { ...state, records: [...records] };
       return newState;
     }
     case 'UPDATE': {

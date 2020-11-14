@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import { useStyle } from '../../Theme';
 
-import { justDate } from '../../Redux/DateHelpers';
+import { justDate, toUtc } from '../../Redux/DateHelpers';
 import SectionHeader from '../../Components/SectionHeader';
 import HistoryItem from './components/HistoryItem';
 import { getNetWorth } from '../../Redux/Selectors';
@@ -18,9 +18,9 @@ const HistoryScreen = ({ netWorth }) => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const onEntrySelected = ({ item }) => {
+  const onEntrySelected = ({ date }) => {
     navigation.navigate('HistoryEntry', {
-      date: new Date(item.date).getTime(),
+      date: toUtc(justDate(date)).getTime(),
     });
   };
 

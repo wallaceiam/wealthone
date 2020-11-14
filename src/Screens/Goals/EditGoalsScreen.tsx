@@ -108,18 +108,6 @@ const EditGoalScreen = ({ goal, dispatch }) => {
 
   const sliderForItem = (item) => {
     switch (item) {
-      case 'age':
-        return (
-          <Slider
-            step={1}
-            minimumValue={18}
-            maximumValue={retirementAge}
-            minimumTrackTintColor={theme.colors.primary}
-            disabled={true}
-            // onValueChange={(v) => setCurrentAge(Math.min(v, retirementAge))}
-            value={currentAge}
-          />
-        );
       case 'retirementAge':
         return (
           <Slider
@@ -134,7 +122,7 @@ const EditGoalScreen = ({ goal, dispatch }) => {
       case 'salary':
         return (
           <Slider
-            step={100}
+            step={500}
             minimumValue={0}
             maximumValue={150000}
             minimumTrackTintColor={theme.colors.primary}
@@ -147,7 +135,7 @@ const EditGoalScreen = ({ goal, dispatch }) => {
           <Slider
             step={50}
             minimumValue={0}
-            maximumValue={5000}
+            maximumValue={Math.floor(earnings / 12)}
             minimumTrackTintColor={theme.colors.primary}
             onValueChange={(v) => setContributions(v)}
             value={contributions}
@@ -226,7 +214,11 @@ const EditGoalScreen = ({ goal, dispatch }) => {
     if (item === 'birthDate') {
       return (
         <View style={style.bottomMargin}>
-          <DateInput date={birthDate} onDateChanged={(d) => setBirthDate(d)} />
+          <DateInput
+            label="Date of Birth"
+            date={birthDate}
+            onDateChanged={(d) => setBirthDate(d)}
+          />
         </View>
       );
     }
@@ -251,7 +243,7 @@ const EditGoalScreen = ({ goal, dispatch }) => {
       title: 'Money',
       data: ['salary', 'contributions', 'retirementLifeStyle'],
     },
-    { title: 'Settings', data: ['investmentStyle', 'pension'] },
+    { title: 'Settings', data: ['investmentStyle' /*, 'pension'*/] },
   ];
   return (
     <SafeAreaView style={style.safeAreaView}>

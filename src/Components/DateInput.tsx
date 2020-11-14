@@ -6,11 +6,12 @@ import { useStyle, useTheme } from '../Theme';
 import { toUtc } from '../Redux/DateHelpers';
 
 interface IDateInputProps {
+  label: string;
   date: Date;
   onDateChanged: (date: Date) => void;
 }
 
-const DateInput = ({ date, onDateChanged }: IDateInputProps) => {
+const DateInput = ({ label, date, onDateChanged }: IDateInputProps) => {
   const style = useStyle();
   const theme = useTheme();
 
@@ -42,7 +43,7 @@ const DateInput = ({ date, onDateChanged }: IDateInputProps) => {
       <View style={{ height: 32 }}>
         <View style={[style.row, style.noMargins]}>
           <View style={[style.column, style.noMargins]}>
-            <Text style={style.label}>Date of Birth</Text>
+            <Text style={style.label}>{label}</Text>
           </View>
           <View
             style={{

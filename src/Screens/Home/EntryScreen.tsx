@@ -35,6 +35,7 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
   const initialDate = route.params['date']
     ? new Date(route.params['date'])
     : toUtc(justDate(new Date()));
+
   const [date, setDate] = useState<Date>(initialDate);
   const [totals, setTotals] = useState([]);
   const [inflows, setInflows] = useState([]);
@@ -99,7 +100,7 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
   }, [date, accounts, records]);
 
   const setAmount = (id, amount) => {
-    const tAmount = Number.parseInt(amount);
+    const tAmount = Number.parseInt(amount, 10);
     const dAmount = +(isNaN(tAmount) ? null : tAmount);
 
     switch (selectedIndex) {
@@ -176,7 +177,11 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
         keyboardOpeningTime={0}
         extraHeight={128}>
         <View style={style.bottomMargin}>
-          <DateInput date={date} onDateChanged={(d) => setDate(d)} />
+          <DateInput
+            label="Date"
+            date={date}
+            onDateChanged={(d) => setDate(d)}
+          />
         </View>
 
         <View style={style.sideMargins}>
