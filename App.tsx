@@ -1,23 +1,31 @@
 import React, { useEffect } from 'react';
-import { NativeEventEmitter, Platform, StatusBar } from 'react-native';
+import { Alert, NativeEventEmitter, Platform, StatusBar } from 'react-native';
 import iCloudStorage from 'react-native-icloudstore';
 import { Provider } from 'react-redux';
 import { GlobalizeProvider, loadCldr } from 'react-native-globalize';
 
-import { store, dispatch } from './src/Redux/Store';
+import { dispatch, store } from './src/Redux/Store';
 import Screens from './src/Screens';
-// import { restoreSync } from './src/Redux/Actions';
-import { ThemeProvider } from './src/Theme';
+import { rehydrate } from './src/Redux/Actions';
+import { ThemeProvider, useTheme } from './src/Theme';
 
 loadCldr(require('react-native-globalize/locale-data/en'));
+
+const ThemeStatusBar = () => {
+  const theme = useTheme();
+
+  return <StatusBar barStyle={theme.dark ? 'light-content' : 'dark-content'} />;
+};
 
 const App = () => {
   useEffect(() => {
     const loadData = (userInfo) => {
-      const changedKeys = userInfo.changedKeys;
-      if (changedKeys != null && changedKeys.includes('wealthone_data')) {
-        iCloudStorage.getItem('backup').then((result) => {
-          // dispatch(restoreSync(result));
+      const changedKeys = userInfo.changedKeys || [];
+      Alert.alert(JSON.stringify(changedKeys));
+      if (changedKeys.includes('persist:wealthone_data')) {
+        iCloudStorage.getItem('persist:wealthone_data').then((result) => {
+          Alert.alert(JSON.stringify(result));
+          dispatch(rehydrate('wealthone_data', result));
         });
       }
     };
@@ -26,9 +34,7 @@ const App = () => {
     eventEmitter.addListener('iCloudStoreDidChangeRemotely', loadData);
 
     const cleanup = () => {
-      eventEmitter.removeListener('iCloudStoreDidChangeRemotely', (msg) =>
-        console.log(msg),
-      );
+      eventEmitter.removeListener('iCloudStoreDidChangeRemotely', loadData);
     };
     return cleanup();
   });
@@ -37,7 +43,7 @@ const App = () => {
     <GlobalizeProvider locale="en" currency="USD">
       <Provider store={store}>
         <ThemeProvider>
-          {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+          {Platform.OS === 'ios' && <ThemeStatusBar />}
           <Screens />
         </ThemeProvider>
       </Provider>

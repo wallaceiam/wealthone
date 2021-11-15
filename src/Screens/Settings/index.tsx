@@ -1,24 +1,17 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import BackIcon from '../../Components/Icons/BackIcon';
-
 import SettingsScreen from './SettingsScreen';
 import EditAccountScreen from './EditAccountScreen';
 import ImportScreen from './ImportScreen';
 import AboutScreen from './AboutScreen';
+import screenOptions from '../screenOptions';
 
 const Stack = createStackNavigator();
 
 const SettingsStack = () => {
   return (
-    <Stack.Navigator
-      initialRouteName="Settings"
-      screenOptions={{
-        headerBackTitle: null,
-        headerBackTitleVisible: false,
-        headerBackImage: () => <BackIcon />,
-      }}>
+    <Stack.Navigator initialRouteName="Settings" screenOptions={screenOptions}>
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="EditAccount" component={EditAccountScreen} />
       <Stack.Screen name="Import" component={ImportScreen} />

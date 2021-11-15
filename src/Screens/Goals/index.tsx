@@ -3,19 +3,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import GoalsScreen from './GoalsScreen';
 import EditGoalsScreen from './EditGoalsScreen';
-import BackIcon from '../../Components/Icons/BackIcon';
+import screenOptions from '../screenOptions';
 
 const Stack = createStackNavigator();
 
 const GoalsStack = () => {
   return (
-    <Stack.Navigator
-      initialRouteName="Goals"
-      screenOptions={{
-        headerBackTitle: null,
-        headerBackTitleVisible: false,
-        headerBackImage: () => <BackIcon />,
-      }}>
+    <Stack.Navigator initialRouteName="Goals" screenOptions={screenOptions}>
       <Stack.Screen name="Goals" component={GoalsScreen} />
       <Stack.Screen name="GoalsEntry" component={EditGoalsScreen} />
     </Stack.Navigator>

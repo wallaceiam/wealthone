@@ -4,7 +4,7 @@ import { useTheme } from '../../Theme';
 
 const SlidersIcon = () => {
   const theme = useTheme();
-  return <FeatherIcon name="edit" size={24} color={theme.colors.primary} />
+  return <FeatherIcon name="edit" size={22} color={theme.colors.primary} />;
 };
 
 export default SlidersIcon;

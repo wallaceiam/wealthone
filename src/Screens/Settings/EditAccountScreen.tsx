@@ -1,10 +1,14 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import {
   SafeAreaView,
   View,
   ScrollView,
   Text,
-  Button,
   StyleSheet,
   Alert,
   TouchableOpacity,
@@ -19,9 +23,12 @@ import { saveAccount, removeAccount } from '../../Redux/Actions';
 import { IsAsset, AccountTypes } from '../../Models';
 import { useStyle, useTheme } from '../../Theme';
 import SaveIcon from '../../Components/Icons/SaveIcon';
-
+import TrashIcon from '../../Components/Icons/TrashIcon';
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+  },
   inner: {
     flex: 3,
     flexDirection: 'column',
@@ -52,34 +59,33 @@ const EditAccountScreen = ({ dispatch }) => {
   const style = useStyle();
   const route = useRoute();
 
-  const routeAccount = route.params['account'] || defaultAccount;
+  const routeAccount = (route.params as any)?.account || defaultAccount;
   const [account, setAccount] = useState(routeAccount);
   const [isValid, setValid] = useState(false);
 
-  const onRemoveAccountConfirmed = () => {
-    dispatch(removeAccount(account.id));
-    navigation.goBack();
-  };
-
-  const onSaveAccount = () => {
+  const onSaveAccount = useCallback(() => {
     dispatch(saveAccount(account));
     navigation.goBack();
-  };
+  }, [account, dispatch, navigation]);
 
-  const onRemoveAccount = () => {
+  const onRemoveAccount = useCallback(() => {
+    const onRemoveAccountConfirmed = () => {
+      dispatch(removeAccount(account.id));
+      navigation.goBack();
+    };
     Alert.alert(
       'Remove account',
-      `Are you sure you wanted to delete ${account.name}?`,
+      `Are you sure you wanted to remove ${account.name}?`,
       [
         {
-          text: 'Yes, Delete',
+          text: 'Yes, Remove',
           onPress: () => onRemoveAccountConfirmed(),
           style: 'destructive',
         },
         { text: 'No' },
       ],
     );
-  };
+  }, [account, dispatch, navigation]);
 
   useEffect(() => {
     setValid(account.name !== '');
@@ -93,27 +99,33 @@ const EditAccountScreen = ({ dispatch }) => {
           : `Add ${account.isAsset === IsAsset.Asset ? 'asset' : 'liability'}`
       }`,
       headerRight: () => (
-        <TouchableOpacity
-          style={style.rightMargin}
-          disabled={!isValid}
-          onPress={() => onSaveAccount()}>
-          <SaveIcon />
-        </TouchableOpacity>
+        <View style={styles.header}>
+          {account.id && (
+            <TouchableOpacity
+              style={style.rightMargin}
+              onPress={() => onRemoveAccount()}>
+              <TrashIcon />
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity
+            style={style.rightMargin}
+            disabled={!isValid}
+            onPress={() => onSaveAccount()}>
+            <SaveIcon />
+          </TouchableOpacity>
+        </View>
       ),
     });
-  }, [navigation, isValid, account]);
+  }, [
+    navigation,
+    isValid,
+    account,
+    style.rightMargin,
+    onRemoveAccount,
+    onSaveAccount,
+  ]);
 
-  const { id, isAsset } = account;
-
-  const RemoveButton = () => {
-    return id !== undefined && id.length > 0 ? (
-      <Button
-        title="Remove account"
-        color={theme.colors.danger}
-        onPress={onRemoveAccount}
-      />
-    ) : null;
-  };
+  const { isAsset } = account;
 
   const accountTypes = AccountTypes.filter((x) => x.isAsset === isAsset).map(
     (s, i) => {
@@ -151,15 +163,12 @@ const EditAccountScreen = ({ dispatch }) => {
               <Text style={style.label}>Type</Text>
               <Picker
                 selectedValue={account.accountType}
-                onValueChange={(itemValue, itemIndex) =>
-                  setAccount({ ...account, accountType: itemValue })
+                onValueChange={(item) =>
+                  setAccount({ ...account, accountType: item })
                 }>
                 {accountTypes}
               </Picker>
             </View>
-          </View>
-          <View style={styles.inner2}>
-            <RemoveButton />
           </View>
         </View>
       </ScrollView>

@@ -10,6 +10,9 @@ const INITIAL_STATE: IState = {
 };
 
 const portfolioReducer = (state = INITIAL_STATE, action) => {
+  if (action.type === 'persist/REHYDRATE') {
+    console.log({ ...action, payload: undefined });
+  }
   switch (action.type) {
     case 'SAVE_ACCOUNT': {
       const { accounts } = state;
@@ -126,6 +129,13 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
       }
       const newState = { ...state, records: [...records] };
       return newState;
+    }
+    case 'REMOVE_ENTRY': {
+      const { records } = state;
+      const newRecords = records.filter(
+        (x) => !sameDay(x.date, action.payload),
+      );
+      return { ...state, records: [...newRecords] };
     }
     case 'UPDATE': {
       const { accounts, records } = state;

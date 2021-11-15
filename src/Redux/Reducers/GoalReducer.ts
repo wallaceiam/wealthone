@@ -13,9 +13,6 @@ const INITIAL_STATE = {
 };
 
 const goalReducer = (state = INITIAL_STATE, action) => {
-  if (action.type.startsWith('@@redux') || action.type.startsWith('persist')) {
-    return state;
-  }
   switch (action.type) {
     case 'SAVE_GOAL':
       return { ...state, ...action.payload };

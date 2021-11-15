@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 import { ITheme } from '../Theming/ITheme';
 
 const css = (theme: ITheme) => ({
@@ -168,6 +169,7 @@ const css = (theme: ITheme) => ({
   },
   appHeaderContainer: {
     flexDirection: 'row',
+    marginTop: 32,
     marginLeft: 32,
     marginRight: 32,
   },
@@ -189,6 +191,28 @@ const css = (theme: ITheme) => ({
     fontSize: 14,
     marginTop: 6,
     color: theme.colors.secondary,
+  },
+
+  // Swipable
+  swipeBackground: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: theme.colors.background,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    overflow: 'hidden',
+  },
+  swipeRow: {
+    flexGrow: 1,
+    flexShrink: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: 0,
+    marginRight: 0,
+    paddingLeft: 32,
+    paddingRight: 32,
+
+    alignItems: 'center',
   },
 });
 

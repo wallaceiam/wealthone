@@ -172,7 +172,13 @@ export const update = () => ({
 
 export const restoreData = (payload) => ({
   type: 'RESTORE_DATA',
-  payload: payload,
+  payload,
+});
+
+export const rehydrate = (key, payload) => ({
+  type: 'persist/REHYDRATE_1',
+  key,
+  payload,
 });
 
 export const importJson = (text) => ({
@@ -182,5 +188,10 @@ export const importJson = (text) => ({
 
 export const saveEntry = (payload) => ({
   type: 'SAVE_ENTRY',
-  payload: payload,
+  payload,
+});
+
+export const removeEntry = (date) => ({
+  type: 'REMOVE_ENTRY',
+  payload: date,
 });

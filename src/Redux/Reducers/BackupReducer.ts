@@ -3,9 +3,6 @@ const INITIAL_STATE = {
 };
 
 const backupReducer = (state = INITIAL_STATE, action) => {
-  if (action.type.startsWith('@@redux') || action.type.startsWith('persist')) {
-    return state;
-  }
   switch (action.type) {
     case 'BACKUP_SUCCESS':
       return { ...state, lastBackupDate: action.payload };

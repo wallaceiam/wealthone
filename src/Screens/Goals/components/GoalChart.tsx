@@ -60,15 +60,18 @@ const GoallChart = ({
   ) => {
     const preddates = getDataRange(startDate, endDate);
     const totalContributions = monthlyContributions * (preddates.length - 1);
-    const rate = CAGR(
-      startAmount + totalContributions,
-      endAmount,
-      Math.floor(preddates.length / 12),
-    ) / 100 / 7;
+    const rate =
+      CAGR(
+        startAmount + totalContributions,
+        endAmount,
+        Math.floor(preddates.length / 12),
+      ) /
+      100 /
+      7;
     let amount = startAmount + monthlyContributions;
     console.log(rate);
-    const result = preddates.map((v, i) => {
-      amount += monthlyContributions + (amount * rate);
+    const result = preddates.map((v) => {
+      amount += monthlyContributions + amount * rate;
       return {
         value: amount,
         date: v,
@@ -84,11 +87,13 @@ const GoallChart = ({
     };
   });
 
+  if (actuals.length < 1) {
+    return null;
+  }
+
   const endDate = addYearsUTC(toUtc(goal.birthDate), goal.retirementAge);
 
   const startDate = actuals.length > 0 ? actuals[0].date : new Date();
-  const endActualDate =
-    actuals.length > 0 ? actuals[actuals.length - 1].date : new Date();
   const startAmount = actuals.length > 0 ? actuals[0].value : 0;
 
   const predictionPoor = createPrediction(
@@ -139,7 +144,7 @@ const GoallChart = ({
   const actMinMax = getMinMax(actuals);
 
   const yMin = Math.min(poorMinMax.min, avgMinMax.min, actMinMax.min || 0);
-  const yMax = Math.max(poorMinMax.max, avgMinMax.max, actMinMax.max || 0);
+  const yMax = Math.max(poorMinMax.max, avgMinMax.max, actMinMax.max || 1);
 
   const ActualLine = ({ line }) => (
     <Path key={'line'} d={line} stroke={theme.colors.primary} fill={'none'} />

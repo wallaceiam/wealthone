@@ -43,6 +43,7 @@ const Navigation = () => {
         activeTintColor: theme.colors.primary,
         inactiveTintColor: theme.colors.primary_alpha,
         showLabel: false,
+        safeAreaInsets: { top: 0, bottom: 24 },
       }}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Breakdown" component={Breakdown} />

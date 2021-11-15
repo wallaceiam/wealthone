@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   SectionList,
   Text,
+  StyleSheet,
+  Alert,
 } from 'react-native';
 import SegmentedControlIOS from '@react-native-community/segmented-control';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -19,12 +21,19 @@ import { connect } from 'react-redux';
 
 import { useStyle } from '../../Theme';
 
-import { saveEntry } from '../../Redux/Actions';
+import { removeEntry, saveEntry } from '../../Redux/Actions';
 import { justDate, sameDay, toUtc } from '../../Redux/DateHelpers';
 import { IsAsset } from '../../Models/Account';
 import { DateInput, NumericInput, SectionHeader } from '../../Components';
 import SaveIcon from '../../Components/Icons/SaveIcon';
+import TrashIcon from '../../Components/Icons/TrashIcon';
 import { getAccounts, getRecords } from '../../Redux/Selectors';
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+  },
+});
 
 const EntryScreen = ({ accounts, records, dispatch }) => {
   const navigation = useNavigation();
@@ -32,32 +41,66 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
   const style = useStyle();
 
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const initialDate = route.params['date']
-    ? new Date(route.params['date'])
+  const { date: routeDate } = route.params as any;
+  const initialDate = routeDate
+    ? new Date(routeDate)
     : toUtc(justDate(new Date()));
 
   const [date, setDate] = useState<Date>(initialDate);
   const [totals, setTotals] = useState([]);
   const [inflows, setInflows] = useState([]);
   const [outflows, setOutflows] = useState([]);
+  const [doesExists, setDoesExists] = useState(false);
+
+  useEffect(() => {
+    setDoesExists(records.find((x) => sameDay(x.date, date)));
+  }, [date, records, setDoesExists]);
 
   const onSaveEntry = useCallback(() => {
     dispatch(saveEntry({ date, totals, inflows, outflows }));
     navigation.goBack();
   }, [navigation, dispatch, date, totals, inflows, outflows]);
 
+  const onRemoveEntry = useCallback(() => {
+    const onRemoveEntryConfirmed = () => {
+      dispatch(removeEntry(date));
+      navigation.goBack();
+    };
+    Alert.alert(
+      'Remove enty',
+      'Are you sure you wanted to remove this entry?',
+      [
+        {
+          text: 'Yes, Remove',
+          onPress: () => onRemoveEntryConfirmed(),
+          style: 'destructive',
+        },
+        { text: 'No' },
+      ],
+    );
+  }, [dispatch, navigation, date]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: 'Entry',
       headerRight: () => (
-        <TouchableOpacity
-          style={style.rightMargin}
-          onPress={() => onSaveEntry()}>
-          <SaveIcon />
-        </TouchableOpacity>
+        <View style={styles.header}>
+          {doesExists && (
+            <TouchableOpacity
+              style={style.rightMargin}
+              onPress={() => onRemoveEntry()}>
+              <TrashIcon />
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity
+            style={style.rightMargin}
+            onPress={() => onSaveEntry()}>
+            <SaveIcon />
+          </TouchableOpacity>
+        </View>
       ),
     });
-  }, [navigation, onSaveEntry, style.rightMargin]);
+  }, [navigation, onSaveEntry, onRemoveEntry, doesExists, style.rightMargin]);
 
   useEffect(() => {
     const _totals = accounts.map((x) => {

@@ -30,10 +30,6 @@ const BreakdownScreen = ({ accounts, netWorthByAccount }) => {
       value: accountKeys.find((y) => y.id === x.id).value,
     }));
 
-    (accounts || []).map((x => {
-      console.log(x);
-      return x;
-    }));
   const assetGroupData = (accounts || [])
     .filter((x) => x.isAsset === IsAsset.Asset)
     .map((x) => ({
@@ -60,10 +56,25 @@ const BreakdownScreen = ({ accounts, netWorthByAccount }) => {
   const assets =
     assetData.length > 0 ? (
       <View>
-        <Text style={[style.sectionHeaderStyle, { color: theme.colors.primary }]}> Assets </Text>
-        <Text style={[style.subSectionHeaderStyle, { color: theme.colors.secondary }]}> By Type </Text>
+        <Text
+          style={[style.sectionHeaderStyle, { color: theme.colors.primary }]}>
+          {' '}
+          Assets{' '}
+        </Text>
+        <Text
+          style={[
+            style.subSectionHeaderStyle,
+            { color: theme.colors.secondary },
+          ]}>
+          {' '}
+          By Type{' '}
+        </Text>
         <PieChart data={assetGroupData} />
-        <Text style={[style.subSectionHeaderStyle, { color: theme.colors.secondary, marginTop: 20 }]}>
+        <Text
+          style={[
+            style.subSectionHeaderStyle,
+            { color: theme.colors.secondary, marginTop: 20 },
+          ]}>
           By Account
         </Text>
         <PieChart data={assetData} />
@@ -72,8 +83,19 @@ const BreakdownScreen = ({ accounts, netWorthByAccount }) => {
   const liabilities =
     liabilityData.length > 0 ? (
       <View>
-        <Text style={[style.sectionHeaderStyle, { color: theme.colors.primary }]}> Liabilities </Text>
-        <Text style={[style.subSectionHeaderStyle, { color: theme.colors.secondary }]}> By Account </Text>
+        <Text
+          style={[style.sectionHeaderStyle, { color: theme.colors.primary }]}>
+          {' '}
+          Liabilities{' '}
+        </Text>
+        <Text
+          style={[
+            style.subSectionHeaderStyle,
+            { color: theme.colors.secondary },
+          ]}>
+          {' '}
+          By Account{' '}
+        </Text>
         <PieChart data={liabilityData} />
       </View>
     ) : null;
