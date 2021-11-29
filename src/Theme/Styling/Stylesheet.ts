@@ -73,7 +73,7 @@ const css = (theme: ITheme) => ({
     lineHeight: 64,
     marginTop: 16,
     marginBottom: 32,
-    fontFamily: 'karla',
+    fontFamily: 'Karla',
     color: theme.colors.secondary,
   },
   h2: {
@@ -81,7 +81,7 @@ const css = (theme: ITheme) => ({
     lineHeight: 32,
     marginTop: 16,
     marginBottom: 16,
-    fontFamily: 'karla',
+    fontFamily: 'Karla',
     color: theme.colors.text,
   },
   h3: {
@@ -89,7 +89,7 @@ const css = (theme: ITheme) => ({
     lineHeight: 46,
     marginTop: 23,
     marginBottom: 0,
-    fontFamily: 'karla',
+    fontFamily: 'Karla',
     color: theme.colors.text,
   },
   h4: {
