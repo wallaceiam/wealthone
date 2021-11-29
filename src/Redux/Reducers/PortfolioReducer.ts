@@ -10,15 +10,12 @@ const INITIAL_STATE: IState = {
 };
 
 const portfolioReducer = (state = INITIAL_STATE, action) => {
-  if (action.type === 'persist/REHYDRATE') {
-    console.log({ ...action, payload: undefined });
-  }
   switch (action.type) {
     case 'SAVE_ACCOUNT': {
       const { accounts } = state;
       if (action.payload.id !== undefined && action.payload.id.length > 0) {
         // existing
-        const account = accounts.find((x) => x.id === action.payload.id);
+        const account = accounts.find(x => x.id === action.payload.id);
         account.name = action.payload.name;
         account.provider = action.payload.provider;
         account.isAsset = action.payload.isAsset;
@@ -38,20 +35,20 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
     case 'REMOVE_ACCOUNT': {
       const accountId = action.payload.id;
       const { accounts, records } = state;
-      const newAccounts = accounts.filter((x) => x.id !== action.payload.id);
+      const newAccounts = accounts.filter(x => x.id !== action.payload.id);
       const newRecords = records
-        .map((r) => ({
+        .map(r => ({
           date: r.date,
-          totals: r.totals.filter((t) => t.id !== accountId),
-          inflows: r.inflows.filter((t) => t.id !== accountId),
-          outflows: r.outflows.filter((t) => t.id !== accountId),
+          totals: r.totals.filter(t => t.id !== accountId),
+          inflows: r.inflows.filter(t => t.id !== accountId),
+          outflows: r.outflows.filter(t => t.id !== accountId),
         }))
-        .filter((x) => x.totals.length > 0);
+        .filter(x => x.totals.length > 0);
       return { ...state, accounts: newAccounts, records: newRecords };
     }
     case 'RESTORE_DATA': {
       const { accounts, records } = action.payload;
-      const updatedRecords = (records || []).map((r) => ({
+      const updatedRecords = (records || []).map(r => ({
         ...r,
         date: new Date(r.date),
       }));
@@ -66,8 +63,8 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
         json.records.length > 0
       ) {
         const accounts = json.categories
-          .filter((x) => x.id !== undefined)
-          .map((x) => {
+          .filter(x => x.id !== undefined)
+          .map(x => {
             return {
               id: shortid.generate(),
               name: x.name,
@@ -76,7 +73,7 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
             };
           });
         const offset = json.records[0].totals[0] === null ? 1 : 0;
-        const records = json.records.map((x) => {
+        const records = json.records.map(x => {
           return {
             date: justDate(new Date(Date.parse(x.date))),
             totals: x.totals
@@ -85,21 +82,21 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
                   return { id: accounts[i - offset].id, amount: +y };
                 }
               })
-              .filter((y) => y !== undefined),
+              .filter(y => y !== undefined),
             inflows: x.inflows
               .map((y, i) => {
                 if (y != null) {
                   return { id: accounts[i - offset].id, amount: +y };
                 }
               })
-              .filter((y) => y !== undefined),
+              .filter(y => y !== undefined),
             outflows: x.outflows
               .map((y, i) => {
                 if (y != null) {
                   return { id: accounts[i - offset].id, amount: +y };
                 }
               })
-              .filter((y) => y !== undefined),
+              .filter(y => y !== undefined),
           };
         });
 
@@ -110,7 +107,7 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
     }
     case 'SAVE_ENTRY': {
       const { records } = state;
-      const index = records.findIndex((x) =>
+      const index = records.findIndex(x =>
         sameDay(x.date, action.payload.date),
       );
       if (index >= 0) {
@@ -132,9 +129,7 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
     }
     case 'REMOVE_ENTRY': {
       const { records } = state;
-      const newRecords = records.filter(
-        (x) => !sameDay(x.date, action.payload),
-      );
+      const newRecords = records.filter(x => !sameDay(x.date, action.payload));
       return { ...state, records: [...newRecords] };
     }
     case 'UPDATE': {

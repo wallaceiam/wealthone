@@ -1,10 +1,9 @@
 import { createSelector } from 'reselect';
 import { BALANCE_DATA, CONTRIBUTION_DATA, DISTRIBUTION_DATA } from '../Data';
-import { toUtc } from '../DateHelpers';
 import { IGoalInput } from '../IGoalInput';
 import { getCurrentNetWorth } from './NetWorthSelector';
 
-export const getGoalInput = (state) => {
+export const getGoalInput = state => {
   return (
     state.goal || {
       birthDate: new Date(1978, 11, 26),
@@ -20,10 +19,8 @@ export const getGoalInput = (state) => {
   );
 };
 
-const getDate = (_state) => toUtc(new Date()).toString();
-
 export const getGoalResults = createSelector(
-  [getGoalInput, getCurrentNetWorth, getDate],
+  [getGoalInput, getCurrentNetWorth],
   (input, netWorth, _date) => {
     const result = calculate(input, 'pound', netWorth);
 
@@ -165,7 +162,7 @@ const calculate = (input: IGoalInput, currency: string, savings: number) => {
   };
 };
 
-const computeAccumArrays = (currency) => {
+const computeAccumArrays = currency => {
   let balance_accum_array = [],
     contribution_accum_array = [],
     B87 = 0,

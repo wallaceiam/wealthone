@@ -1,16 +1,14 @@
 import { createSelector } from 'reselect';
 import { IsAsset } from '../../Models/Account';
+import { toDate } from '../DateHelpers';
 import { getAccounts, getRecords } from './AccountSelector';
 
-const sameYear = (d1, d2) => {
-  const da = d1 instanceof Date ? d1 : new Date(Date.parse(d1));
-  const db = d2 instanceof Date ? d2 : new Date(Date.parse(d2));
-  return da.getFullYear() === db.getFullYear();
-};
+const sameYear = (d1, d2) =>
+  toDate(d1).getFullYear() === toDate(d2).getFullYear();
 
 const sameTaxYear = (d1, d2) => {
-  const da = d1 instanceof Date ? d1 : new Date(Date.parse(d1));
-  const db = d2 instanceof Date ? d2 : new Date(Date.parse(d2));
+  const da = toDate(d1);
+  const db = toDate(d2);
   const fyA =
     da.getFullYear() +
     (da.getMonth() >= 3 /* apr */ || (da.getMonth() === 3 && da.getDate() > 5)
@@ -34,11 +32,11 @@ const reduceCalc = (p, c, i) => {
 
   const yearlyTwrrPercent =
     p
-      .filter((x) => sameYear(x.date, c.date))
+      .filter(x => sameYear(x.date, c.date))
       .reduce((tp, tc) => 1 + tp * tc.twrrRaw, 1) *
       (1 + twrr) -
     1;
-  const beginningOfTheYear = p.find((x) => sameYear(x.date, c.date)) || {
+  const beginningOfTheYear = p.find(x => sameYear(x.date, c.date)) || {
     total: 0,
     yearlyNetflows: 0,
     taxYearNetflows: 0,
@@ -103,11 +101,11 @@ export const getNetWorth = createSelector(
   [getAccounts, getRecords],
   (accounts, records) =>
     records
-      .map((c) => {
+      .map(c => {
         return {
           date: c.date,
           assets: c.totals.reduce((tp, tc) => {
-            const account = accounts.find((x) => x.id === tc.id);
+            const account = accounts.find(x => x.id === tc.id);
             return (
               tp +
               (account !== null && account.isAsset === IsAsset.Asset
@@ -116,7 +114,7 @@ export const getNetWorth = createSelector(
             );
           }, 0),
           liabilities: c.totals.reduce((tp, tc) => {
-            const account = accounts.find((x) => x.id === tc.id);
+            const account = accounts.find(x => x.id === tc.id);
             return (
               tp +
               (account !== null && account.isAsset === IsAsset.Liability
@@ -125,16 +123,16 @@ export const getNetWorth = createSelector(
             );
           }, 0),
           inflows: c.inflows.reduce((tp, tc) => {
-            const account = accounts.find((x) => x.id === tc.id);
+            const account = accounts.find(x => x.id === tc.id);
             return tp + (account !== null && tc.amount != null ? tc.amount : 0);
           }, 0),
           outflows: c.outflows.reduce((tp, tc) => {
-            const account = accounts.find((x) => x.id === tc.id);
+            const account = accounts.find(x => x.id === tc.id);
             return tp + (account !== null && tc.amount != null ? tc.amount : 0);
           }, 0),
         };
       })
-      .map((c) => {
+      .map(c => {
         return {
           ...c,
           total: c.assets - c.liabilities,
@@ -144,7 +142,7 @@ export const getNetWorth = createSelector(
       .reduce(reduceCalc, []),
 );
 
-export const getCurrentNetWorth = createSelector([getNetWorth], (netWorth) => {
+export const getCurrentNetWorth = createSelector([getNetWorth], netWorth => {
   if (netWorth.length > 0) {
     return netWorth[netWorth.length - 1].total;
   }
@@ -154,16 +152,17 @@ export const getCurrentNetWorth = createSelector([getNetWorth], (netWorth) => {
 export const getNetWorthByAccount = createSelector(
   [getAccounts, getRecords],
   (accounts, records) =>
-    accounts.map((c) => {
+    accounts.map(c => {
       return {
         id: c.id,
+        isAsset: c.isAsset,
         records: records
-          .map((oc) => {
-            const total = oc.totals.find((x) => x.id === c.id);
-            const inflow = oc.inflows.find((x) => x.id === c.id);
-            const outflow = oc.outflows.find((x) => x.id === c.id);
+          .map(oc => {
+            const total = oc.totals.find(x => x.id === c.id);
+            const inflow = oc.inflows.find(x => x.id === c.id);
+            const outflow = oc.outflows.find(x => x.id === c.id);
             return {
-              date: new Date(Date.parse(oc.date)),
+              date: toDate(oc.date),
               total: total !== null && total !== undefined ? total.amount : 0,
               inflow:
                 inflow !== null && inflow !== undefined ? inflow.amount : 0,
@@ -171,7 +170,7 @@ export const getNetWorthByAccount = createSelector(
                 outflow !== null && outflow !== undefined ? outflow.amount : 0,
             };
           })
-          .map((oc) => {
+          .map(oc => {
             return {
               ...oc,
               netflows: oc.inflow - oc.outflow,
@@ -180,4 +179,39 @@ export const getNetWorthByAccount = createSelector(
           .reduce(reduceCalc, []),
       };
     }),
+);
+
+export const getAccountSummary = createSelector(
+  [getAccounts, getRecords],
+  (accounts, records) => {
+    // const last = records.sort();
+
+    return accounts.map(c => {
+      return {
+        id: c.id,
+        isAsset: c.isAsset,
+        records: records
+          .map(oc => {
+            const total = oc.totals.find(x => x.id === c.id);
+            const inflow = oc.inflows.find(x => x.id === c.id);
+            const outflow = oc.outflows.find(x => x.id === c.id);
+            return {
+              date: toDate(oc.date),
+              total: total !== null && total !== undefined ? total.amount : 0,
+              inflow:
+                inflow !== null && inflow !== undefined ? inflow.amount : 0,
+              outflow:
+                outflow !== null && outflow !== undefined ? outflow.amount : 0,
+            };
+          })
+          .map(oc => {
+            return {
+              ...oc,
+              netflows: oc.inflow - oc.outflow,
+            };
+          })
+          .reduce(reduceCalc, []),
+      };
+    });
+  },
 );

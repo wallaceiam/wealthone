@@ -14,13 +14,13 @@ const AccountGrowthChart = ({ netWorthByAccount, accountId }) => {
 
   const account =
     (netWorthByAccount || []).length > 0
-      ? netWorthByAccount.find((x) => x.id === accountId)
+      ? netWorthByAccount.find(x => x.id === accountId)
       : undefined;
 
   if (account === undefined) {
     return null;
   }
-  const data = (account.records || []).map((c) => {
+  const data = (account.records || []).map(c => {
     return {
       date: new Date(Date.parse(c.date)),
       value: c.total,
@@ -29,17 +29,13 @@ const AccountGrowthChart = ({ netWorthByAccount, accountId }) => {
 
   const Gradient = ({ index }) => (
     <Defs key={index}>
-      <LinearGradient id={'gradient'} x1={'0%'} y={'0%'} x2={'0%'} y2={'100%'}>
+      <LinearGradient id={'gradient'} x1={'0%'} y1={'0%'} x2={'0%'} y2={'100%'}>
         <Stop
           offset={'0%'}
           stopColor={theme.colors.secondary}
           stopOpacity={0.2}
         />
-        <Stop
-          offset={'75%'}
-          stopColor={theme.colors.white}
-          stopOpacity={0.0}
-        />
+        <Stop offset={'75%'} stopColor={theme.colors.white} stopOpacity={0.0} />
       </LinearGradient>
     </Defs>
   );
@@ -84,7 +80,7 @@ const AccountGrowthChart = ({ netWorthByAccount, accountId }) => {
   ) : null;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const netWorthByAccount = getNetWorthByAccount(state);
   return { netWorthByAccount };
 };

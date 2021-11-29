@@ -24,15 +24,15 @@ const HistoryScreen = ({ netWorth }) => {
     });
   };
 
-  const allYears = (netWorth || []).map((v) => justDate(v.date).getFullYear());
+  const allYears = (netWorth || []).map(v => justDate(v.date).getFullYear());
   const uniqueYears = [...new Set(allYears)].reverse();
 
-  const sections = uniqueYears.map((v) => {
+  const sections = uniqueYears.map(v => {
     return {
       title: v.toString(),
       data: (netWorth || [])
-        .filter((x) => justDate(x.date).getFullYear() === v)
-        .map((c) => {
+        .filter(x => justDate(x.date).getFullYear() === v)
+        .map(c => {
           return {
             date: c.date,
             total: c.total,
@@ -52,7 +52,7 @@ const HistoryScreen = ({ netWorth }) => {
           <SegmentedControlIOS
             values={['Total', '+/-', '%', 'Netflows']}
             selectedIndex={selectedIndex}
-            onChange={(event) =>
+            onChange={event =>
               setSelectedIndex(event.nativeEvent.selectedSegmentIndex)
             }
           />
@@ -71,9 +71,6 @@ const HistoryScreen = ({ netWorth }) => {
             <SectionHeader title={section.title} />
           )}
           stickySectionHeadersEnabled={true}
-          keyExtractor={(item, index) =>
-            `${index}-${selectedIndex}-${item.date}`
-          }
           sections={sections}
         />
       </View>
@@ -81,7 +78,7 @@ const HistoryScreen = ({ netWorth }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const netWorth = getNetWorth(state);
   return { netWorth };
 };

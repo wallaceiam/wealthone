@@ -1,59 +1,18 @@
 import React from 'react';
-import {
-  View,
-  SectionList,
-  Text,
-  Platform,
-  TouchableOpacity,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { FormattedCurrency } from 'react-native-globalize';
+import { View, SectionList, Platform } from 'react-native';
 import { connect } from 'react-redux';
 
-import { useStyle } from '../../../Theme';
 import SectionHeader from '../../../Components/SectionHeader';
-import ForwardIcon from '../../../Components/Icons/ForwardIcon';
 import {
   getAssetAccounts,
   getLiabilityAccounts,
   getRecords,
 } from '../../../Redux/Selectors';
+import AccountItem from './AccountItem';
+import HomeTopBar from './HomeTopBar';
+import NetworthGrowthChart from './NetworthGrowthChart';
 
 const PortfolioList = ({ assetAccounts, liabilityAccounts, records }) => {
-  const navigation = useNavigation();
-  const style = useStyle();
-
-  const onPortfolioSelected = item => {
-    navigation.navigate('HomeAccount', { accountId: item.id });
-  };
-
-  const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => onPortfolioSelected(item)}>
-      <View style={style.row}>
-        <View style={[style.column, style.noMargins, style.autoMargins]}>
-          <Text style={style.text}>{item.name} </Text>
-          {item.provider !== undefined && item.provider !== '' && (
-            <Text style={style.subText}>{item.provider} </Text>
-          )}
-        </View>
-        <View>
-          {!isNaN(+item.amount) && (
-            <FormattedCurrency
-              value={+item.amount}
-              currency="GBP"
-              maximumFractionDigits={0}
-              minimumFractionDigits={0}
-              style={style.h2}
-            />
-          )}
-        </View>
-        <View style={style.autoMargins}>
-          <ForwardIcon />
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-
   const last = records.length - 1;
 
   const assets = assetAccounts.map(x => {
@@ -87,6 +46,15 @@ const PortfolioList = ({ assetAccounts, liabilityAccounts, records }) => {
     };
   });
 
+  const renderItem = ({ item }) => <AccountItem item={item} />;
+
+  const header = () => (
+    <View style={{ marginBottom: Platform.OS == 'ios' ? 20 : 0 }}>
+      <HomeTopBar />
+      <NetworthGrowthChart />
+    </View>
+  );
+
   const sections =
     assets.length > 0 && liabilities.length > 0
       ? [
@@ -100,16 +68,14 @@ const PortfolioList = ({ assetAccounts, liabilityAccounts, records }) => {
       : [];
 
   return (
-    <View style={{ marginTop: Platform.OS == 'ios' ? 20 : 0 }}>
-      <SectionList
-        sections={sections}
-        renderSectionHeader={({ section }) => (
-          <SectionHeader title={section.title} />
-        )}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => `${index}`}
-      />
-    </View>
+    <SectionList
+      ListHeaderComponent={header}
+      sections={sections}
+      renderSectionHeader={({ section }) => (
+        <SectionHeader title={section.title} />
+      )}
+      renderItem={renderItem}
+    />
   );
 };
 

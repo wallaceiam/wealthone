@@ -39,7 +39,13 @@ const DateInput = ({ label, date, onDateChanged }: IDateInputProps) => {
   };
 
   return (
-    <Animated.View style={[style.column, { height: animation }]}>
+    <Animated.View
+      style={[
+        style.bottomMargin,
+        style.topMargin,
+        style.column,
+        { marginTop: 32, minHeight: animation },
+      ]}>
       <View style={{ height: 32 }}>
         <View style={[style.row, style.noMargins]}>
           <View style={[style.column, style.noMargins]}>

@@ -1,13 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useLayoutEffect } from 'react';
-import { SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import { SafeAreaView, TouchableOpacity } from 'react-native';
 
 import { justDate, toUtc } from '../../Redux/DateHelpers';
 import { useStyle } from '../../Theme';
 import PlusIcon from '../../Components/Icons/PlusIcon';
-import HomeTopBar from './components/HomeTopBar';
-import NetworthGrowthChart from './components/NetworthGrowthChart';
-import PortfolioList from './components/PortfolioList';
+import PortfolioList from './components/PortfolioList2';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -34,13 +32,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={style.safeAreaView}>
-      <ScrollView
-        style={style.container}
-        contentContainerStyle={style.contentContainer}>
-        <HomeTopBar />
-        <NetworthGrowthChart />
-        <PortfolioList />
-      </ScrollView>
+      <PortfolioList />
     </SafeAreaView>
   );
 };

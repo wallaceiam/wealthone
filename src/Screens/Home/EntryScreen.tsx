@@ -12,9 +12,10 @@ import {
   Text,
   StyleSheet,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import SegmentedControlIOS from '@react-native-community/segmented-control';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { connect } from 'react-redux';
@@ -28,6 +29,7 @@ import { DateInput, NumericInput, SectionHeader } from '../../Components';
 import SaveIcon from '../../Components/Icons/SaveIcon';
 import TrashIcon from '../../Components/Icons/TrashIcon';
 import { getAccounts, getRecords } from '../../Redux/Selectors';
+import { FormattedCurrency } from 'react-native-globalize';
 
 const styles = StyleSheet.create({
   header: {
@@ -53,7 +55,7 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
   const [doesExists, setDoesExists] = useState(false);
 
   useEffect(() => {
-    setDoesExists(records.find((x) => sameDay(x.date, date)));
+    setDoesExists(records.find(x => sameDay(x.date, date)));
   }, [date, records, setDoesExists]);
 
   const onSaveEntry = useCallback(() => {
@@ -103,33 +105,32 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
   }, [navigation, onSaveEntry, onRemoveEntry, doesExists, style.rightMargin]);
 
   useEffect(() => {
-    const _totals = accounts.map((x) => {
-      const r = records.find((y) => sameDay(y.date, date));
+    const r = records.find(y => sameDay(y.date, date));
+
+    const _totals = accounts.map(x => {
       const re =
         r !== null && r !== undefined
-          ? r.totals.find((y) => y.id === x.id)
+          ? r.totals.find(y => y.id === x.id)
           : null;
       return {
         id: x.id,
         amount: re !== null && re !== undefined ? re.amount : null,
       };
     });
-    const _inflows = accounts.map((x) => {
-      const r = records.find((y) => sameDay(y.date, date));
+    const _inflows = accounts.map(x => {
       const re =
         r !== null && r !== undefined
-          ? r.inflows.find((y) => y.id === x.id)
+          ? r.inflows.find(y => y.id === x.id)
           : null;
       return {
         id: x.id,
         amount: re !== null && re !== undefined ? re.amount : null,
       };
     });
-    const _outflows = accounts.map((x) => {
-      const r = records.find((y) => sameDay(y.date, date));
+    const _outflows = accounts.map(x => {
       const re =
         r !== null && r !== undefined
-          ? r.outflows.find((y) => y.id === x.id)
+          ? r.outflows.find(y => y.id === x.id)
           : null;
       return {
         id: x.id,
@@ -148,21 +149,21 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
 
     switch (selectedIndex) {
       case 0: {
-        const _totals = totals.map((x) =>
+        const _totals = totals.map(x =>
           x.id === id ? { id, amount: dAmount } : { ...x },
         );
         setTotals(_totals);
         break;
       }
       case 1: {
-        const _inflows = inflows.map((x) =>
+        const _inflows = inflows.map(x =>
           x.id === id ? { id, amount: dAmount } : { ...x },
         );
         setInflows(_inflows);
         break;
       }
       case 2: {
-        const _outflows = outflows.map((x) =>
+        const _outflows = outflows.map(x =>
           x.id === id ? { id, amount: dAmount } : { ...x },
         );
         setOutflows(_outflows);
@@ -171,10 +172,10 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
     }
   };
 
-  const getAmount = (id) => {
+  const getAmount = id => {
     const values =
       selectedIndex === 0 ? totals : selectedIndex === 1 ? inflows : outflows;
-    const value = values.find((x) => x.id === id);
+    const value = values.find(x => x.id === id);
     return value !== undefined && value.amount !== null
       ? value.amount.toString()
       : null;
@@ -193,7 +194,7 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
           <NumericInput
             label={null}
             placeholder="0"
-            onChangeText={(text) => setAmount(item.id, +text)}
+            onChangeText={text => setAmount(item.id, +text)}
             value={getAmount(item.id)}
           />
         </View>
@@ -203,35 +204,40 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
 
   const accountSections = [
     {
-      data: accounts.filter((x) => x.isAsset === IsAsset.Asset),
+      data: accounts.filter(x => x.isAsset === IsAsset.Asset),
       title: 'Assets',
     },
     {
-      data: accounts.filter((x) => x.isAsset === IsAsset.Liability),
+      data: accounts.filter(x => x.isAsset === IsAsset.Liability),
       title: 'Liabilities',
     },
   ];
 
+  const getTotal = (isAsset: boolean): number => {
+    const d =
+      selectedIndex === 0 ? totals : selectedIndex === 1 ? inflows : outflows;
+
+    const accountIds = accounts
+      .filter(x => x.isAsset === isAsset)
+      .map(x => x.id);
+    return (d ?? []).reduce((prev, cur) => {
+      return prev + (accountIds.includes(cur.id) ? cur.amount : 0);
+    }, 0);
+  };
+
   return (
     <SafeAreaView style={style.safeAreaView}>
-      <KeyboardAwareScrollView
+      <KeyboardAvoidingView
         style={style.container}
         contentContainerStyle={style.contentContainer}
-        keyboardOpeningTime={0}
-        extraHeight={128}>
-        <View style={style.bottomMargin}>
-          <DateInput
-            label="Date"
-            date={date}
-            onDateChanged={(d) => setDate(d)}
-          />
-        </View>
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <DateInput label="Date" date={date} onDateChanged={d => setDate(d)} />
 
         <View style={style.sideMargins}>
           <SegmentedControlIOS
             values={['Total', 'Inflows', 'Outflows']}
             selectedIndex={selectedIndex}
-            onChange={(event) =>
+            onChange={event =>
               setSelectedIndex(event.nativeEvent.selectedSegmentIndex)
             }
           />
@@ -242,15 +248,26 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
           renderSectionHeader={({ section }) => (
             <SectionHeader title={section.title} />
           )}
-          renderItem={(item) => renderItem(item)}
-          keyExtractor={(_item, index) => `${index}-${selectedIndex}`}
+          renderSectionFooter={({ section }) => (
+            <View style={style.row}>
+              <Text style={[style.bottomMargin, style.text, style.active]} />
+              <FormattedCurrency
+                currency="GBP"
+                maximumFractionDigits={0}
+                minimumFractionDigits={0}
+                style={style.text}
+                value={getTotal(section.title === 'Assets')}
+              />
+            </View>
+          )}
+          renderItem={item => renderItem(item)}
         />
-      </KeyboardAwareScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const accounts = getAccounts(state);
   const records = getRecords(state);
   return { accounts, records };

@@ -1,1 +1,1 @@
-export const getLastBackupDate = (state) => state.backup.lastBackupDate;
+export const getLastBackupDate = state => state.backup.lastBackupDate;

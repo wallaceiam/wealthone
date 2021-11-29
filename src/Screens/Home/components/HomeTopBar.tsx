@@ -26,7 +26,7 @@ const HomeTopBar = ({ netWorth }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const netWorth = getNetWorth(state);
   return { netWorth };
 };

@@ -1,43 +1,18 @@
 import React from 'react';
-import { StyleSheet, View, SectionList, Text, Platform } from 'react-native';
-import { FormattedCurrency } from 'react-native-globalize';
+import { View, SectionList, Platform } from 'react-native';
 import { connect } from 'react-redux';
 
 import SectionHeader from '../../../Components/SectionHeader';
 import { getNetWorthByAccount } from '../../../Redux/Selectors';
-
-import { useStyle } from './../../../Theme';
+import AccountGrowthChart from './AccountGrowthChart';
+import AccountStatItem from './AccountStatItem';
+import AccountTopBar from './AccountTopBar';
 
 const AccountStats = ({ netWorthByAccount, accountId }) => {
-  const style = useStyle();
-
-  const renderItem = ({ item }) => {
-    return (
-      <View style={style.row}>
-        <View style={[style.column, style.noMargins, style.autoMargins]}>
-          <Text style={style.text}>{item.name} </Text>
-        </View>
-        <View>
-          {item.type === 'currency' ? (
-            <FormattedCurrency
-              value={item.value}
-              currency="GBP"
-              maximumFractionDigits={0}
-              minimumFractionDigits={0}
-              style={style.h2}
-            />
-          ) : (
-            <Text style={style.h2}>{(item.value * 100).toFixed(2)}%</Text>
-          )}
-        </View>
-      </View>
-    );
-  };
-
   if (accountId === null || accountId === undefined || accountId === '') {
     return null;
   }
-  const accountStats = (netWorthByAccount || []).find((x) => x.id === accountId);
+  const accountStats = (netWorthByAccount || []).find(x => x.id === accountId);
   if (accountStats === null || accountStats === undefined) {
     return null;
   }
@@ -80,32 +55,30 @@ const AccountStats = ({ netWorthByAccount, accountId }) => {
     { title: 'Total', data: totalData },
   ];
 
-  return (
-    <View style={{ marginTop: Platform.OS == 'ios' ? 20 : 0 }}>
-      <SectionList
-        sections={sections}
-        renderSectionHeader={({ section }) => (
-          <SectionHeader title={section.title} />
-        )}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => `${index}`}
-      />
+  const renderItem = ({ item }) => {
+    return <AccountStatItem item={item} />;
+  };
+
+  const header = () => (
+    <View style={{ marginBottom: Platform.OS == 'ios' ? 20 : 0 }}>
+      <AccountTopBar accountId={accountId} />
+      <AccountGrowthChart accountId={accountId} />
     </View>
+  );
+
+  return (
+    <SectionList
+      ListHeaderComponent={header}
+      sections={sections}
+      renderSectionHeader={({ section }) => (
+        <SectionHeader title={section.title} />
+      )}
+      renderItem={renderItem}
+    />
   );
 };
 
-const styles = StyleSheet.create({
-  sectionListItemStyle: {
-    padding: 24,
-  },
-  elementsContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-});
-
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const netWorthByAccount = getNetWorthByAccount(state);
   return { netWorthByAccount };
 };

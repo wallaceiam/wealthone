@@ -11,13 +11,13 @@ const AccountTopBar = ({ accounts, netWorthByAccount, accountId }) => {
 
   const account =
     (netWorthByAccount || []).length > 0
-      ? netWorthByAccount.find((x) => x.id === accountId)
+      ? netWorthByAccount.find(x => x.id === accountId)
       : undefined;
   const latest =
     account !== undefined && account !== null && account.records.length > 0
       ? account.records[account.records.length - 1].total
       : 0;
-  const nAccount = accounts.find((x) => x.id === accountId);
+  const nAccount = accounts.find(x => x.id === accountId);
   const accountName =
     nAccount !== undefined && nAccount !== null
       ? `${nAccount.name}${nAccount.provider ? ` - ${nAccount.provider}` : ''}`
@@ -37,11 +37,10 @@ const AccountTopBar = ({ accounts, netWorthByAccount, accountId }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const accounts = getAccounts(state);
   const netWorthByAccount = getNetWorthByAccount(state);
   return { accounts, netWorthByAccount };
 };
 
 export default connect(mapStateToProps)(AccountTopBar);
-

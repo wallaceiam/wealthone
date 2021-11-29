@@ -10,15 +10,15 @@ import { getNetWorth } from '../../../Redux/Selectors';
 
 const NetworthGrowthChart = ({ netWorth }) => {
   const theme = useTheme();
- 
-  const data = (netWorth || []).map((c) => {
+
+  const data = (netWorth || []).map(c => {
     return {
       date: new Date(Date.parse(c.date)),
       value: c.total,
     };
   });
 
-  const Gradient = (any) => (
+  const Gradient = any => (
     <Defs>
       <LinearGradient id={'gradient'} x1={'0%'} y={'0%'} x2={'0%'} y2={'100%'}>
         <Stop
@@ -36,12 +36,7 @@ const NetworthGrowthChart = ({ netWorth }) => {
   );
 
   const GraphLine = ({ line }) => (
-    <Path
-      key={'line'}
-      d={line}
-      stroke={theme.colors.secondary}
-      fill={'none'}
-    />
+    <Path key={'line'} d={line} stroke={theme.colors.secondary} fill={'none'} />
   );
 
   // const VerticalLine = ({ line }) =>
@@ -79,7 +74,7 @@ const NetworthGrowthChart = ({ netWorth }) => {
         <LinearGradient
           id={'gradient'}
           x1={'0%'}
-          y={'0%'}
+          y1={'0%'}
           x2={'0%'}
           y2={'100%'}>
           <Stop
@@ -98,7 +93,7 @@ const NetworthGrowthChart = ({ netWorth }) => {
   ) : null;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const netWorth = getNetWorth(state);
   return { netWorth };
 };
