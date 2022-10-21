@@ -27,7 +27,7 @@
     "react-native-globalize": "^4.4.0",
     "react-native-icloudstore": "^0.9.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
-    "react-native-reanimated": "^1.13.1",
+    "react-native-reanimated": "^2.10.0",
     "react-native-redash": "14.2.1",
     "react-native-safe-area-context": "^3.1.8",
     "react-native-screens": "^2.12.0",
