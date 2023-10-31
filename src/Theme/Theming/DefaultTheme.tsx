@@ -1,5 +1,5 @@
-import { DefaultTheme as _LightTheme } from '@react-navigation/native';
-import { ITheme } from './ITheme';
+import {DefaultTheme as _LightTheme} from '@react-navigation/native';
+import {ITheme} from './ITheme';
 
 const DefaultTheme: ITheme = {
   dark: false,

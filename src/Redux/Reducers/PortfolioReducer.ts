@@ -1,13 +1,16 @@
 import 'react-native-get-random-values';
-import { customAlphabet } from 'nanoid';
-import { IsAsset } from '../../Models';
-import { justDate, sameDay } from './../DateHelpers';
+import {customAlphabet} from 'nanoid';
+import {IsAsset} from '../../Models';
+import {justDate, sameDay} from './../DateHelpers';
 
-import { IState } from '../IState';
-import { IAction } from '../IAction';
+import {IState} from '../IState';
+import {IAction} from '../IAction';
 
-const shortid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890_-', 7);
- 
+const shortid = customAlphabet(
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890_-',
+  7,
+);
+
 const INITIAL_STATE: IState = {
   accounts: [],
   records: [],
@@ -16,11 +19,11 @@ const INITIAL_STATE: IState = {
 const portfolioReducer = (state = INITIAL_STATE, action: IAction) => {
   switch (action.type) {
     case 'SAVE_ACCOUNT': {
-      const { accounts } = state;
+      const {accounts} = state;
       if (action.payload.id !== undefined && action.payload.id.length > 0) {
         // existing
         const account = accounts.find(x => x.id === action.payload.id);
-        if(account === undefined) {
+        if (account === undefined) {
           break;
         }
         account.name = action.payload.name;
@@ -37,11 +40,11 @@ const portfolioReducer = (state = INITIAL_STATE, action: IAction) => {
           accountType: action.payload.accountType,
         });
       }
-      return { ...state, accounts: [...accounts] };
+      return {...state, accounts: [...accounts]};
     }
     case 'REMOVE_ACCOUNT': {
       const accountId = action.payload.id;
-      const { accounts, records } = state;
+      const {accounts, records} = state;
       const newAccounts = accounts.filter(x => x.id !== action.payload.id);
       const newRecords = records
         .map(r => ({
@@ -51,15 +54,15 @@ const portfolioReducer = (state = INITIAL_STATE, action: IAction) => {
           outflows: r.outflows.filter(t => t.id !== accountId),
         }))
         .filter(x => x.totals.length > 0);
-      return { ...state, accounts: newAccounts, records: newRecords };
+      return {...state, accounts: newAccounts, records: newRecords};
     }
     case 'RESTORE_DATA': {
-      const { accounts, records } = action.payload;
+      const {accounts, records} = action.payload;
       const updatedRecords = (records || []).map(r => ({
         ...r,
         date: new Date(r.date),
       }));
-      return { accounts, records: updatedRecords };
+      return {accounts, records: updatedRecords};
     }
     case 'IMPORT': {
       const json = JSON.parse(action.payload.json);
@@ -86,34 +89,34 @@ const portfolioReducer = (state = INITIAL_STATE, action: IAction) => {
             totals: x.totals
               .map((y, i) => {
                 if (y != null) {
-                  return { id: accounts[i - offset].id, amount: +y };
+                  return {id: accounts[i - offset].id, amount: +y};
                 }
               })
               .filter(y => y !== undefined),
             inflows: x.inflows
               .map((y, i) => {
                 if (y != null) {
-                  return { id: accounts[i - offset].id, amount: +y };
+                  return {id: accounts[i - offset].id, amount: +y};
                 }
               })
               .filter(y => y !== undefined),
             outflows: x.outflows
               .map((y, i) => {
                 if (y != null) {
-                  return { id: accounts[i - offset].id, amount: +y };
+                  return {id: accounts[i - offset].id, amount: +y};
                 }
               })
               .filter(y => y !== undefined),
           };
         });
 
-        return Object.assign({}, state, { accounts, records });
+        return Object.assign({}, state, {accounts, records});
       } else {
         return json;
       }
     }
     case 'SAVE_ENTRY': {
-      const { records } = state;
+      const {records} = state;
       const index = records.findIndex(x =>
         sameDay(x.date, action.payload.date),
       );
@@ -131,17 +134,17 @@ const portfolioReducer = (state = INITIAL_STATE, action: IAction) => {
           outflows: action.payload.outflows,
         });
       }
-      const newState = { ...state, records: [...records] };
+      const newState = {...state, records: [...records]};
       return newState;
     }
     case 'REMOVE_ENTRY': {
-      const { records } = state;
+      const {records} = state;
       const newRecords = records.filter(x => !sameDay(x.date, action.payload));
-      return { ...state, records: [...newRecords] };
+      return {...state, records: [...newRecords]};
     }
     case 'UPDATE': {
-      const { accounts, records } = state;
-      const newState = { accounts, records };
+      const {accounts, records} = state;
+      const newState = {accounts, records};
       return newState;
     }
     default:

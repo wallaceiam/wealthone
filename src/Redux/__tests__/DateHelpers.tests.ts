@@ -1,4 +1,4 @@
-import { justDate, toUtc } from '../DateHelpers';
+import {justDate, toUtc} from '../DateHelpers';
 
 describe('justDate', () => {
   it('removes the time from a date', () => {

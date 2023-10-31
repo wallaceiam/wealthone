@@ -1,7 +1,7 @@
 import React from 'react';
-import { TouchableOpacity, View, Text } from 'react-native';
+import {TouchableOpacity, View, Text} from 'react-native';
 
-import { useStyle } from '../Theme';
+import {useStyle} from '../Theme';
 import PlusIcon from './Icons/PlusIcon';
 
 interface ISectionFooterProps {
@@ -9,7 +9,7 @@ interface ISectionFooterProps {
   onClick: () => void;
 }
 
-const SectionFooter = ({ text, onClick }: ISectionFooterProps) => {
+const SectionFooter = ({text, onClick}: ISectionFooterProps) => {
   const style = useStyle();
   return (
     <TouchableOpacity onPress={onClick}>

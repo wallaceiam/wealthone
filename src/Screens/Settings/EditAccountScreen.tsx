@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
 import {
   SafeAreaView,
   View,
@@ -13,15 +8,15 @@ import {
   Alert,
   TouchableOpacity,
 } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { connect } from 'react-redux';
+import {Picker} from '@react-native-picker/picker';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {connect} from 'react-redux';
 
 import FloatingLabelTextInput from '../../Components/FloatingLabelTextInput';
 
-import { saveAccount, removeAccount } from '../../Redux/Actions';
-import { IsAsset, AccountTypes } from '../../Models';
-import { useStyle, useTheme } from '../../Theme';
+import {saveAccount, removeAccount} from '../../Redux/Actions';
+import {IsAsset, AccountTypes} from '../../Models';
+import {useStyle, useTheme} from '../../Theme';
 import SaveIcon from '../../Components/Icons/SaveIcon';
 import TrashIcon from '../../Components/Icons/TrashIcon';
 
@@ -53,7 +48,7 @@ const defaultAccount = {
   accountType: AccountTypes[0].id,
 };
 
-const EditAccountScreen = ({ dispatch }) => {
+const EditAccountScreen = ({dispatch}) => {
   const navigation = useNavigation();
   const theme = useTheme();
   const style = useStyle();
@@ -82,7 +77,7 @@ const EditAccountScreen = ({ dispatch }) => {
           onPress: () => onRemoveAccountConfirmed(),
           style: 'destructive',
         },
-        { text: 'No' },
+        {text: 'No'},
       ],
     );
   }, [account, dispatch, navigation]);
@@ -125,9 +120,9 @@ const EditAccountScreen = ({ dispatch }) => {
     onSaveAccount,
   ]);
 
-  const { isAsset } = account;
+  const {isAsset} = account;
 
-  const accountTypes = AccountTypes.filter((x) => x.isAsset === isAsset).map(
+  const accountTypes = AccountTypes.filter(x => x.isAsset === isAsset).map(
     (s, i) => {
       return (
         <Picker.Item
@@ -149,22 +144,20 @@ const EditAccountScreen = ({ dispatch }) => {
           <View style={styles.inner}>
             <FloatingLabelTextInput
               label="Account name"
-              onChangeText={(text) => setAccount({ ...account, name: text })}
+              onChangeText={text => setAccount({...account, name: text})}
               value={account.name}
             />
             <FloatingLabelTextInput
               label="Provider"
-              onChangeText={(text) =>
-                setAccount({ ...account, provider: text })
-              }
+              onChangeText={text => setAccount({...account, provider: text})}
               value={account.provider}
             />
             <View>
               <Text style={style.label}>Type</Text>
               <Picker
                 selectedValue={account.accountType}
-                onValueChange={(item) =>
-                  setAccount({ ...account, accountType: item })
+                onValueChange={item =>
+                  setAccount({...account, accountType: item})
                 }>
                 {accountTypes}
               </Picker>

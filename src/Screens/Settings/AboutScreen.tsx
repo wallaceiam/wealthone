@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
   SafeAreaView,
   SectionList,
@@ -7,24 +7,34 @@ import {
   Text,
   View,
 } from 'react-native';
-import { useStyle } from '../../Theme';
+import {useStyle} from '../../Theme';
+import {SectionHeader} from './SectionHeader';
 
-const AboutScreen = (props) => {
+interface IItem {
+  readonly type: string;
+  readonly value: any;
+}
+
+interface IData {
+  readonly item: IItem;
+}
+
+const AboutScreen = () => {
   const style = useStyle();
 
   const manifest = {};
   // const { manifest } = Constants;
   const sections = [
-    { data: [{ value: manifest.sdkVersion }], title: 'sdkVersion' },
-    { data: [{ value: manifest.privacy }], title: 'privacy' },
-    { data: [{ value: manifest.version }], title: 'version' },
-    { data: [{ value: manifest.orientation }], title: 'orientation' },
+    {data: [{value: manifest.sdkVersion}], title: 'sdkVersion'},
+    {data: [{value: manifest.privacy}], title: 'privacy'},
+    {data: [{value: manifest.version}], title: 'version'},
+    {data: [{value: manifest.orientation}], title: 'orientation'},
     {
-      data: [{ value: manifest.primaryColor, type: 'color' }],
+      data: [{value: manifest.primaryColor, type: 'color'}],
       title: 'primaryColor',
     },
     {
-      data: [{ value: manifest.splash && manifest.splash.image }],
+      data: [{value: manifest.splash && manifest.splash.image}],
       title: 'splash.image',
     },
     {
@@ -54,7 +64,7 @@ const AboutScreen = (props) => {
     },
   ];
 
-  const _renderItem = ({ item }) => {
+  const renderItem = React.useCallback(({item}: IData) => {
     if (item.type === 'color') {
       return (
         <SectionContent>
@@ -68,14 +78,14 @@ const AboutScreen = (props) => {
         </SectionContent>
       );
     }
-  };
+  }, []);
 
   return (
     <SafeAreaView style={style.safeAreaView}>
       <SectionList
         style={styles.container}
-        renderItem={_renderItem}
-        renderSectionHeader={({ section }) => (
+        renderItem={renderItem}
+        renderSectionHeader={({section}) => (
           <SectionHeader title={section.title} />
         )}
         stickySectionHeadersEnabled={true}
@@ -89,7 +99,7 @@ const AboutScreen = (props) => {
 
 const ListHeader = () => {
   // const { manifest } = Constants;
-  const manifest = {};
+  const manifest: any = {};
 
   return (
     <View style={styles.titleContainer}>
@@ -112,19 +122,14 @@ const ListHeader = () => {
   );
 };
 
-const SectionHeader = ({ title }) => {
-  return (
-    <View style={styles.sectionHeaderContainer}>
-      <Text style={styles.sectionHeaderText}>{title}</Text>
-    </View>
-  );
+const SectionContent = ({children}: React.PropsWithChildren<unknown>) => {
+  return <View style={styles.sectionContentContainer}>{children}</View>;
 };
 
-const SectionContent = (props) => {
-  return <View style={styles.sectionContentContainer}>{props.children}</View>;
-};
-
-const AppIconPreview = ({ iconUrl }) => {
+interface IAppIconPreviewProps {
+  readonly iconUrl?: string;
+}
+const AppIconPreview = ({iconUrl}: IAppIconPreviewProps) => {
   if (!iconUrl) {
     iconUrl =
       'https://s3.amazonaws.com/exp-brand-assets/ExponentEmptyManifest_192.png';
@@ -132,20 +137,23 @@ const AppIconPreview = ({ iconUrl }) => {
 
   return (
     <Image
-      source={{ uri: iconUrl }}
-      style={{ width: 64, height: 64 }}
+      source={{uri: iconUrl}}
+      style={{width: 64, height: 64}}
       resizeMode="cover"
     />
   );
 };
 
-const Color = ({ value }) => {
+interface IColorProps {
+  readonly value?: string;
+}
+const Color = ({value}: IColorProps) => {
   if (!value) {
     return <View />;
   } else {
     return (
       <View style={styles.colorContainer}>
-        <View style={[styles.colorPreview, { backgroundColor: value }]} />
+        <View style={[styles.colorPreview, {backgroundColor: value}]} />
         <View style={styles.colorTextContainer}>
           <Text style={styles.sectionContentText}>{value}</Text>
         </View>
@@ -154,7 +162,7 @@ const Color = ({ value }) => {
   }
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',

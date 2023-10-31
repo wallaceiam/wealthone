@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, SectionList, Platform } from 'react-native';
-import { connect } from 'react-redux';
+import {View, SectionList, Platform} from 'react-native';
+import {connect} from 'react-redux';
 
 import SectionHeader from '../../../Components/SectionHeader';
+import {IAccount} from '../../../Redux/IAccount';
+import {IRecord, IState} from '../../../Redux/IState';
 import {
   getAssetAccounts,
   getLiabilityAccounts,
@@ -12,7 +14,17 @@ import AccountItem from './AccountItem';
 import HomeTopBar from './HomeTopBar';
 import NetworthGrowthChart from './NetworthGrowthChart';
 
-const PortfolioList = ({ assetAccounts, liabilityAccounts, records }) => {
+interface IPortfolioListProps {
+  readonly assetAccounts: IAccount[];
+  readonly liabilityAccounts: IAccount[];
+  readonly records: IRecord[];
+}
+
+const PortfolioList = ({
+  assetAccounts,
+  liabilityAccounts,
+  records,
+}: IPortfolioListProps) => {
   const last = records.length - 1;
 
   const assets = assetAccounts.map(x => {
@@ -46,10 +58,10 @@ const PortfolioList = ({ assetAccounts, liabilityAccounts, records }) => {
     };
   });
 
-  const renderItem = ({ item }) => <AccountItem item={item} />;
+  const renderItem = ({item}) => <AccountItem item={item} />;
 
   const header = () => (
-    <View style={{ marginBottom: Platform.OS == 'ios' ? 20 : 0 }}>
+    <View style={{marginBottom: Platform.OS == 'ios' ? 20 : 0}}>
       <HomeTopBar />
       <NetworthGrowthChart />
     </View>
@@ -58,20 +70,20 @@ const PortfolioList = ({ assetAccounts, liabilityAccounts, records }) => {
   const sections =
     assets.length > 0 && liabilities.length > 0
       ? [
-          { title: 'Assets', data: assets },
-          { title: 'Liabilities', data: liabilities },
+          {title: 'Assets', data: assets},
+          {title: 'Liabilities', data: liabilities},
         ]
       : assets.length > 0
-      ? [{ title: 'Assets', data: assets }]
+      ? [{title: 'Assets', data: assets}]
       : liabilities.length > 0
-      ? [{ title: 'Liabilities', data: liabilities }]
+      ? [{title: 'Liabilities', data: liabilities}]
       : [];
 
   return (
     <SectionList
       ListHeaderComponent={header}
       sections={sections}
-      renderSectionHeader={({ section }) => (
+      renderSectionHeader={({section}) => (
         <SectionHeader title={section.title} />
       )}
       renderItem={renderItem}
@@ -79,11 +91,15 @@ const PortfolioList = ({ assetAccounts, liabilityAccounts, records }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: IState): IPortfolioListProps => {
   const assetAccounts = getAssetAccounts(state);
   const liabilityAccounts = getLiabilityAccounts(state);
   const records = getRecords(state);
-  return { assetAccounts, liabilityAccounts, records };
+  return {
+    assetAccounts,
+    liabilityAccounts,
+    records,
+  };
 };
 
 export default connect(mapStateToProps)(PortfolioList);

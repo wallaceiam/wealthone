@@ -1,15 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Path } from 'react-native-svg';
-import { AreaChart } from 'react-native-svg-charts';
-import { Defs, LinearGradient, Stop } from 'react-native-svg';
+import {connect} from 'react-redux';
+import {Path} from 'react-native-svg';
+import {AreaChart} from 'react-native-svg-charts';
+import {Defs, LinearGradient, Stop} from 'react-native-svg';
 import * as shape from 'd3-shape';
 import * as scale from 'd3-scale';
 
-import { useTheme } from '../../../Theme';
-import { getNetWorthByAccount } from '../../../Redux/Selectors';
+import {useTheme} from '../../../Theme';
+import {getNetWorthByAccount} from '../../../Redux/Selectors';
 
-const AccountGrowthChart = ({ netWorthByAccount, accountId }) => {
+const AccountGrowthChart = ({netWorthByAccount, accountId}) => {
   const theme = useTheme();
 
   const account =
@@ -27,7 +27,7 @@ const AccountGrowthChart = ({ netWorthByAccount, accountId }) => {
     };
   });
 
-  const Gradient = ({ index }) => (
+  const Gradient = ({index}) => (
     <Defs key={index}>
       <LinearGradient id={'gradient'} x1={'0%'} y1={'0%'} x2={'0%'} y2={'100%'}>
         <Stop
@@ -40,20 +40,20 @@ const AccountGrowthChart = ({ netWorthByAccount, accountId }) => {
     </Defs>
   );
 
-  const Line = ({ line }) => (
+  const Line = ({line}) => (
     <Path key={'line'} d={line} stroke={theme.colors.primary} fill={'none'} />
   );
 
   return data.length > 1 ? (
     <AreaChart
-      style={{ height: 200 }}
+      style={{height: 200}}
       data={data}
-      yAccessor={({ item }) => item.value}
-      xAccessor={({ item }) => item.date}
+      yAccessor={({item}) => item.value}
+      xAccessor={({item}) => item.date}
       xScale={scale.scaleTime}
-      contentInset={{ top: 30, bottom: 30 }}
+      contentInset={{top: 30, bottom: 30}}
       curve={shape.curveNatural}
-      svg={{ fill: 'url(#gradient)', viewBox: '0 0 200 200' }}
+      svg={{fill: 'url(#gradient)', viewBox: '0 0 200 200'}}
       // svg={{ fill: globalColours.primary_o20 }}
     >
       <Line />
@@ -82,7 +82,7 @@ const AccountGrowthChart = ({ netWorthByAccount, accountId }) => {
 
 const mapStateToProps = state => {
   const netWorthByAccount = getNetWorthByAccount(state);
-  return { netWorthByAccount };
+  return {netWorthByAccount};
 };
 
 export default connect(mapStateToProps)(AccountGrowthChart);

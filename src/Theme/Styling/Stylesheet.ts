@@ -1,23 +1,16 @@
-import { StyleSheet } from 'react-native';
-import { ITheme } from '../Theming/ITheme';
+import {StyleSheet} from 'react-native';
+import {ITheme} from '../Theming/ITheme';
 
-type FlexDirection =
-  'row'
-  | 'column'
-  | 'row-reverse'
-  | 'column-reverse';
+type FlexDirection = 'row' | 'column' | 'row-reverse' | 'column-reverse';
 type JustifyContent =
-  'flex-start'
+  | 'flex-start'
   | 'flex-end'
   | 'center'
   | 'space-between'
   | 'space-around'
-  | 'space-evenly'
-type Margin = 
-  'auto'
-  | number;
-type TextAlign = 
-  'right';
+  | 'space-evenly';
+type Margin = 'auto' | number;
+type TextAlign = 'right';
 
 const css = (theme: ITheme) => ({
   /* Containers */

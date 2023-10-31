@@ -1,4 +1,4 @@
-import { toUtc } from '../DateHelpers';
+import {toUtc} from '../DateHelpers';
 
 const INITIAL_STATE = {
   birthDate: toUtc(new Date(1978, 11, 26)),
@@ -15,10 +15,10 @@ const INITIAL_STATE = {
 const goalReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case 'SAVE_GOAL':
-      return { ...state, ...action.payload };
+      return {...state, ...action.payload};
     case 'RESTORE_DATA': {
-      const { goal } = action.payload;
-      return { ...state, ...goal };
+      const {goal} = action.payload;
+      return {...state, ...goal};
     }
   }
   return state;

@@ -1,16 +1,17 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { persistStore, persistReducer } from 'redux-persist';
-import { createLogger } from 'redux-logger';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
+import {persistStore, persistReducer} from 'redux-persist';
+import {createLogger} from 'redux-logger';
 import createCompressor from './createCompressor';
 import iCloudStorage from 'react-native-icloudstore';
 
-import { backupReducer, goalReducer, portfolioReducer } from './Reducers';
+import {backupReducer, goalReducer, portfolioReducer} from './Reducers';
 import thunk from 'redux-thunk';
-import { IAction } from './IAction';
+import {IAction} from './IAction';
 
 const compressor = createCompressor();
 
-const replacer = (_key: string, value: any) => (Array.isArray(value) ? [] : value);
+const replacer = (_key: string, value: any) =>
+  Array.isArray(value) ? [] : value;
 
 const stateTransformer = (state: any) => JSON.stringify(state, replacer);
 

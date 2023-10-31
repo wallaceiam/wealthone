@@ -1,4 +1,4 @@
-import { CAGR, CI } from '../Finance';
+import {CAGR, CI} from '../Finance';
 
 describe('finance', () => {
   it('CAGR', () => {
@@ -11,11 +11,11 @@ describe('finance', () => {
     expect(ci).toEqual(1938.84);
   });
 
-  it('CAGR and CI', ()=> {
+  it('CAGR and CI', () => {
     const rate = CAGR(1500, 1938.84, 12);
     expect(rate).toEqual(2.16);
 
     const ci = CI(rate, 1, 1500, 12);
     expect(ci).toEqual(1938.48);
-  })
+  });
 });

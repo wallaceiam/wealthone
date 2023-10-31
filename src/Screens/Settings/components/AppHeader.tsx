@@ -1,7 +1,7 @@
-import React from 'react';
-import { Text, View, Image, ImageStyle } from 'react-native';
+import * as React from 'react';
+import {Text, View, Image, ImageStyle} from 'react-native';
 
-import { useStyle } from '../../../Theme';
+import {useStyle} from '../../../Theme';
 
 const AppHeader = () => {
   const style = useStyle();

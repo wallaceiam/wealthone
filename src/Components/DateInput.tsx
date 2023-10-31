@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Animated, Text, TouchableOpacity, View } from 'react-native';
+import {Animated, Text, TouchableOpacity, View} from 'react-native';
 import DatePickerIOS from '@react-native-community/datetimepicker';
 
-import { useStyle, useTheme } from '../Theme';
-import { toUtc } from '../Redux/DateHelpers';
+import {useStyle, useTheme} from '../Theme';
+import {toUtc} from '../Redux/DateHelpers';
 
 interface IDateInputProps {
   label: string;
@@ -11,7 +11,7 @@ interface IDateInputProps {
   onDateChanged: (date: Date) => void;
 }
 
-const DateInput = ({ label, date, onDateChanged }: IDateInputProps) => {
+const DateInput = ({label, date, onDateChanged}: IDateInputProps) => {
   const style = useStyle();
   const theme = useTheme();
 
@@ -44,9 +44,9 @@ const DateInput = ({ label, date, onDateChanged }: IDateInputProps) => {
         style.bottomMargin,
         style.topMargin,
         style.column,
-        { marginTop: 32, minHeight: animation },
+        {marginTop: 32, minHeight: animation},
       ]}>
-      <View style={{ height: 32 }}>
+      <View style={{height: 32}}>
         <View style={[style.row, style.noMargins]}>
           <View style={[style.column, style.noMargins]}>
             <Text style={style.label}>{label}</Text>
@@ -58,7 +58,7 @@ const DateInput = ({ label, date, onDateChanged }: IDateInputProps) => {
               borderBottomColor: '#E7E7E7',
             }}>
             <TouchableOpacity onPress={onToggleDate}>
-              <Text style={[style.textInput, { textAlign: 'right' }]}>
+              <Text style={[style.textInput, {textAlign: 'right'}]}>
                 {date.toDateString()}
               </Text>
             </TouchableOpacity>

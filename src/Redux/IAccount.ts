@@ -1,4 +1,4 @@
-import { IAccountType } from '../Models';
+import {IAccountType} from '../Models';
 
 export interface IAccount {
   id: string;

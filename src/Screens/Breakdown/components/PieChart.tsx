@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
+import React, {useState} from 'react';
+import {View} from 'react-native';
 import * as shape from 'd3-shape';
-import Svg, { G, Path } from 'react-native-svg';
+import Svg, {G, Path} from 'react-native-svg';
 
 export interface IPieChartData {
   svg: object;
@@ -21,7 +21,7 @@ export interface IPieChartProps {
   animationDuration?: number;
   style?: any;
   sort?: (a, b) => number;
-  valueAccessor?: ({ item }) => number;
+  valueAccessor?: ({item}) => number;
   startAngle?: number;
   endAngle?: number;
   children?: React.ReactNode[];
@@ -37,7 +37,7 @@ const PieChart = ({
   animationDuration = 0,
   style,
   sort = (a, b) => b.value - a.value,
-  valueAccessor = ({ item }) => item.value,
+  valueAccessor = ({item}) => item.value,
   children,
   startAngle = 0,
   endAngle = Math.PI * 2,
@@ -45,10 +45,10 @@ const PieChart = ({
   const [width, setWidth] = useState(100);
   const [height, setHeight] = useState(100);
 
-  const _onLayout = (event) => {
+  const _onLayout = event => {
     const {
       nativeEvent: {
-        layout: { height, width },
+        layout: {height, width},
       },
     } = event;
 
@@ -72,7 +72,7 @@ const PieChart = ({
 
   const maxRadius = Math.min(width, height) / 2;
 
-  if (Math.min(...data.map((obj) => valueAccessor({ item: obj }))) < 0) {
+  if (Math.min(...data.map(obj => valueAccessor({item: obj}))) < 0) {
     console.error(
       "don't pass negative numbers to pie-chart, it makes no sense!",
     );
@@ -86,7 +86,7 @@ const PieChart = ({
     console.warn('innerRadius is equal to or greater than outerRadius');
   }
 
-  const arcs = data.map((item) => {
+  const arcs = data.map(item => {
     const arc = shape
       .arc()
       .outerRadius(_outerRadius)
@@ -120,7 +120,7 @@ const PieChart = ({
 
   const pieSlices = shape
     .pie()
-    .value((d) => valueAccessor({ item: d }))
+    .value(d => valueAccessor({item: d}))
     .sort(sort)
     .startAngle(startAngle)
     .endAngle(endAngle)(data);
@@ -140,17 +140,17 @@ const PieChart = ({
 
   return (
     <View style={style}>
-      <View style={{ flex: 1 }} onLayout={(event) => _onLayout(event)}>
+      <View style={{flex: 1}} onLayout={event => _onLayout(event)}>
         {height > 0 && width > 0 && (
-          <Svg style={{ height, width }}>
+          <Svg style={{height, width}}>
             <G x={width / 2} y={height / 2}>
               {pieSlices.map((slice, index) => {
-                const { key, onPress, svg } = data[index];
+                const {key, onPress, svg} = data[index];
                 return (
                   <Path
                     key={key}
                     onPress={onPress}
-                    d={arcs[index](slice)} 
+                    d={arcs[index](slice)}
                     {...svg}
                   />
                 );

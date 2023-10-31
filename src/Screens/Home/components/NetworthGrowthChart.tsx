@@ -1,14 +1,14 @@
 import React from 'react';
-import { AreaChart } from 'react-native-svg-charts';
-import { Path, Defs, LinearGradient, Stop, Rect, Line } from 'react-native-svg';
+import {AreaChart} from 'react-native-svg-charts';
+import {Path, Defs, LinearGradient, Stop, Rect, Line} from 'react-native-svg';
 import * as shape from 'd3-shape';
 import * as scale from 'd3-scale';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-import { useTheme } from '../../../Theme';
-import { getNetWorth } from '../../../Redux/Selectors';
+import {useTheme} from '../../../Theme';
+import {getNetWorth} from '../../../Redux/Selectors';
 
-const NetworthGrowthChart = ({ netWorth }) => {
+const NetworthGrowthChart = ({netWorth}) => {
   const theme = useTheme();
 
   const data = (netWorth || []).map(c => {
@@ -35,7 +35,7 @@ const NetworthGrowthChart = ({ netWorth }) => {
     </Defs>
   );
 
-  const GraphLine = ({ line }) => (
+  const GraphLine = ({line}) => (
     <Path key={'line'} d={line} stroke={theme.colors.secondary} fill={'none'} />
   );
 
@@ -59,14 +59,14 @@ const NetworthGrowthChart = ({ netWorth }) => {
 
   return data.length > 1 ? (
     <AreaChart
-      style={{ height: 200 }}
+      style={{height: 200}}
       data={data}
-      yAccessor={({ item }) => item.value}
-      xAccessor={({ item }) => item.date}
+      yAccessor={({item}) => item.value}
+      xAccessor={({item}) => item.date}
       xScale={scale.scaleTime}
-      contentInset={{ top: 30, bottom: 30 }}
+      contentInset={{top: 30, bottom: 30}}
       curve={shape.curveNatural}
-      svg={{ fill: 'url(#gradient)' }}
+      svg={{fill: 'url(#gradient)'}}
       // svg={{ fill: globalColours.primary_o20 }}
     >
       <GraphLine />
@@ -95,7 +95,7 @@ const NetworthGrowthChart = ({ netWorth }) => {
 
 const mapStateToProps = state => {
   const netWorth = getNetWorth(state);
-  return { netWorth };
+  return {netWorth};
 };
 
 export default connect(mapStateToProps)(NetworthGrowthChart);

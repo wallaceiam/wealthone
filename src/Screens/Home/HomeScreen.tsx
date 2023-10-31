@@ -1,9 +1,9 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useCallback, useLayoutEffect } from 'react';
-import { SafeAreaView, TouchableOpacity } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import React, {useCallback, useLayoutEffect} from 'react';
+import {SafeAreaView, TouchableOpacity} from 'react-native';
 
-import { justDate, toUtc } from '../../Redux/DateHelpers';
-import { useStyle } from '../../Theme';
+import {justDate, toUtc} from '../../Redux/DateHelpers';
+import {useStyle} from '../../Theme';
 import PlusIcon from '../../Components/Icons/PlusIcon';
 import PortfolioList from './components/PortfolioList2';
 

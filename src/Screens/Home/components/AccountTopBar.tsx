@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { FormattedCurrency } from 'react-native-globalize';
-import { connect } from 'react-redux';
+import {Text, View} from 'react-native';
+import {FormattedCurrency} from 'react-native-globalize';
+import {connect} from 'react-redux';
 
-import { getAccounts, getNetWorthByAccount } from '../../../Redux/Selectors';
-import { useStyle } from './../../../Theme';
+import {getAccounts, getNetWorthByAccount} from '../../../Redux/Selectors';
+import {useStyle} from './../../../Theme';
 
-const AccountTopBar = ({ accounts, netWorthByAccount, accountId }) => {
+const AccountTopBar = ({accounts, netWorthByAccount, accountId}) => {
   const style = useStyle();
 
   const account =
@@ -40,7 +40,7 @@ const AccountTopBar = ({ accounts, netWorthByAccount, accountId }) => {
 const mapStateToProps = state => {
   const accounts = getAccounts(state);
   const netWorthByAccount = getNetWorthByAccount(state);
-  return { accounts, netWorthByAccount };
+  return {accounts, netWorthByAccount};
 };
 
 export default connect(mapStateToProps)(AccountTopBar);

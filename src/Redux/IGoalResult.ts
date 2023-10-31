@@ -1,2 +1,1 @@
-
-export interface IGoalResult { }
+export interface IGoalResult {}

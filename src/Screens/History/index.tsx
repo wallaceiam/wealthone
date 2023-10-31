@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import HistoryScreen from './HistoryScreen';
 import EntryScreen from '../Home/EntryScreen';

@@ -1,7 +1,7 @@
-import { createSelector } from 'reselect';
-import { IsAsset } from '../../Models/Account';
-import { toDate } from '../DateHelpers';
-import { getAccounts, getRecords } from './AccountSelector';
+import {createSelector} from 'reselect';
+import {IsAsset} from '../../Models/Account';
+import {toDate} from '../DateHelpers';
+import {getAccounts, getRecords} from './AccountSelector';
 
 const sameYear = (d1, d2) =>
   toDate(d1).getFullYear() === toDate(d2).getFullYear();

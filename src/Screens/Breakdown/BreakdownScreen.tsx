@@ -1,20 +1,20 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, View, Text } from 'react-native';
-import { connect } from 'react-redux';
+import {SafeAreaView, ScrollView, View, Text} from 'react-native';
+import {connect} from 'react-redux';
 
 import PieChart from './components/BreakdownPieChart';
 
-import { useStyle, useTheme } from '../../Theme';
+import {useStyle, useTheme} from '../../Theme';
 
-import { IsAsset, AccountTypes } from '../../Models';
-import { getAccounts, getNetWorthByAccount } from '../../Redux/Selectors';
+import {IsAsset, AccountTypes} from '../../Models';
+import {getAccounts, getNetWorthByAccount} from '../../Redux/Selectors';
 
-const BreakdownScreen = ({ accounts, netWorthByAccount }) => {
+const BreakdownScreen = ({accounts, netWorthByAccount}) => {
   const theme = useTheme();
   const style = useStyle();
 
   const accountKeys = (netWorthByAccount || [])
-    .map((v) => ({
+    .map(v => ({
       id: v.id,
       value:
         v.records[v.records.length - 1] !== undefined
@@ -24,47 +24,46 @@ const BreakdownScreen = ({ accounts, netWorthByAccount }) => {
     .sort((a, b) => a.value - b.value);
 
   const assetData = (accounts || [])
-    .filter((x) => x.isAsset === IsAsset.Asset)
-    .map((x) => ({
+    .filter(x => x.isAsset === IsAsset.Asset)
+    .map(x => ({
       key: `${x.name} - ${x.provider}`,
-      value: accountKeys.find((y) => y.id === x.id).value,
+      value: accountKeys.find(y => y.id === x.id).value,
     }));
 
   const assetGroupData = (accounts || [])
-    .filter((x) => x.isAsset === IsAsset.Asset)
-    .map((x) => ({
-      key: AccountTypes.find((a) => a.id === x.accountType)?.name,
-      value: accountKeys.find((y) => y.id === x.id).value,
+    .filter(x => x.isAsset === IsAsset.Asset)
+    .map(x => ({
+      key: AccountTypes.find(a => a.id === x.accountType)?.name,
+      value: accountKeys.find(y => y.id === x.id).value,
     }))
     .reduce((p, c) => {
-      const prev = p.find((x) => x.key === c.key);
+      const prev = p.find(x => x.key === c.key);
       if (prev !== undefined && prev !== null) {
         prev.value += +c.value;
       } else {
-        p.push({ key: c.key, value: +c.value });
+        p.push({key: c.key, value: +c.value});
       }
       return p;
     }, []);
 
   const liabilityData = (accounts || [])
-    .filter((x) => x.isAsset === IsAsset.Liability)
-    .map((x) => ({
+    .filter(x => x.isAsset === IsAsset.Liability)
+    .map(x => ({
       key: `${x.name} - ${x.provider}`,
-      value: accountKeys.find((y) => y.id === x.id).value,
+      value: accountKeys.find(y => y.id === x.id).value,
     }));
 
   const assets =
     assetData.length > 0 ? (
       <View>
-        <Text
-          style={[style.sectionHeaderStyle, { color: theme.colors.primary }]}>
+        <Text style={[style.sectionHeaderStyle, {color: theme.colors.primary}]}>
           {' '}
           Assets{' '}
         </Text>
         <Text
           style={[
             style.subSectionHeaderStyle,
-            { color: theme.colors.secondary },
+            {color: theme.colors.secondary},
           ]}>
           {' '}
           By Type{' '}
@@ -73,7 +72,7 @@ const BreakdownScreen = ({ accounts, netWorthByAccount }) => {
         <Text
           style={[
             style.subSectionHeaderStyle,
-            { color: theme.colors.secondary, marginTop: 20 },
+            {color: theme.colors.secondary, marginTop: 20},
           ]}>
           By Account
         </Text>
@@ -83,15 +82,14 @@ const BreakdownScreen = ({ accounts, netWorthByAccount }) => {
   const liabilities =
     liabilityData.length > 0 ? (
       <View>
-        <Text
-          style={[style.sectionHeaderStyle, { color: theme.colors.primary }]}>
+        <Text style={[style.sectionHeaderStyle, {color: theme.colors.primary}]}>
           {' '}
           Liabilities{' '}
         </Text>
         <Text
           style={[
             style.subSectionHeaderStyle,
-            { color: theme.colors.secondary },
+            {color: theme.colors.secondary},
           ]}>
           {' '}
           By Account{' '}
@@ -112,10 +110,10 @@ const BreakdownScreen = ({ accounts, netWorthByAccount }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const accounts = getAccounts(state);
   const netWorthByAccount = getNetWorthByAccount(state);
-  return { accounts, netWorthByAccount };
+  return {accounts, netWorthByAccount};
 };
 
 export default connect(mapStateToProps)(BreakdownScreen);

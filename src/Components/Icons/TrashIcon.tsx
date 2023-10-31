@@ -1,6 +1,6 @@
 import React from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import { useTheme } from '../../Theme';
+import {useTheme} from '../../Theme';
 
 const TrashIcon = () => {
   const theme = useTheme();

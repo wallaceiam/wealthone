@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
 import {
   SafeAreaView,
   View,
@@ -11,19 +6,19 @@ import {
   SectionList,
   TouchableOpacity,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-import { saveGoal } from '../../Redux/Actions';
+import {saveGoal} from '../../Redux/Actions';
 
-import { useStyle, useTheme } from '../../Theme';
-import { SectionHeader, DateInput } from '../../Components';
+import {useStyle, useTheme} from '../../Theme';
+import {SectionHeader, DateInput} from '../../Components';
 import SaveIcon from '../../Components/Icons/SaveIcon';
-import { getGoalInput } from '../../Redux/Selectors';
+import {getGoalInput} from '../../Redux/Selectors';
 
-const EditGoalScreen = ({ goal, dispatch }) => {
+const EditGoalScreen = ({goal, dispatch}) => {
   const navigation = useNavigation();
   const theme = useTheme();
   const style = useStyle();
@@ -86,7 +81,7 @@ const EditGoalScreen = ({ goal, dispatch }) => {
     setCurrentAge(v);
   }, [birthDate]);
 
-  const titleForItem = (item) => {
+  const titleForItem = item => {
     switch (item) {
       case 'age':
         return 'Current age:';
@@ -106,7 +101,7 @@ const EditGoalScreen = ({ goal, dispatch }) => {
     return null;
   };
 
-  const sliderForItem = (item) => {
+  const sliderForItem = item => {
     switch (item) {
       case 'retirementAge':
         return (
@@ -115,7 +110,7 @@ const EditGoalScreen = ({ goal, dispatch }) => {
             minimumValue={currentAge}
             maximumValue={75}
             minimumTrackTintColor={theme.colors.primary}
-            onValueChange={(v) => setRetirementAge(Math.max(v, currentAge))}
+            onValueChange={v => setRetirementAge(Math.max(v, currentAge))}
             value={retirementAge}
           />
         );
@@ -126,7 +121,7 @@ const EditGoalScreen = ({ goal, dispatch }) => {
             minimumValue={0}
             maximumValue={150000}
             minimumTrackTintColor={theme.colors.primary}
-            onValueChange={(v) => setEarnings(v)}
+            onValueChange={v => setEarnings(v)}
             value={earnings}
           />
         );
@@ -137,7 +132,7 @@ const EditGoalScreen = ({ goal, dispatch }) => {
             minimumValue={0}
             maximumValue={Math.floor(earnings / 12)}
             minimumTrackTintColor={theme.colors.primary}
-            onValueChange={(v) => setContributions(v)}
+            onValueChange={v => setContributions(v)}
             value={contributions}
           />
         );
@@ -148,7 +143,7 @@ const EditGoalScreen = ({ goal, dispatch }) => {
             minimumValue={0}
             maximumValue={6}
             minimumTrackTintColor={theme.colors.primary}
-            onValueChange={(v) => setInvestmentStyle(v)}
+            onValueChange={v => setInvestmentStyle(v)}
             value={investmentStyle}
           />
         );
@@ -159,7 +154,7 @@ const EditGoalScreen = ({ goal, dispatch }) => {
             minimumValue={0}
             maximumValue={100}
             minimumTrackTintColor={theme.colors.primary}
-            onValueChange={(v) => setLifeStyle(v)}
+            onValueChange={v => setLifeStyle(v)}
             value={lifeStyle}
           />
         );
@@ -167,8 +162,8 @@ const EditGoalScreen = ({ goal, dispatch }) => {
     return null;
   };
 
-  const valueForItem = (item) => {
-    const currencyFormatter = (v) => v;
+  const valueForItem = item => {
+    const currencyFormatter = v => v;
     //Globalize.getCurrencyFormatter('GBP', {
     // minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
@@ -210,14 +205,14 @@ const EditGoalScreen = ({ goal, dispatch }) => {
     return null;
   };
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({item}) => {
     if (item === 'birthDate') {
       return (
         <View style={style.bottomMargin}>
           <DateInput
             label="Date of Birth"
             date={birthDate}
-            onDateChanged={(d) => setBirthDate(d)}
+            onDateChanged={d => setBirthDate(d)}
           />
         </View>
       );
@@ -232,18 +227,18 @@ const EditGoalScreen = ({ goal, dispatch }) => {
           <Text style={style.text}>{title} </Text>
           {val}
         </View>
-        <View style={{ flex: 2 }}>{slider}</View>
+        <View style={{flex: 2}}>{slider}</View>
       </View>
     );
   };
 
   const sections = [
-    { title: 'Time', data: ['birthDate', 'age', 'retirementAge'] },
+    {title: 'Time', data: ['birthDate', 'age', 'retirementAge']},
     {
       title: 'Money',
       data: ['salary', 'contributions', 'retirementLifeStyle'],
     },
-    { title: 'Settings', data: ['investmentStyle' /*, 'pension'*/] },
+    {title: 'Settings', data: ['investmentStyle' /*, 'pension'*/]},
   ];
   return (
     <SafeAreaView style={style.safeAreaView}>
@@ -251,7 +246,7 @@ const EditGoalScreen = ({ goal, dispatch }) => {
         <SectionList
           style={style.contentContainer}
           sections={sections}
-          renderSectionHeader={({ section }) => (
+          renderSectionHeader={({section}) => (
             <SectionHeader title={section.title} />
           )}
           renderItem={renderItem}
@@ -262,9 +257,9 @@ const EditGoalScreen = ({ goal, dispatch }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const goal = getGoalInput(state);
-  return { goal };
+  return {goal};
 };
 
 export default connect(mapStateToProps)(EditGoalScreen);

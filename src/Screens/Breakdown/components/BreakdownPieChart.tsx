@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { View, Dimensions, Text } from 'react-native';
-import { FormattedCurrency } from 'react-native-globalize';
+import React, {useState} from 'react';
+import {View, Dimensions, Text} from 'react-native';
+import {FormattedCurrency} from 'react-native-globalize';
 import * as scale from 'd3-scale';
 import PieChart from './PieChart';
 
-import { useStyle, useTheme } from '../../../Theme';
+import {useStyle, useTheme} from '../../../Theme';
 
-const BreakdownPieChart = ({ data }) => {
+const BreakdownPieChart = ({data}) => {
   const theme = useTheme();
   const style = useStyle();
 
@@ -82,10 +82,10 @@ const BreakdownPieChart = ({ data }) => {
 
   return (
     <View
-      style={{ justifyContent: 'center', flex: 1 }}
+      style={{justifyContent: 'center', flex: 1}}
       onLayout={() => _onLayout(firstKey, firstValue)}>
       <PieChart
-        style={{ height: 200 }}
+        style={{height: 200}}
         outerRadius={'80%'}
         innerRadius={'60%'}
         data={pieData}
@@ -94,14 +94,14 @@ const BreakdownPieChart = ({ data }) => {
       <View
         onLayout={({
           nativeEvent: {
-            layout: { width },
+            layout: {width},
           },
         }) => setLabelWidth(width)}
         style={{
           position: 'absolute',
           left: deviceWidth / 2 - labelWidth / 2,
         }}>
-        <Text style={{ color: theme.colors.secondary, textAlign: 'center' }}>
+        <Text style={{color: theme.colors.secondary, textAlign: 'center'}}>
           {selectedLabel}
         </Text>
         <FormattedCurrency
@@ -111,7 +111,7 @@ const BreakdownPieChart = ({ data }) => {
           minimumFractionDigits={0}
           style={[
             style.h2,
-            { color: theme.colors.secondary, textAlign: 'center' },
+            {color: theme.colors.secondary, textAlign: 'center'},
           ]}
         />
       </View>

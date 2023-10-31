@@ -1,4 +1,4 @@
-import { IAccount } from './IAccount';
+import {IAccount} from './IAccount';
 
 export interface IRecordValue {
   id: string;

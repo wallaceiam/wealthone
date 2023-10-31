@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
 import {
   SafeAreaView,
   View,
@@ -16,20 +11,20 @@ import {
   Platform,
 } from 'react-native';
 import SegmentedControlIOS from '@react-native-community/segmented-control';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-import { useStyle } from '../../Theme';
+import {useStyle} from '../../Theme';
 
-import { removeEntry, saveEntry } from '../../Redux/Actions';
-import { justDate, sameDay, toUtc } from '../../Redux/DateHelpers';
-import { IsAsset } from '../../Models/Account';
-import { DateInput, NumericInput, SectionHeader } from '../../Components';
+import {removeEntry, saveEntry} from '../../Redux/Actions';
+import {justDate, sameDay, toUtc} from '../../Redux/DateHelpers';
+import {IsAsset} from '../../Models/Account';
+import {DateInput, NumericInput, SectionHeader} from '../../Components';
 import SaveIcon from '../../Components/Icons/SaveIcon';
 import TrashIcon from '../../Components/Icons/TrashIcon';
-import { getAccounts, getRecords } from '../../Redux/Selectors';
-import { FormattedCurrency } from 'react-native-globalize';
+import {getAccounts, getRecords} from '../../Redux/Selectors';
+import {FormattedCurrency} from 'react-native-globalize';
 
 const styles = StyleSheet.create({
   header: {
@@ -37,13 +32,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const EntryScreen = ({ accounts, records, dispatch }) => {
+const EntryScreen = ({accounts, records, dispatch}) => {
   const navigation = useNavigation();
   const route = useRoute();
   const style = useStyle();
 
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const { date: routeDate } = route.params as any;
+  const {date: routeDate} = route.params as any;
   const initialDate = routeDate
     ? new Date(routeDate)
     : toUtc(justDate(new Date()));
@@ -59,7 +54,7 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
   }, [date, records, setDoesExists]);
 
   const onSaveEntry = useCallback(() => {
-    dispatch(saveEntry({ date, totals, inflows, outflows }));
+    dispatch(saveEntry({date, totals, inflows, outflows}));
     navigation.goBack();
   }, [navigation, dispatch, date, totals, inflows, outflows]);
 
@@ -77,7 +72,7 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
           onPress: () => onRemoveEntryConfirmed(),
           style: 'destructive',
         },
-        { text: 'No' },
+        {text: 'No'},
       ],
     );
   }, [dispatch, navigation, date]);
@@ -150,21 +145,21 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
     switch (selectedIndex) {
       case 0: {
         const _totals = totals.map(x =>
-          x.id === id ? { id, amount: dAmount } : { ...x },
+          x.id === id ? {id, amount: dAmount} : {...x},
         );
         setTotals(_totals);
         break;
       }
       case 1: {
         const _inflows = inflows.map(x =>
-          x.id === id ? { id, amount: dAmount } : { ...x },
+          x.id === id ? {id, amount: dAmount} : {...x},
         );
         setInflows(_inflows);
         break;
       }
       case 2: {
         const _outflows = outflows.map(x =>
-          x.id === id ? { id, amount: dAmount } : { ...x },
+          x.id === id ? {id, amount: dAmount} : {...x},
         );
         setOutflows(_outflows);
         break;
@@ -181,7 +176,7 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
       : null;
   };
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({item}) => {
     return (
       <View style={style.row}>
         <View style={[style.column, style.noMargins, style.autoMargins]}>
@@ -190,7 +185,7 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
             <Text style={style.subText}>{item.provider} </Text>
           )}
         </View>
-        <View style={{ flex: 1 }}>
+        <View style={{flex: 1}}>
           <NumericInput
             label={null}
             placeholder="0"
@@ -245,10 +240,10 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
 
         <SectionList
           sections={accountSections}
-          renderSectionHeader={({ section }) => (
+          renderSectionHeader={({section}) => (
             <SectionHeader title={section.title} />
           )}
-          renderSectionFooter={({ section }) => (
+          renderSectionFooter={({section}) => (
             <View style={style.row}>
               <Text style={[style.bottomMargin, style.text, style.active]} />
               <FormattedCurrency
@@ -270,7 +265,7 @@ const EntryScreen = ({ accounts, records, dispatch }) => {
 const mapStateToProps = state => {
   const accounts = getAccounts(state);
   const records = getRecords(state);
-  return { accounts, records };
+  return {accounts, records};
 };
 
 export default connect(mapStateToProps)(EntryScreen);

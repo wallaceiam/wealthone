@@ -4,13 +4,13 @@ import {
   getAssetAccounts,
   getLiabilityAccounts,
 } from './AccountSelector';
-import { getGoalInput, getGoalResults } from './GoalResultSelector';
+import {getGoalInput, getGoalResults} from './GoalResultSelector';
 import {
   getNetWorth,
   getCurrentNetWorth,
   getNetWorthByAccount,
 } from './NetWorthSelector';
-import { getLastBackupDate } from './BackupSelector';
+import {getLastBackupDate} from './BackupSelector';
 
 export {
   getGoalInput,

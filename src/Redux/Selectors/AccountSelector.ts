@@ -1,7 +1,7 @@
-import { createSelector } from 'reselect';
-import { toDate } from '../DateHelpers';
-import { IAccount } from '../IAccount';
-import { IRecord } from '../IState';
+import {createSelector} from 'reselect';
+import {toDate} from '../DateHelpers';
+import {IAccount} from '../IAccount';
+import {IRecord} from '../IState';
 
 export const getAccounts = state => state.portfolio.accounts as IAccount[];
 

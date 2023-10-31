@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Alert, NativeEventEmitter, Platform, StatusBar } from 'react-native';
+import {Alert, NativeEventEmitter, Platform, StatusBar} from 'react-native';
 import iCloudStorage from 'react-native-icloudstore';
-import { Provider } from 'react-redux';
-import { GlobalizeProvider, loadCldr } from 'react-native-globalize';
+import {Provider} from 'react-redux';
+import {GlobalizeProvider, loadCldr} from 'react-native-globalize';
 
-import { dispatch, store } from './src/Redux/Store';
+import {dispatch, store} from './src/Redux/Store';
 import Screens from './src/Screens';
-import { rehydrate } from './src/Redux/Actions';
-import { ThemeProvider, useTheme } from './src/Theme';
+import {rehydrate} from './src/Redux/Actions';
+import {ThemeProvider, useTheme} from './src/Theme';
 
 loadCldr(require('react-native-globalize/locale-data/en'));
 

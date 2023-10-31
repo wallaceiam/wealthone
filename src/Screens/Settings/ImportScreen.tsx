@@ -1,13 +1,13 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { SafeAreaView, View, TextInput, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { connect } from 'react-redux';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
+import {SafeAreaView, View, TextInput, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {connect, DispatchProp} from 'react-redux';
 
-import { importJson } from '../../Redux/Actions';
-import { useStyle } from '../../Theme';
+import {importJson} from '../../Redux/Actions';
+import {useStyle} from '../../Theme';
 import SaveIcon from '../../Components/Icons/SaveIcon';
 
-const ImportScreen = ({ dispatch }) => {
+const ImportScreen = ({dispatch}: DispatchProp<any>) => {
   const navigation = useNavigation();
   const style = useStyle();
 
@@ -22,25 +22,29 @@ const ImportScreen = ({ dispatch }) => {
   useEffect(() => {
     setValid(importText !== '');
   }, [importText]);
-  
+
+  const headerRight = React.useMemo(
+    () => (
+      <TouchableOpacity
+        style={style.rightMargin}
+        disabled={!isValid}
+        onPress={() => onSaveImport()}>
+        <SaveIcon />
+      </TouchableOpacity>
+    ),
+    [],
+  );
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: 'Import',
-      headerRight: () => (
-        <TouchableOpacity
-          style={style.rightMargin}
-          disabled={!isValid}
-          onPress={() => onSaveImport()}>
-          <SaveIcon />
-        </TouchableOpacity>
-      ),
+      headerRight,
     });
   }, [navigation, isValid]);
 
   return (
     <SafeAreaView style={style.safeAreaView}>
-      <View
-        style={style.column}>
+      <View style={style.column}>
         <View
           style={{
             flex: 1,
@@ -51,7 +55,7 @@ const ImportScreen = ({ dispatch }) => {
             style={style.textInput}
             multiline={true}
             placeholder="Paste your json export here"
-            onChangeText={(text) => setImportText(text)}
+            onChangeText={text => setImportText(text)}
             value={importText}
           />
         </View>

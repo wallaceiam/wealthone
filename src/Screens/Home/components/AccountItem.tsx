@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { FormattedCurrency } from 'react-native-globalize';
+import {View, Text, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {FormattedCurrency} from 'react-native-globalize';
 import ForwardIcon from '../../../Components/Icons/ForwardIcon';
 
-import { useStyle } from '../../../Theme';
+import {useStyle} from '../../../Theme';
 
-const AccountItem = ({ item }) => {
+const AccountItem = ({item}) => {
   const navigation = useNavigation();
   const style = useStyle();
 
-  const onPortfolioSelected = ({ id }) => {
-    navigation.navigate('HomeAccount', { accountId: id });
+  const onPortfolioSelected = ({id}) => {
+    navigation.navigate('HomeAccount', {accountId: id});
   };
 
   return (

@@ -1,4 +1,3 @@
-
 export interface IGoalInput {
   birthDate: Date;
   currentAge: number;

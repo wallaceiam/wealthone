@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { SafeAreaView, SectionList, View } from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView, SectionList, View} from 'react-native';
 import SegmentedControlIOS from '@react-native-community/segmented-control';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-import { useStyle } from '../../Theme';
+import {useStyle} from '../../Theme';
 
-import { justDate, toUtc } from '../../Redux/DateHelpers';
+import {justDate, toUtc} from '../../Redux/DateHelpers';
 import SectionHeader from '../../Components/SectionHeader';
 import HistoryItem from './components/HistoryItem';
-import { getNetWorth } from '../../Redux/Selectors';
+import {getNetWorth} from '../../Redux/Selectors';
 
-const HistoryScreen = ({ netWorth }) => {
+const HistoryScreen = ({netWorth}) => {
   const navigation = useNavigation();
   const style = useStyle();
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const onEntrySelected = ({ date }) => {
+  const onEntrySelected = ({date}) => {
     navigation.navigate('HistoryEntry', {
       date: toUtc(justDate(date)).getTime(),
     });
@@ -60,14 +60,14 @@ const HistoryScreen = ({ netWorth }) => {
 
         <SectionList
           style={style.container}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <HistoryItem
               item={item}
               selectedIndex={selectedIndex}
               onClick={() => onEntrySelected(item)}
             />
           )}
-          renderSectionHeader={({ section }) => (
+          renderSectionHeader={({section}) => (
             <SectionHeader title={section.title} />
           )}
           stickySectionHeadersEnabled={true}
@@ -80,7 +80,7 @@ const HistoryScreen = ({ netWorth }) => {
 
 const mapStateToProps = state => {
   const netWorth = getNetWorth(state);
-  return { netWorth };
+  return {netWorth};
 };
 
 export default connect(mapStateToProps)(HistoryScreen);

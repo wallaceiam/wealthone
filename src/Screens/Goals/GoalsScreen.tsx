@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -6,17 +6,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import SegmentedControlIOS from '@react-native-community/segmented-control';
-import { FormattedCurrency } from 'react-native-globalize';
-import { connect } from 'react-redux';
+import {FormattedCurrency} from 'react-native-globalize';
+import {connect} from 'react-redux';
 
-import { useTheme, useStyle } from '../../Theme';
+import {useTheme, useStyle} from '../../Theme';
 import SlidersIcon from '../../Components/Icons/SlidersIcon';
 import GoalChart from './components/GoalChart';
-import { getGoalResults } from '../../Redux/Selectors';
+import {getGoalResults} from '../../Redux/Selectors';
 
-const GoalsScreen = ({ result }) => {
+const GoalsScreen = ({result}) => {
   const navigation = useNavigation();
   const theme = useTheme();
   const style = useStyle();
@@ -66,7 +66,7 @@ const GoalsScreen = ({ result }) => {
           <SegmentedControlIOS
             values={['Savings', 'Income']}
             selectedIndex={selectedIndex}
-            onChange={(event) =>
+            onChange={event =>
               setSelectedIndex(event.nativeEvent.selectedSegmentIndex)
             }
           />
@@ -91,11 +91,11 @@ const GoalsScreen = ({ result }) => {
               currency="GBP"
               maximumFractionDigits={0}
               minimumFractionDigits={0}
-              style={[style.h1, { paddingBottom: 0, marginBottom: 8 }]}
+              style={[style.h1, {paddingBottom: 0, marginBottom: 8}]}
             />
             <Text style={style.text}>
               if the market performs{' '}
-              <Text style={{ fontWeight: 'bold' }}>poorly</Text>
+              <Text style={{fontWeight: 'bold'}}>poorly</Text>
             </Text>
           </View>
           <View>
@@ -115,7 +115,7 @@ const GoalsScreen = ({ result }) => {
             />
             <Text style={style.text}>
               if the market performs{' '}
-              <Text style={{ fontWeight: 'bold' }}>average</Text>
+              <Text style={{fontWeight: 'bold'}}>average</Text>
             </Text>
           </View>
         </View>
@@ -131,9 +131,9 @@ const GoalsScreen = ({ result }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const result = getGoalResults(state);
-  return { result };
+  return {result};
 };
 
 export default connect(mapStateToProps)(GoalsScreen);

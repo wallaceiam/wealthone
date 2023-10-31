@@ -1,15 +1,15 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Path, Defs, LinearGradient, Stop } from 'react-native-svg';
-import { AreaChart } from 'react-native-svg-charts';
-import { connect } from 'react-redux';
+import {View, StyleSheet} from 'react-native';
+import {Path, Defs, LinearGradient, Stop} from 'react-native-svg';
+import {AreaChart} from 'react-native-svg-charts';
+import {connect} from 'react-redux';
 import * as scale from 'd3-scale';
 import * as shape from 'd3-shape';
 
-import { useTheme } from '../../../Theme';
-import { toUtc } from '../../../Redux/DateHelpers';
-import { CAGR } from './Finance';
-import { getGoalInput, getNetWorth } from '../../../Redux/Selectors';
+import {useTheme} from '../../../Theme';
+import {toUtc} from '../../../Redux/DateHelpers';
+import {CAGR} from './Finance';
+import {getGoalInput, getNetWorth} from '../../../Redux/Selectors';
 
 const GoallChart = ({
   netWorth,
@@ -135,7 +135,7 @@ const GoallChart = ({
             max: Math.max(c.value, p.max !== undefined ? p.max : c.value),
           };
         },
-        { min: undefined, max: undefined },
+        {min: undefined, max: undefined},
       );
 
   const poorMinMax = getMinMax(predictionPoor);
@@ -145,28 +145,28 @@ const GoallChart = ({
   const yMin = Math.min(poorMinMax.min, avgMinMax.min, actMinMax.min || 0);
   const yMax = Math.max(poorMinMax.max, avgMinMax.max, actMinMax.max || 1);
 
-  const ActualLine = ({ line }) => (
+  const ActualLine = ({line}) => (
     <Path key={'line'} d={line} stroke={theme.colors.primary} fill={'none'} />
   );
 
-  const PredictLine = ({ line }) => (
+  const PredictLine = ({line}) => (
     <Path key={'line'} d={line} stroke={theme.colors.alt} fill={'none'} />
   );
 
   return (
-    <View style={{ height: 200 }}>
+    <View style={{height: 200}}>
       <AreaChart
-        style={{ height: 200 }}
+        style={{height: 200}}
         data={predictionPoor}
-        yAccessor={({ item }) => item.value}
-        xAccessor={({ item }) => item.date}
+        yAccessor={({item}) => item.value}
+        xAccessor={({item}) => item.date}
         xScale={scale.scaleTime}
         yMin={yMin}
         yMax={yMax}
         xMin={xMin}
         xMax={xMax}
-        svg={{ fill: 'url(#gradientPoor)' }}
-        contentInset={{ top: 20, bottom: 20 }}
+        svg={{fill: 'url(#gradientPoor)'}}
+        contentInset={{top: 20, bottom: 20}}
         curve={shape.curveNatural}>
         <PredictLine />
         <Defs key={'gradientPoor'}>
@@ -193,15 +193,15 @@ const GoallChart = ({
       <AreaChart
         style={StyleSheet.absoluteFill}
         data={predictionAverage}
-        yAccessor={({ item }) => item.value}
-        xAccessor={({ item }) => item.date}
+        yAccessor={({item}) => item.value}
+        xAccessor={({item}) => item.date}
         xScale={scale.scaleTime}
         yMin={yMin}
         yMax={yMax}
         xMin={xMin}
         xMax={xMax}
-        svg={{ fill: 'url(#gradientAvg)' }}
-        contentInset={{ top: 20, bottom: 20 }}
+        svg={{fill: 'url(#gradientAvg)'}}
+        contentInset={{top: 20, bottom: 20}}
         curve={shape.curveNatural}>
         <PredictLine />
         <Defs key={'gradientAvg'}>
@@ -228,15 +228,15 @@ const GoallChart = ({
       <AreaChart
         style={StyleSheet.absoluteFill}
         data={actuals}
-        yAccessor={({ item }) => item.value}
-        xAccessor={({ item }) => item.date}
+        yAccessor={({item}) => item.value}
+        xAccessor={({item}) => item.date}
         xScale={scale.scaleTime}
         yMin={yMin}
         yMax={yMax}
         xMin={xMin}
         xMax={xMax}
-        svg={{ fill: 'url(#gradient)' }}
-        contentInset={{ top: 20, bottom: 20 }}
+        svg={{fill: 'url(#gradient)'}}
+        contentInset={{top: 20, bottom: 20}}
         curve={shape.curveNatural}>
         <ActualLine />
         <Defs key={'gradient'}>
@@ -267,7 +267,7 @@ const mapStateToProps = state => {
   const netWorth = getNetWorth(state);
   const goal = getGoalInput(state);
 
-  return { netWorth, goal };
+  return {netWorth, goal};
 };
 
 export default connect(mapStateToProps)(GoallChart);

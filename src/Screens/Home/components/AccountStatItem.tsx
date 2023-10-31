@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { FormattedCurrency } from 'react-native-globalize';
+import {View, Text} from 'react-native';
+import {FormattedCurrency} from 'react-native-globalize';
 
-import { useStyle } from '../../../Theme';
+import {useStyle} from '../../../Theme';
 
-const AccountStatItem = ({ item }) => {
+const AccountStatItem = ({item}) => {
   const style = useStyle();
 
   return (

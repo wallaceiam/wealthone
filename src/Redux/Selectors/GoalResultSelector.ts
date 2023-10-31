@@ -1,7 +1,7 @@
-import { createSelector } from 'reselect';
-import { BALANCE_DATA, CONTRIBUTION_DATA, DISTRIBUTION_DATA } from '../Data';
-import { IGoalInput } from '../IGoalInput';
-import { getCurrentNetWorth } from './NetWorthSelector';
+import {createSelector} from 'reselect';
+import {BALANCE_DATA, CONTRIBUTION_DATA, DISTRIBUTION_DATA} from '../Data';
+import {IGoalInput} from '../IGoalInput';
+import {getCurrentNetWorth} from './NetWorthSelector';
 
 export const getGoalInput = state => {
   return (

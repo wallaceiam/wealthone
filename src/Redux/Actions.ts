@@ -1,8 +1,8 @@
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
 import iCloudStorage from 'react-native-icloudstore';
-import { IGoalInput } from './IGoalInput';
+import {IGoalInput} from './IGoalInput';
 
-export const saveAccount = (account) => ({
+export const saveAccount = account => ({
   type: 'SAVE_ACCOUNT',
   payload: {
     id: account.id,
@@ -13,9 +13,9 @@ export const saveAccount = (account) => ({
   },
 });
 
-export const removeAccount = (id) => ({
+export const removeAccount = id => ({
   type: 'REMOVE_ACCOUNT',
-  payload: { id: id },
+  payload: {id: id},
 });
 
 export const saveGoal = (input: IGoalInput) => ({
@@ -23,7 +23,7 @@ export const saveGoal = (input: IGoalInput) => ({
   payload: input,
 });
 
-const backupSuccessful = (lastBackupDate) => {
+const backupSuccessful = lastBackupDate => {
   Alert.alert('iCloud Backup', 'Your data has been backed up to iCloud');
 
   return {
@@ -32,7 +32,7 @@ const backupSuccessful = (lastBackupDate) => {
   };
 };
 
-const backupFailed = (err) => {
+const backupFailed = err => {
   console.error(err);
 
   Alert.alert(
@@ -64,7 +64,7 @@ const restoreFailedNoData = () => {
   };
 };
 
-const restoreFailed = (err) => {
+const restoreFailed = err => {
   console.error(err);
 
   Alert.alert(
@@ -80,7 +80,7 @@ const restoreFailed = (err) => {
 
 export const backup = () => {
   return (dispatch, getState) => {
-    const { goal, portfolio } = getState();
+    const {goal, portfolio} = getState();
     const now = new Date();
     const lastBackupDate = new Date(
       Date.UTC(
@@ -95,22 +95,22 @@ export const backup = () => {
     iCloudStorage
       .setItem(
         'wealthone',
-        JSON.stringify({ goal, ...portfolio, ts: lastBackupDate }),
+        JSON.stringify({goal, ...portfolio, ts: lastBackupDate}),
       )
-      .then((_) => {
+      .then(_ => {
         dispatch(backupSuccessful(lastBackupDate));
       })
-      .catch((err) => {
+      .catch(err => {
         dispatch(backupFailed(err));
       });
   };
 };
 
 export const restore = () => {
-  return (dispatch) => {
+  return dispatch => {
     iCloudStorage
       .getItem('wealthone')
-      .then((x) => {
+      .then(x => {
         if (x !== undefined && x !== null) {
           const json = JSON.parse(x);
           dispatch(restoreData(json));
@@ -119,42 +119,42 @@ export const restore = () => {
           dispatch(restoreFailedNoData());
         }
       })
-      .catch((err) => {
+      .catch(err => {
         dispatch(restoreFailed(err));
       });
   };
 };
 
-const lastBackupDate = (date) => ({
+const lastBackupDate = date => ({
   type: 'LAST_BACKUP_DATE',
   payload: date,
 });
 
 export const fetchLastBackupDate = () => {
-  return (dispatch) => {
+  return dispatch => {
     iCloudStorage
       .getItem('wealthone')
-      .then((x) => {
+      .then(x => {
         if (x !== undefined && x !== null) {
           const json = JSON.parse(x);
           dispatch(lastBackupDate(json.backup.lastBackupDate));
         }
       })
-      .catch((_) => {});
+      .catch(_ => {});
   };
 };
 
 export const restorePrevious = () => {
-  return (dispatch) => {
+  return dispatch => {
     iCloudStorage
       .getItem('backup')
-      .then((x) => {
+      .then(x => {
         if (x !== undefined && x !== null) {
           const json = JSON.parse(x);
           const keys = Object.keys(json);
           Alert.alert('iCloud restore', `${[...keys]}`);
-          const { accounts, records, goal } = json;
-          dispatch(restoreData({ accounts, records, goal: goal.input }));
+          const {accounts, records, goal} = json;
+          dispatch(restoreData({accounts, records, goal: goal.input}));
           dispatch(restoreSuccessful());
         } else {
           dispatch(restoreFailedNoData());
@@ -170,7 +170,7 @@ export const update = () => ({
   type: 'UPDATE',
 });
 
-export const restoreData = (payload) => ({
+export const restoreData = payload => ({
   type: 'RESTORE_DATA',
   payload,
 });
@@ -183,15 +183,15 @@ export const rehydrate = (key, payload) => ({
 
 export const importJson = (text: string) => ({
   type: 'IMPORT',
-  payload: { json: text },
+  payload: {json: text},
 });
 
-export const saveEntry = (payload) => ({
+export const saveEntry = payload => ({
   type: 'SAVE_ENTRY',
   payload,
 });
 
-export const removeEntry = (date) => ({
+export const removeEntry = date => ({
   type: 'REMOVE_ENTRY',
   payload: date,
 });

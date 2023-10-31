@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import Home from './Home';
@@ -8,7 +8,7 @@ import Breakdown from './Breakdown';
 import History from './History';
 import Goals from './Goals';
 
-import { useStyle, useTheme } from '../Theme';
+import {useStyle, useTheme} from '../Theme';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,18 +18,20 @@ const Navigation = () => {
   return (
     <Tab.Navigator
       sceneContainerStyle={[style.container, style.body]}
-      screenOptions={({ route }) => ({
+      screenOptions={({route}) => ({
         headerShown: false,
         tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: theme.colors.primary_alpha,
         tabBarShowLabel: false,
-        tabBarStyle: [{
-          display: "flex"
-        }],
-        safeAreaInsets: { top: 0, bottom: 24 },
-        
+        tabBarStyle: [
+          {
+            display: 'flex',
+          },
+        ],
+        safeAreaInsets: {top: 0, bottom: 24},
+
         unmountOnBlur: true,
-        tabBarIcon: ({ color, size }) => {
+        tabBarIcon: ({color, size}) => {
           let iconName = '';
 
           if (route.name === 'HomeTab') {
@@ -47,8 +49,7 @@ const Navigation = () => {
           // You can return any component that you like here!
           return <FeatherIcon name={iconName} size={size} color={color} />;
         },
-      })}
-     > 
+      })}>
       <Tab.Screen name="HomeTab" component={Home} />
       <Tab.Screen name="BreakdownTab" component={Breakdown} />
       <Tab.Screen name="GoalsTab" component={Goals} />

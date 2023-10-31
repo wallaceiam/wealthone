@@ -1,5 +1,5 @@
-import { DarkTheme as _DarkTheme } from '@react-navigation/native';
-import { ITheme } from './ITheme';
+import {DarkTheme as _DarkTheme} from '@react-navigation/native';
+import {ITheme} from './ITheme';
 
 const DarkTheme: ITheme = {
   dark: true,
@@ -24,7 +24,7 @@ const DarkTheme: ITheme = {
 
     notification: _DarkTheme.colors.notification,
     card: _DarkTheme.colors.card,
-    border: _DarkTheme.colors.border, 
+    border: _DarkTheme.colors.border,
   },
 };
 

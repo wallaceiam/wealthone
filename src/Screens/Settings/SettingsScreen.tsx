@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { SafeAreaView, SectionList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { connect } from 'react-redux';
+import React, {useEffect} from 'react';
+import {SafeAreaView, SectionList} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {connect} from 'react-redux';
 import formatRelative from 'date-fns/formatRelative';
 
-import { useStyle } from '../../Theme';
+import {useStyle} from '../../Theme';
 
 import {
   backup,
@@ -13,14 +13,13 @@ import {
   restorePrevious,
   update,
 } from '../../Redux/Actions';
-import { IsAsset } from '../../Models/Account';
-import { SectionFooter, SectionHeader } from '../../Components';
+import {IsAsset} from '../../Models/Account';
+import {SectionFooter, SectionHeader} from '../../Components';
 import MenuItem from './components/MenuItem';
 import AppHeader from './components/AppHeader';
-import { getAccounts, getLastBackupDate } from '../../Redux/Selectors';
-import { IState } from '../../Redux/IState';
-import { IAccount } from '../../Redux/IAccount';
-import { IAction } from '../../Redux/IAction';
+import {getAccounts, getLastBackupDate} from '../../Redux/Selectors';
+import {IState} from '../../Redux/IState';
+import {IAccount} from '../../Redux/IAccount';
 
 interface ISettingsScreenProps {
   readonly assets: IAccount[];
@@ -29,7 +28,12 @@ interface ISettingsScreenProps {
   readonly dispatch: (action: any) => void;
 }
 
-const SettingsScreen = ({ assets, liabilities, lastBackupDate, dispatch }: ISettingsScreenProps) => {
+const SettingsScreen = ({
+  assets,
+  liabilities,
+  lastBackupDate,
+  dispatch,
+}: ISettingsScreenProps) => {
   const navigation = useNavigation();
   const style = useStyle();
 
@@ -67,26 +71,26 @@ const SettingsScreen = ({ assets, liabilities, lastBackupDate, dispatch }: ISett
           subText: lastBackup,
           icon: 'download-cloud',
         },
-        { action: 'export', title: 'Export' },
-        { action: 'import', title: 'Import', icon: 'chevron-right' },
-        { action: 'update', title: 'Update' },
-        { action: 'migrate', title: 'Migrate' },
+        {action: 'export', title: 'Export'},
+        {action: 'import', title: 'Import', icon: 'chevron-right'},
+        {action: 'update', title: 'Update'},
+        {action: 'migrate', title: 'Migrate'},
       ],
       title: 'Your data',
       addFooter: false,
     },
     {
-      data: [{ action: 'about', title: 'About', icon: 'chevron-right' }],
+      data: [{action: 'about', title: 'About', icon: 'chevron-right'}],
       title: 'wealthone',
       addFooter: false,
     },
   ];
 
-  const onEditAccount = (item) => {
-    navigation.navigate('EditAccount', { account: item });
-  };
+  const onEditAccount = React.useCallback((item: IAccount) => {
+    navigation.navigate('EditAccount', {account: item});
+  }, []);
 
-  const onGenericAction = (action: string) => {
+  const onGenericAction = React.useCallback((action: string) => {
     switch (action) {
       case 'backup':
         dispatch(backup());
@@ -107,9 +111,9 @@ const SettingsScreen = ({ assets, liabilities, lastBackupDate, dispatch }: ISett
         navigation.navigate('About');
         break;
     }
-  };
+  }, []);
 
-  const onAddAccount = ({ section }) => {
+  const onAddAccount = React.useCallback(({section}) => {
     navigation.navigate('EditAccount', {
       account: {
         id: undefined,
@@ -118,7 +122,7 @@ const SettingsScreen = ({ assets, liabilities, lastBackupDate, dispatch }: ISett
         isAsset: section.title === 'Assets' ? IsAsset.Asset : IsAsset.Liability,
       },
     });
-  };
+  }, []);
 
   return (
     <SafeAreaView style={style.safeAreaView}>
@@ -126,7 +130,7 @@ const SettingsScreen = ({ assets, liabilities, lastBackupDate, dispatch }: ISett
       <SectionList
         style={style.container}
         contentContainerStyle={style.contentContainer}
-        renderItem={({ item }) =>
+        renderItem={({item}: any) =>
           item.action !== undefined ? (
             <MenuItem
               text={item.title}
@@ -143,10 +147,10 @@ const SettingsScreen = ({ assets, liabilities, lastBackupDate, dispatch }: ISett
             />
           )
         }
-        renderSectionHeader={({ section }) => (
+        renderSectionHeader={({section}) => (
           <SectionHeader title={section.title} />
         )}
-        renderSectionFooter={(footer) =>
+        renderSectionFooter={footer =>
           footer.section.addFooter ? (
             <SectionFooter text="Add" onClick={() => onAddAccount(footer)} />
           ) : null
@@ -161,12 +165,12 @@ const SettingsScreen = ({ assets, liabilities, lastBackupDate, dispatch }: ISett
 
 const mapStateToProps = (state: IState) => {
   const accounts = getAccounts(state);
-  const assets = (accounts || []).filter((a) => a.isAsset === IsAsset.Asset);
+  const assets = (accounts || []).filter(a => a.isAsset === IsAsset.Asset);
   const liabilities = (accounts || []).filter(
-    (a) => a.isAsset === IsAsset.Liability,
+    a => a.isAsset === IsAsset.Liability,
   );
   const lastBackupDate = getLastBackupDate(state);
-  return { assets, liabilities, lastBackupDate };
+  return {assets, liabilities, lastBackupDate};
 };
 
 export default connect(mapStateToProps)(SettingsScreen);
