@@ -160,7 +160,7 @@ export const restorePrevious = () => {
           dispatch(restoreFailedNoData());
         }
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         dispatch(restoreFailed(err));
       });
   };
@@ -181,7 +181,7 @@ export const rehydrate = (key, payload) => ({
   payload,
 });
 
-export const importJson = (text) => ({
+export const importJson = (text: string) => ({
   type: 'IMPORT',
   payload: { json: text },
 });

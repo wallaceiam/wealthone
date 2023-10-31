@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import { Animated, Text, TouchableOpacity, View } from 'react-native';
 import DatePickerIOS from '@react-native-community/datetimepicker';
 
@@ -15,8 +15,8 @@ const DateInput = ({ label, date, onDateChanged }: IDateInputProps) => {
   const style = useStyle();
   const theme = useTheme();
 
-  const [isDateExpanded, setDateExpanded] = useState(false);
-  const [animation] = useState(new Animated.Value(32));
+  const [isDateExpanded, setDateExpanded] = React.useState(false);
+  const [animation] = React.useState(new Animated.Value(32));
 
   const onToggleDate = () => {
     const MIN_HEIGHT = 32;

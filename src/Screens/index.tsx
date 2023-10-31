@@ -19,6 +19,15 @@ const Navigation = () => {
     <Tab.Navigator
       sceneContainerStyle={[style.container, style.body]}
       screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.primary_alpha,
+        tabBarShowLabel: false,
+        tabBarStyle: [{
+          display: "flex"
+        }],
+        safeAreaInsets: { top: 0, bottom: 24 },
+        
         unmountOnBlur: true,
         tabBarIcon: ({ color, size }) => {
           let iconName;
@@ -39,12 +48,7 @@ const Navigation = () => {
           return <FeatherIcon name={iconName} size={size} color={color} />;
         },
       })}
-      tabBarOptions={{
-        activeTintColor: theme.colors.primary,
-        inactiveTintColor: theme.colors.primary_alpha,
-        showLabel: false,
-        safeAreaInsets: { top: 0, bottom: 24 },
-      }}>
+     > 
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Breakdown" component={Breakdown} />
       <Tab.Screen name="Goals" component={Goals} />

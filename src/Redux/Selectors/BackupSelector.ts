@@ -1,1 +1,3 @@
-export const getLastBackupDate = state => state.backup.lastBackupDate;
+import { IState } from "../IState";
+
+export const getLastBackupDate = (state: IState) => state.backup.lastBackupDate;

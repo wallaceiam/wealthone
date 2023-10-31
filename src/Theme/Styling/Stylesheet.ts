@@ -1,6 +1,24 @@
 import { StyleSheet } from 'react-native';
 import { ITheme } from '../Theming/ITheme';
 
+type FlexDirection =
+  'row'
+  | 'column'
+  | 'row-reverse'
+  | 'column-reverse';
+type JustifyContent =
+  'flex-start'
+  | 'flex-end'
+  | 'center'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly'
+type Margin = 
+  'auto'
+  | number;
+type TextAlign = 
+  'right';
+
 const css = (theme: ITheme) => ({
   /* Containers */
   safeAreaView: {
@@ -17,15 +35,15 @@ const css = (theme: ITheme) => ({
   },
   row: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: 'row' as FlexDirection,
+    justifyContent: 'space-between' as JustifyContent,
     marginLeft: 32,
     marginRight: 32,
   },
   column: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    flexDirection: 'column' as FlexDirection,
+    justifyContent: 'space-between' as JustifyContent,
     marginLeft: 32,
     marginRight: 32,
   },
@@ -49,15 +67,15 @@ const css = (theme: ITheme) => ({
     marginRight: 0,
   },
   autoMargins: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
+    marginTop: 'auto' as Margin,
+    marginBottom: 'auto' as Margin,
   },
 
   /* Typography */
   body: {
     fontSize: 12,
     lineHeight: 16,
-    margin: 'auto',
+    margin: 'auto' as Margin,
     fontFamily: 'montserrat',
     color: theme.colors.text,
   },
@@ -128,7 +146,7 @@ const css = (theme: ITheme) => ({
     color: theme.colors.primary,
   },
   numberInput: {
-    textAlign: 'right',
+    textAlign: 'right' as TextAlign,
   },
 
   bigHeader: {
@@ -168,7 +186,7 @@ const css = (theme: ITheme) => ({
     height: 64,
   },
   appHeaderContainer: {
-    flexDirection: 'row',
+    flexDirection: 'row' as FlexDirection,
     marginTop: 32,
     marginLeft: 32,
     marginRight: 32,
@@ -197,8 +215,8 @@ const css = (theme: ITheme) => ({
   swipeBackground: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: theme.colors.background,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    flexDirection: 'row' as FlexDirection,
+    justifyContent: 'flex-end' as JustifyContent,
     alignItems: 'center',
     overflow: 'hidden',
   },

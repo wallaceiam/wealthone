@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import * as React from 'react';
 import { Alert, NativeEventEmitter, Platform, StatusBar } from 'react-native';
 import iCloudStorage from 'react-native-icloudstore';
 import { Provider } from 'react-redux';
@@ -14,16 +14,16 @@ loadCldr(require('react-native-globalize/locale-data/en'));
 const ThemeStatusBar = () => {
   const theme = useTheme();
 
-  return <StatusBar barStyle={theme.dark ? 'light-content' : 'dark-content'} />;
+  return <StatusBar barStyle={theme.mode ? 'light-content' : 'dark-content'} />;
 };
 
 const App = () => {
-  useEffect(() => {
-    const loadData = (userInfo) => {
+  React.useEffect(() => {
+    const loadData = (userInfo: any) => {
       const changedKeys = userInfo.changedKeys || [];
       Alert.alert(JSON.stringify(changedKeys));
       if (changedKeys.includes('persist:wealthone_data')) {
-        iCloudStorage.getItem('persist:wealthone_data').then((result) => {
+        iCloudStorage.getItem('persist:wealthone_data').then((result: any) => {
           Alert.alert(JSON.stringify(result));
           dispatch(rehydrate('wealthone_data', result));
         });
@@ -34,10 +34,10 @@ const App = () => {
     eventEmitter.addListener('iCloudStoreDidChangeRemotely', loadData);
 
     const cleanup = () => {
-      eventEmitter.removeListener('iCloudStoreDidChangeRemotely', loadData);
+      eventEmitter.removeAllListeners('iCloudStoreDidChangeRemotely');
     };
     return cleanup();
-  });
+  }, []);
 
   return (
     <GlobalizeProvider locale="en" currency="USD">

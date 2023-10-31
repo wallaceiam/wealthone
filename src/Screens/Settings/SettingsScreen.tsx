@@ -18,8 +18,18 @@ import { SectionFooter, SectionHeader } from '../../Components';
 import MenuItem from './components/MenuItem';
 import AppHeader from './components/AppHeader';
 import { getAccounts, getLastBackupDate } from '../../Redux/Selectors';
+import { IState } from '../../Redux/IState';
+import { IAccount } from '../../Redux/IAccount';
+import { IAction } from '../../Redux/IAction';
 
-const SettingsScreen = ({ assets, liabilities, lastBackupDate, dispatch }) => {
+interface ISettingsScreenProps {
+  readonly assets: IAccount[];
+  readonly liabilities: IAccount[];
+  readonly lastBackupDate: any;
+  readonly dispatch: (action: any) => void;
+}
+
+const SettingsScreen = ({ assets, liabilities, lastBackupDate, dispatch }: ISettingsScreenProps) => {
   const navigation = useNavigation();
   const style = useStyle();
 
@@ -76,7 +86,7 @@ const SettingsScreen = ({ assets, liabilities, lastBackupDate, dispatch }) => {
     navigation.navigate('EditAccount', { account: item });
   };
 
-  const onGenericAction = (action) => {
+  const onGenericAction = (action: string) => {
     switch (action) {
       case 'backup':
         dispatch(backup());
@@ -149,7 +159,7 @@ const SettingsScreen = ({ assets, liabilities, lastBackupDate, dispatch }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState) => {
   const accounts = getAccounts(state);
   const assets = (accounts || []).filter((a) => a.isAsset === IsAsset.Asset);
   const liabilities = (accounts || []).filter(

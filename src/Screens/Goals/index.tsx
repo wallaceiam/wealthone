@@ -9,8 +9,8 @@ const Stack = createStackNavigator();
 
 const GoalsStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Goals" screenOptions={screenOptions}>
-      <Stack.Screen name="Goals" component={GoalsScreen} />
+    <Stack.Navigator initialRouteName="GoalsDefault" screenOptions={screenOptions}>
+      <Stack.Screen name="GoalsDefault" component={GoalsScreen} />
       <Stack.Screen name="GoalsEntry" component={EditGoalsScreen} />
     </Stack.Navigator>
   );

@@ -1,15 +1,29 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import logger from 'redux-logger';
-// import createSensitiveStorage from 'redux-persist-sensitive-storage';
+import { createLogger } from 'redux-logger';
+import createCompressor from './createCompressor';
 import iCloudStorage from 'react-native-icloudstore';
 
 import { backupReducer, goalReducer, portfolioReducer } from './Reducers';
 import thunk from 'redux-thunk';
+import { IAction } from './IAction';
+
+const compressor = createCompressor();
+
+const replacer = (_key: string, value: any) => (Array.isArray(value) ? [] : value);
+
+const stateTransformer = (state: any) => JSON.stringify(state, replacer);
+
+const logger = createLogger({
+  stateTransformer,
+});
+
+console.log(iCloudStorage);
 
 const persistConfig = {
   key: 'wealthone_data',
   storage: iCloudStorage,
+  transforms: [compressor],
 };
 
 const rootReducer = combineReducers({
@@ -27,4 +41,4 @@ export const store = createStore(
 
 export const persistor = persistStore(store);
 
-export const dispatch = (action) => store.dispatch(action);
+export const dispatch = (action: IAction) => store.dispatch(action);

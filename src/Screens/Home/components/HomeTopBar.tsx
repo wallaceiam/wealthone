@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedCurrency } from 'react-native-globalize';
 import { useStyle } from '../../../Theme';
 import { getNetWorth } from '../../../Redux/Selectors';
+import { IState } from '../../../Redux/IState';
 
 const HomeTopBar = ({ netWorth }) => {
   const style = useStyle();
@@ -26,7 +27,7 @@ const HomeTopBar = ({ netWorth }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: IState) => {
   const netWorth = getNetWorth(state);
   return { netWorth };
 };

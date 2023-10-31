@@ -1,14 +1,14 @@
-import React from 'react';
+import * as React from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import { useStyle, useTheme } from '../../../Theme';
 
 interface IMenuItemProps {
-  text: string;
-  subText?: string;
-  icon: string;
-  onClick: () => void;
+  readonly text: string;
+  readonly subText?: string;
+  readonly icon: string;
+  readonly onClick: () => void;
 }
 
 const MenuItem = ({ text, subText, icon, onClick }: IMenuItemProps) => {

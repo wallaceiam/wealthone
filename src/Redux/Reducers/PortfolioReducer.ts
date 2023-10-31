@@ -1,21 +1,28 @@
-import * as shortid from 'shortid';
+import 'react-native-get-random-values';
+import { customAlphabet } from 'nanoid';
 import { IsAsset } from '../../Models';
 import { justDate, sameDay } from './../DateHelpers';
 
 import { IState } from '../IState';
+import { IAction } from '../IAction';
 
+const shortid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890_-', 7);
+ 
 const INITIAL_STATE: IState = {
   accounts: [],
   records: [],
 };
 
-const portfolioReducer = (state = INITIAL_STATE, action) => {
+const portfolioReducer = (state = INITIAL_STATE, action: IAction) => {
   switch (action.type) {
     case 'SAVE_ACCOUNT': {
       const { accounts } = state;
       if (action.payload.id !== undefined && action.payload.id.length > 0) {
         // existing
         const account = accounts.find(x => x.id === action.payload.id);
+        if(account === undefined) {
+          break;
+        }
         account.name = action.payload.name;
         account.provider = action.payload.provider;
         account.isAsset = action.payload.isAsset;
@@ -23,7 +30,7 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
       } else {
         // new
         accounts.push({
-          id: shortid.generate(),
+          id: shortid(),
           name: action.payload.name,
           provider: action.payload.provider,
           isAsset: action.payload.isAsset,
@@ -63,17 +70,17 @@ const portfolioReducer = (state = INITIAL_STATE, action) => {
         json.records.length > 0
       ) {
         const accounts = json.categories
-          .filter(x => x.id !== undefined)
-          .map(x => {
+          .filter((x: any) => x.id !== undefined)
+          .map((x: any) => {
             return {
-              id: shortid.generate(),
+              id: shortid(),
               name: x.name,
               provider: '',
               isAsset: x.isAsset ? IsAsset.Asset : IsAsset.Liability,
             };
           });
         const offset = json.records[0].totals[0] === null ? 1 : 0;
-        const records = json.records.map(x => {
+        const records = json.records.map((x: any) => {
           return {
             date: justDate(new Date(Date.parse(x.date))),
             totals: x.totals

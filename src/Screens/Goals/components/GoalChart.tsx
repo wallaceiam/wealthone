@@ -69,8 +69,7 @@ const GoallChart = ({
       100 /
       7;
     let amount = startAmount + monthlyContributions;
-    console.log(rate);
-    const result = preddates.map((v) => {
+    const result = preddates.map(v => {
       amount += monthlyContributions + amount * rate;
       return {
         value: amount,
@@ -80,7 +79,7 @@ const GoallChart = ({
     return result;
   };
 
-  const actuals = (netWorth || []).map((c) => {
+  const actuals = (netWorth || []).map(c => {
     return {
       date: new Date(Date.parse(c.date)),
       value: c.total,
@@ -122,10 +121,10 @@ const GoallChart = ({
     predictionPoor[predictionPoor.length - 1].date.getTime(),
   );
 
-  const getMinMax = (a) =>
+  const getMinMax = a =>
     a
       .filter(
-        (x) =>
+        x =>
           x.date.getTime() >= xMin.getTime() &&
           x.date.getTime() <= xMax.getTime(),
       )
@@ -264,7 +263,7 @@ const GoallChart = ({
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const netWorth = getNetWorth(state);
   const goal = getGoalInput(state);
 
