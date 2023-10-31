@@ -11,8 +11,8 @@ const Stack = createStackNavigator();
 
 const SettingsStack = () => {
   return (
-    <Stack.Navigator initialRouteName="SettingsDefault" screenOptions={screenOptions}>
-      <Stack.Screen name="SettingsDefault" component={SettingsScreen} />
+    <Stack.Navigator initialRouteName="Settings" screenOptions={screenOptions}>
+      <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="EditAccount" component={EditAccountScreen} />
       <Stack.Screen name="Import" component={ImportScreen} />
       <Stack.Screen name="About" component={AboutScreen} />

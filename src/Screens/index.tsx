@@ -30,17 +30,17 @@ const Navigation = () => {
         
         unmountOnBlur: true,
         tabBarIcon: ({ color, size }) => {
-          let iconName;
+          let iconName = '';
 
-          if (route.name === 'Home') {
+          if (route.name === 'HomeTab') {
             iconName = 'home';
-          } else if (route.name === 'Settings') {
+          } else if (route.name === 'SettingsTab') {
             iconName = 'settings';
-          } else if (route.name === 'History') {
+          } else if (route.name === 'HistoryTab') {
             iconName = 'list';
-          } else if (route.name === 'Breakdown') {
+          } else if (route.name === 'BreakdownTab') {
             iconName = 'bar-chart';
-          } else if (route.name === 'Goals') {
+          } else if (route.name === 'GoalsTab') {
             iconName = 'target';
           }
 
@@ -49,11 +49,11 @@ const Navigation = () => {
         },
       })}
      > 
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Breakdown" component={Breakdown} />
-      <Tab.Screen name="Goals" component={Goals} />
-      <Tab.Screen name="History" component={History} />
-      <Tab.Screen name="Settings" component={Settings} />
+      <Tab.Screen name="HomeTab" component={Home} />
+      <Tab.Screen name="BreakdownTab" component={Breakdown} />
+      <Tab.Screen name="GoalsTab" component={Goals} />
+      <Tab.Screen name="HistoryTab" component={History} />
+      <Tab.Screen name="SettingsTab" component={Settings} />
     </Tab.Navigator>
   );
 };

@@ -9,8 +9,8 @@ const Stack = createStackNavigator();
 
 const HistoryStack = () => {
   return (
-    <Stack.Navigator initialRouteName="HistoryDefault" screenOptions={screenOptions}>
-      <Stack.Screen name="HistoryDefault" component={HistoryScreen} />
+    <Stack.Navigator initialRouteName="History" screenOptions={screenOptions}>
+      <Stack.Screen name="History" component={HistoryScreen} />
       <Stack.Screen name="HistoryEntry" component={EntryScreen} />
     </Stack.Navigator>
   );

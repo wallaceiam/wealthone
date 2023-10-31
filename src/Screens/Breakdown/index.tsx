@@ -8,8 +8,8 @@ const Stack = createStackNavigator();
 
 const BreakdownStack = () => {
   return (
-    <Stack.Navigator initialRouteName="BreakdownDefault" screenOptions={screenOptions}>
-      <Stack.Screen name="BreakdownDefault" component={BreakdownScreen} />
+    <Stack.Navigator initialRouteName="Breakdown" screenOptions={screenOptions}>
+      <Stack.Screen name="Breakdown" component={BreakdownScreen} />
     </Stack.Navigator>
   );
 };
