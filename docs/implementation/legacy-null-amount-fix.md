@@ -1,0 +1,13 @@
+# Legacy nullable amounts and decimal-safe recovery
+
+A user-supplied private original-data export reproduced failures in all three known iCloud keys. The original file and recovered financial payloads are not stored in this repository.
+
+Root cause: legacy records contain explicit `{id, amount: null}` entries for blank cells. The importer attempted to parse null as a decimal and rejected otherwise valid portfolios. The array importer now validates the account ID and duplicate identity before skipping a null amount. Missing cells remain absent, not zero; explicit zero remains recorded. Missing amounts, boolean amounts, unknown IDs and duplicate entries remain invalid.
+
+Validation also exposed a numeric round-trip issue: reserializing Foundation NSNumber values can turn an exact decimal such as the synthetic0.03 into0.029999999999999999. Native snapshots now decode from their original JSON bytes. Plain legacy snapshots no longer take an unnecessary serialization hop. Compressed portfolio/goal merging converts numeric NSNumbers to NSDecimalNumber before intermediate JSON encoding, retaining CFBoolean as Boolean.
+
+Synthetic nullable/compressed regressions failed first, then passed. A synthetic exact-cents archive case reproduced the precision failure before correction. Full package suite62 tests passed. Both native and read-only recovery-helper unsigned device builds verified separately. Focused independent review found no Important/Critical issues; minor uncovered combinations are explicit null IDs and unwrapped-native precision (the parser guards/branch are present but not separately asserted).
+
+Private end-to-end validation used the production Swift decoder and an independent installed-JavaScript LZ decoder plus Python Decimal comparison. All accounts, raw date identifiers, non-null totals/deposits/withdrawals and goal inputs matched the exported references. All three recovered candidates passed exact native archive round trips; the two newer candidates were identical. Validated current and older JSON files were saved outside this repository beside the original iCloud Drive export using exclusive new-file creation; the original was never rewritten.
+
+Rebuild the native WealthOne app before importing the recovered JSON so the decimal-safe loader is installed. Native Settings → Backups → Import backup accepts the recovered version1 snapshot envelope. Existing current edits remain in permanent native history after explicit replacement confirmation. The updated recovery helper can also reread/preview/export directly from iCloud, but the already validated files do not require another download.

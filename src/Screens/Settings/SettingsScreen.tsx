@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, SectionList} from 'react-native';
+import {Alert, SafeAreaView, SectionList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import formatRelative from 'date-fns/formatRelative';
@@ -20,11 +20,17 @@ import AppHeader from './components/AppHeader';
 import {getAccounts, getLastBackupDate} from '../../Redux/Selectors';
 import {IState} from '../../Redux/IState';
 import {IAccount} from '../../Redux/IAccount';
+import {createWealthOneArchive} from '../../Redux/WealthOneArchive';
+import {shareLegacyJSON} from '../../NativeModules/LegacyJSONExporter';
+import {IRecord} from '../../Redux/IState';
+import {IGoalInput} from '../../Redux/IGoalInput';
 
 interface ISettingsScreenProps {
   readonly assets: IAccount[];
   readonly liabilities: IAccount[];
   readonly lastBackupDate: any;
+  readonly records: IRecord[];
+  readonly goal: IGoalInput;
   readonly dispatch: (action: any) => void;
 }
 
@@ -32,6 +38,8 @@ const SettingsScreen = ({
   assets,
   liabilities,
   lastBackupDate,
+  records,
+  goal,
   dispatch,
 }: ISettingsScreenProps) => {
   const navigation = useNavigation();
@@ -86,43 +94,61 @@ const SettingsScreen = ({
     },
   ];
 
-  const onEditAccount = React.useCallback((item: IAccount) => {
-    navigation.navigate('EditAccount', {account: item});
-  }, []);
+  const onEditAccount = React.useCallback(
+    (item: IAccount) => {
+      navigation.navigate('EditAccount', {account: item});
+    },
+    [navigation],
+  );
 
-  const onGenericAction = React.useCallback((action: string) => {
-    switch (action) {
-      case 'backup':
-        dispatch(backup());
-        break;
-      case 'restore':
-        dispatch(restore());
-        break;
-      case 'import':
-        navigation.navigate('Import');
-        break;
-      case 'update':
-        dispatch(update());
-        break;
-      case 'migrate':
-        dispatch(restorePrevious());
-        break;
-      case 'about':
-        navigation.navigate('About');
-        break;
-    }
-  }, []);
+  const onGenericAction = React.useCallback(
+    (action: string) => {
+      switch (action) {
+        case 'backup':
+          dispatch(backup());
+          break;
+        case 'restore':
+          dispatch(restore());
+          break;
+        case 'export':
+          try {
+            const json = createWealthOneArchive({accounts: [...assets, ...liabilities], records, goal});
+            shareLegacyJSON(json).catch(error => Alert.alert('Export failed', error.message));
+          } catch (error) {
+            Alert.alert('Export failed', error instanceof Error ? error.message : 'Unable to create backup.');
+          }
+          break;
+        case 'import':
+          navigation.navigate('Import');
+          break;
+        case 'update':
+          dispatch(update());
+          break;
+        case 'migrate':
+          dispatch(restorePrevious());
+          break;
+        case 'about':
+          navigation.navigate('About');
+          break;
+      }
+    },
+    [dispatch, navigation, assets, liabilities, records, goal],
+  );
 
-  const onAddAccount = React.useCallback(({section}) => {
-    navigation.navigate('EditAccount', {
-      account: {
-        id: undefined,
-        name: '',
-        provider: '',
-        isAsset: section.title === 'Assets' ? IsAsset.Asset : IsAsset.Liability,
-      },
-    });
-  }, []);
+  const onAddAccount = React.useCallback(
+    ({section}) => {
+      navigation.navigate('EditAccount', {
+        account: {
+          id: undefined,
+          name: '',
+          provider: '',
+          isAsset:
+            section.title === 'Assets' ? IsAsset.Asset : IsAsset.Liability,
+        },
+      });
+    },
+    [navigation],
+  );
 
   return (
     <SafeAreaView style={style.safeAreaView}>
@@ -163,14 +189,14 @@ const SettingsScreen = ({
   );
 };
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: {portfolio: IState; goal: IGoalInput}) => {
   const accounts = getAccounts(state);
   const assets = (accounts || []).filter(a => a.isAsset === IsAsset.Asset);
   const liabilities = (accounts || []).filter(
     a => a.isAsset === IsAsset.Liability,
   );
   const lastBackupDate = getLastBackupDate(state);
-  return {assets, liabilities, lastBackupDate};
+  return {assets, liabilities, lastBackupDate, records: state.portfolio.records, goal: state.goal};
 };
 
 export default connect(mapStateToProps)(SettingsScreen);

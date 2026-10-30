@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA1000000000000000000001 /* LegacyJSONExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1000000000000000000002; };
 		00E356F31AD99517003FC87E /* wealthoneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* wealthoneTests.m */; };
 		0C80B921A6F3F58F76C31292 /* libPods-wealthone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-wealthone.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
@@ -50,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EA1000000000000000000002 /* LegacyJSONExporter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = wealthone/LegacyJSONExporter.m; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* wealthoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wealthoneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* wealthoneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = wealthoneTests.m; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				834FAD022AED9EB20032C4C5 /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
+				EA1000000000000000000002 /* LegacyJSONExporter.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
@@ -521,6 +524,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				EA1000000000000000000001 /* LegacyJSONExporter.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

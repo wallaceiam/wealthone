@@ -1,0 +1,37 @@
+# SDD ledger — plan: docs/superpowers/plans/2026-10-29-wealthone-liquid-glass.md
+
+- Approved: blue light/dark iPhone and Watch/icon concepts; user chose direct implementation with independent final review.
+- Pre-flight: Tasks 1→2 share BrandFont/FeatherIcon compatibility API and WealthTheme semantic colours; preserve existing signatures. Tasks 1→3 share platform floor but Watch does not consume UIKit helpers. Tasks 1/3→4 share project generator/resources; regenerate only after resource changes settle.
+- Workspace decision: use existing feature branch codex/native-event-sourcing, preserving the uncommitted native app and unrelated legacy user edits. A clean worktree would omit these untracked files. Do not commit a preexisting mixed worktree merely to drive skill scripts; use this durable ledger and actual test evidence instead.
+- Platform decision: watchOS 26 matches the approved iOS 26 design generation; old watch hardware is excluded. Core remains Foundation-only.
+- Validation decision: reversible styling is verified through meaningful runtime journeys and visual captures, not tests that mirror theme constants. New behavior/data helpers require regression tests first.
+- WatchConnectivity receive issue remains open; preview fixture rendering must not be described as successful paired-device sync.
+
+- Design check: only ambiguity was whether Watch amount means saved balance or input. Settled as existing editable total input; no snapshot/transport schema extension.
+- Baseline package suite39/39 passed. Baseline dark UI journey still rendered the forced light design (actual image inspected). New icon integration test failed for absent dark variant/missing Watch catalog and old multi-size artwork, as expected.
+- Task1/2 first pass: removed forced light mode and UIKit title/tab appearance overrides, replaced custom fonts/glyph rendering with semantic system typography/SF Symbols, native root titles, flat Home and analysis rows, native segmented chart range, blue tonal allocation/projections, adaptive Current annotation. Light/dark journeys and chart regression passed3/3. Captures pending final visual assessment.
+- Icon renderer first failed because NSGraphicsContext cannot draw the chosen 24-bit RGB bitmap; replaced with an opaque RGBX CoreGraphics context. Native vector rendering then succeeded; no generated mockup pixels used.
+
+- Visual verification caught a test harness issue: -AppleInterfaceStyle launch arguments did not change UIKit appearance, so the first nominal “dark” captures were still light. Do not count them as dark validation. Use simctl ui appearance dark/light on the simulator itself for separate capture runs.
+- All40 native core/resource tests passed with the new single-size light/dark iPhone and Watch artwork. Combined iPhone/Watch/complication simulator build passed. Moved legacy icon PNGs outside the active catalog to preserve them without unassigned-image warnings; added Watch AccentColor.
+
+- Real system-dark phone capture inspected: black surfaces, readable white native title, blue chart/control tint, no residual white cards. Corrected dark run passed7/7 (AppleStyle dark, ChartRefinement, four Premium scenarios, save/reopen). Final system-light journey passed1/1.
+- iPad initial run failed5/5 because tests constrained Home to app.tabBars.buttons. Actual iPad capture showed the correct new top native tab strip, exposed as a different accessibility role. Updated tab queries to role-independent accessible labels; rerun in progress. This is a test compatibility correction, not a forced phone-style iPad UI.
+- Actual Watch empty and populated overview rendered on an isolated review simulator. Synthetic snapshot is in that disposable app sandbox only; no successful WatchConnectivity transport is inferred. Native CUA service failed startup; use a separate temporary presentation harness for remaining Watch view captures, without adding fixture paths to production.
+
+- Independent final review returned two Important presentation issues: allocation category/legend domain mismatch after zero/negative filtering, and stale Watch timestamps omitting the date. Fix pass reproduces allocation in a synthetic UI capture and adds shared timestamp regressions before implementation. No Critical findings.
+- Deferred minor: Watch change comparison with fewer than two snapshots; retain existing behaviour for this pass and record follow-up.
+- Review boundaries accepted: no live sync/migration certification; no exhaustive long-name/negative/huge-balance accessibility certification; WidgetKit tinted/always-on runtime remains unverified. Cost is a narrower validation claim, not permission to conceal a known failure.
+
+## Final result
+
+- Task1 complete: native system typography/SF Symbols, appearance-adaptive semantic surfaces and native glass navigation; iOS/iPadOS26 and watchOS26 floors.
+- Task2 complete: flat Home/analysis composition, native range/metric controls, single-hue charts and contrast-adaptive Current annotation; data/editor/history actions preserved.
+- Task3 complete: Watch glance/chart/entry/history/pending/retry presentation and family-specific complication layouts. Visual harness caught nested Watch input backgrounds; using a native labelled Section removes the duplicate pill. No transport/schema/acknowledgment changes.
+- Task4 complete: deterministic native-vector light/dark phone and Watch icon catalogs, integration in generator, archived old artwork, screenshots and docs.
+- Final Important fixes: allocation marks and row dots now use the exact same explicit category mapping, including when zero/negative groups are excluded from sectors. Before/after synthetic captures inspected; targeted final case passed. Three SnapshotFreshness regressions failed for missing implementation, then passed with date-aware/compact labels. Full native package suite43/43 passed. Actual stale Watch view shows an older calendar date; all complication families use the formatter and expose complete accessible timestamps.
+- Runtime results: phone actual-system-dark7/7 (screen journey, chart, four draft/input/accessibility scenarios, save/reopen), final light journey1/1; iPad adaptive-label regression5/5. Post-review allocation/chart2/2, followed by explicit-mapping allocation1/1. Baseline/faulty-appearance captures are not counted as dark-mode evidence.
+- Final unsigned generic physical iOS build succeeded, including Watch/complication targets and both icon catalogs; latest simulator UI build also succeeded. Only normal AppIntents metadata extraction warning remained in final device log; no missing/unassigned icon warnings. Testing used available iOS27/watchOS27 runtimes with26 deployment floors; a26 runtime was unavailable.
+- Independent review: no Critical findings; both Important findings addressed with tests/visual checks. No further reviewer dispatched. Deferred minor: suppress the Watch comparison until a second snapshot exists.
+- Validation boundaries: signed iCloud/KVS migration and the old paired WatchConnectivity issue remain open. Synthetic Watch rendering is not sync verification. Exhaustive populated accessibility combinations and actual WidgetKit tinted/always-on/clipping checks remain unverified.
+- Preserved codex/native-event-sourcing and all existing user legacy edits. No commit, merge, publication, production signing or identity changes. Actual gallery and review report remain in the workspace for user inspection.

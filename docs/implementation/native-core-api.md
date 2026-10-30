@@ -1,0 +1,26 @@
+# Native core API
+
+Foundation-only `WealthOneCore` (Swift 6). Public value types are Codable, Equatable and Sendable.
+
+- `Snapshot(accounts:records:goal:)`; `Account(id:name:provider:isAsset:accountType:)`, `DayRecord(date:totals:inflows:outflows:)`. Amount maps use `Decimal`; date is the original historical string, never timezone-normalized. Goal inputs are `[String: Value]` using legacy field names.
+- `Event(id:actor:counter:parents:epoch:operation:)` is immutable, version 1. `Operation` is `.replace(Snapshot)`, `.create(Entity, generation: String, fields: [String: Value])`, `.edit(Entity, generation: String, fields: [String: Value])`, `.remove(Entity, generation: String)`. `Entity` is `.account(String)`, `.day(String)`, `.goal`. Value is string/decimal/bool/null.
+- `Projection(events:) throws` exposes `snapshot`, `fields`, `conflicts`, `bufferedEventIDs`, `epoch`. Field keys are `FieldKey(entity:generation:field:)`; conflicts retain concurrent differing values and source events. Removal permanently tombstones its generation; explicit recreation must use a fresh generation. Replacement's event ID becomes the dataset epoch. Initial epoch is `root`.
+- `EventStore(envelope:commit:) throws` owns immutable `events`, `projection`, `envelope`. `append(operation:id:) throws -> Event`, `merge([Event]) throws`, `replace(Snapshot) throws`, `resolve(FieldKey,value:) throws` persist a complete candidate envelope before publishing any memory change. Correction/undo uses append/edit or resolve; no log mutation API. Append parents all integrated heads. Adapter uses projected generation from `fields` when editing. Actor and Lamport counter persist in envelope. Creating an envelope without durable identity creates a fresh UUID actor.
+- `Envelope(actor:clock:events:)`, `JSONFileRepository(url:)` with `load()` / `save(_:)` atomic JSON. `Archive.export(events:)` emits version 2 full log; `Archive.events(from:)` validates a full log; `Archive.snapshot(from:)` reads state version 1/current and legacy categories. State import is explicitly a replacement baseline; no invented historical events. Baseline raw snapshot is retained in its replace event.
+
+Invalid versions, event ID collisions, invalid clocks/causal cycles and malformed archives throw. Missing parents buffer events. Replay uses causal field maxima then UTF-8 lexicographic `(counter, actor, id)` ordering. Full restore merges, preserving local log.
+
+Implementation clarifications:
+- `Event.recordedAt` is display metadata; it never influences replay. Caller-supplied append event IDs provide durable command deduplication. Baseline metadata lives in the original replace event's raw `Snapshot`; no pre-import edits are synthesized.
+- New day commands require a valid `yyyy-MM-dd` date and existing account references. Existing imported days retain their exact original string when edited. Import supports ISO dates and millisecond epoch strings/numbers without converting time zones. UI must retain existing day keys; normalization/grouping is an explicit adapter decision. Current core rejects exact duplicate date strings, but does not coalesce differently encoded dates for the same calendar day.
+- `Projection.generation(for:)` supplies the current generation. Account recreation never reveals amounts authored for an earlier generation; a value must causally observe the current account generation. `.null` removes a day value from the snapshot, while keeping its event.
+- State JSON accepts `version:1` or `schemaVersion:1`, optional `snapshot` wrapper, `id`/`accountID` entries, accountType integer/object, `goal.input`, filtered legacy categories with first-row null offset and legacy decimal strings. Unknown state versions, invalid identifiers/types/dates and boolean/malformed amounts are rejected.
+- `EventStore` is synchronous and must be serialized by its owner (the app uses MainActor). Its default commit is memory-only for tests/previews; production must inject a durable repository. JSONFileRepository requires an existing parent directory. Restoring full history calls `merge(Archive.events(from:))`; importing current state calls `replace(Archive.snapshot(from:))`.
+
+## Reviewed adapter additions
+
+- `EventStore.editContext(for:) -> EditContext` captures epoch, generation, visible fields, observed parent heads and account-generation dependencies. `submit(_:context:) throws` writes only user changes, retains original causality, and rejects deleted/replaced or unseen account dependencies.
+- `EventStore.applyQuickEntry(id:accountID:day:total:today:calendar:) throws` durably updates only one total, preserves legacy raw day identifiers via parsed local-day matching, and deduplicates retries across repository restart and midnight.
+- `JSONFileRepository.recover(_:) throws -> URL` validates the replacement, preserves an unreadable source copy, atomically saves and reloads before success.
+- `PortfolioCalculator.date`, `dayKey`, and `record(on:records:calendar:)` share date handling including fractional ISO timestamps, offsets, millisecond strings and explicit calendar-day keys.
+- `EntryAmount.parse` in `Shared/WatchPayload.swift` is shared production phone/Watch input validation, tested through the Foundation-only `WealthOneShared` package target. New user inputs truncate toward zero; imported Decimal values remain untouched until edited.

@@ -1,0 +1,999 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0175F6482499AF73EF0395F2 /* ChartRefinementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F877A511A5082BACAB6DAE4 /* ChartRefinementTests.swift */; };
+		03C1B5C0B35452A9717D8950 /* LegacyMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D493704DE0F878D667324D68 /* LegacyMigration.swift */; };
+		04BE14B14C47B39E3AECB907 /* SnapshotFreshness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA00A6C5E2DABAA9822023 /* SnapshotFreshness.swift */; };
+		0A10640E6C3A5A6967E8E655 /* SettingsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0A31D5274F1BB6228CCBB2 /* SettingsViews.swift */; };
+		0A9A8486F2F0A5D9323DD0A2 /* WealthOneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2A757701EA6306FC178720 /* WealthOneApp.swift */; };
+		0B7F3665658D9CF1410C69F2 /* NetWorthComplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EDDDF653B12B3BCE13999 /* NetWorthComplication.swift */; };
+		0BF3915DD7AD9ED14D93A181 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44CF84EF2A3E10C5F21AD87E /* Assets.xcassets */; };
+		1F9EF69390BBF7F708BD81DF /* PortfolioViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138EBE81B0FFED16651BF92E /* PortfolioViews.swift */; };
+		22CD8DEC1560474C34998096 /* PremiumUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4D07DBF31365528C6F82BC /* PremiumUITests.swift */; };
+		26B5215A6CEFA8D736A62E2A /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B776F5F60B2F67CE496397 /* AppModel.swift */; };
+		3200AC3A38ABC5F5ABF40883 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05D1E5ED02CB3A6409453523 /* Foundation.framework */; };
+		3326FA8410EF6B7E25BB0737 /* WatchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A14E4F62617D760F95A752 /* WatchModel.swift */; };
+		3C2AE7ECD3262FBA78150731 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E94E6A7452C7DD84E318A4E9 /* Assets.xcassets */; };
+		43EC30FAC533117A48A9EA3B /* WatchPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA5B5C0ACDBECF7585342F1 /* WatchPayload.swift */; };
+		4A7E3CAE6AF768A1E70F43BE /* LegacyRecoveryHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = E671A27F6CD8130D410D1C3E /* LegacyRecoveryHost.swift */; };
+		4D493BB8DEC21339CCA54999 /* WatchViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E096E80D7C6B2821060F4229 /* WatchViews.swift */; };
+		4F98F45B559D1BF484F58B13 /* WealthOneCore in Frameworks */ = {isa = PBXBuildFile; productRef = F180EE93CBE2E34C9CD6B6E6 /* WealthOneCore */; };
+		526C1BA7CEFD7CCB88C927DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05D1E5ED02CB3A6409453523 /* Foundation.framework */; };
+		542099ECAEA8F0CD1891CFA8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44CF84EF2A3E10C5F21AD87E /* Assets.xcassets */; };
+		55233390B5B528340DC3DA57 /* WealthOneRecoveryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9496055CF511E11F8C5A1A /* WealthOneRecoveryApp.swift */; };
+		5FAA07FC30A0E13734EA4C5C /* WealthOneWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E5357EE01916D6E51C763343 /* WealthOneWatch.app */; };
+		6E9A079885333C2694BE4B23 /* LegacyRecoveryBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D606FBA2D31EEB3A6C2AFEFE /* LegacyRecoveryBrowser.swift */; };
+		72602E5A15BAEAD4A4558B5F /* WealthTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894FB4702D622E492DFF2355 /* WealthTheme.swift */; };
+		72F1DF7A48E4412F3867A179 /* AnalysisViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DC18473DB160B97E99F176 /* AnalysisViews.swift */; };
+		75D492AE6427DA2CDBDABE97 /* HIGReviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F4E3924665B8527A3A7EAF /* HIGReviewTests.swift */; };
+		803B8733AA02BD64199045BE /* SnapshotFreshness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA00A6C5E2DABAA9822023 /* SnapshotFreshness.swift */; };
+		805FB7D306B55E1B9762A088 /* LegacyMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D493704DE0F878D667324D68 /* LegacyMigration.swift */; };
+		89668D22E75F28EE6B1E54B6 /* PhoneWatchBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E22027BB753F6CD84E81F0 /* PhoneWatchBridge.swift */; };
+		957CADD211D870E0001B907E /* WealthOneCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7F7AAB6F6951B74AD145D969 /* WealthOneCore */; };
+		95EE45C47CB713EB99C0BE67 /* AppleStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC16749A4AF3924705FEACB /* AppleStyleTests.swift */; };
+		98F8D431A53E8BD1E5B4CAA0 /* BrandAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CCF3D3286E1B76C570A8B9 /* BrandAssets.swift */; };
+		A8187B7D7F11AD391E10AAC3 /* WealthOneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586D279E62AE97FB90F379E1 /* WealthOneUITests.swift */; };
+		B865B410671E54CE4DB15669 /* WatchPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA5B5C0ACDBECF7585342F1 /* WatchPayload.swift */; };
+		BE4228AC394DAF54185A2BBA /* ExchangeRateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C5EEDFDD8EF1C8E5487C3 /* ExchangeRateProvider.swift */; };
+		C8D6A237D642C52269153FBA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82988D7DB4CC707C2806E52B /* Foundation.framework */; };
+		CA6DD4C08484F3471BF89E55 /* LegacyRecoveryBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D606FBA2D31EEB3A6C2AFEFE /* LegacyRecoveryBrowser.swift */; };
+		CCAD8E896D18DDC4F576F88A /* WealthOneWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D8F36C7A08A1D7A72E18EB /* WealthOneWatchApp.swift */; };
+		D277CC8F437A7E923D49A3A1 /* CloudEventTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB28D9F865455731F67A3398 /* CloudEventTransport.swift */; };
+		E5858A4919026438B25A0912 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82988D7DB4CC707C2806E52B /* Foundation.framework */; };
+		E62F1761A9697028527C7A7A /* LegacyRecoveryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526298698A3B5A5BA2C44E8F /* LegacyRecoveryUITests.swift */; };
+		EA9A643C3E97CAA37D278AEB /* SnapshotFreshness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA00A6C5E2DABAA9822023 /* SnapshotFreshness.swift */; };
+		F439748156EBA6601AC9D4FB /* WealthOneComplication.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C594F945F197B0180049E29C /* WealthOneComplication.appex */; };
+		F4D781D92BDF36A6BD1CEEAA /* WatchPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA5B5C0ACDBECF7585342F1 /* WatchPayload.swift */; };
+		FAB0A02237CD98C6724B4680 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82988D7DB4CC707C2806E52B /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5078EAAF22B149AF5EC8A69F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 394B413D1ED4F1461BBBA0AA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BAFA65073275E4D7E43E2546;
+			remoteInfo = WealthOneWatch;
+		};
+		921A475579D57F3A7103BD64 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 394B413D1ED4F1461BBBA0AA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4177B488B695AF2D97DC41C3;
+			remoteInfo = WealthOneComplication;
+		};
+		C5DBCF1B52CE5A1FAF48A11E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 394B413D1ED4F1461BBBA0AA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0E30BC818C35E917D98A4785;
+			remoteInfo = WealthOne;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C796DE0F54AC206234DCC828 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F439748156EBA6601AC9D4FB /* WealthOneComplication.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FC55A051FE325311C09C1F03 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				5FAA07FC30A0E13734EA4C5C /* WealthOneWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		05D1E5ED02CB3A6409453523 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		138EBE81B0FFED16651BF92E /* PortfolioViews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PortfolioViews.swift; path = Views/PortfolioViews.swift; sourceTree = "<group>"; };
+		32DC18473DB160B97E99F176 /* AnalysisViews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnalysisViews.swift; path = Views/AnalysisViews.swift; sourceTree = "<group>"; };
+		35D8F36C7A08A1D7A72E18EB /* WealthOneWatchApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WealthOneWatchApp.swift; sourceTree = "<group>"; };
+		3D9496055CF511E11F8C5A1A /* WealthOneRecoveryApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WealthOneRecoveryApp.swift; sourceTree = "<group>"; };
+		3F877A511A5082BACAB6DAE4 /* ChartRefinementTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChartRefinementTests.swift; sourceTree = "<group>"; };
+		44CF84EF2A3E10C5F21AD87E /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		526298698A3B5A5BA2C44E8F /* LegacyRecoveryUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LegacyRecoveryUITests.swift; sourceTree = "<group>"; };
+		586D279E62AE97FB90F379E1 /* WealthOneUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WealthOneUITests.swift; sourceTree = "<group>"; };
+		61CCF3D3286E1B76C570A8B9 /* BrandAssets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BrandAssets.swift; sourceTree = "<group>"; };
+		6F46358102C4A42134E60806 /* WealthOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WealthOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7ABA00A6C5E2DABAA9822023 /* SnapshotFreshness.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnapshotFreshness.swift; sourceTree = "<group>"; };
+		82988D7DB4CC707C2806E52B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		83B776F5F60B2F67CE496397 /* AppModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		85F4E3924665B8527A3A7EAF /* HIGReviewTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HIGReviewTests.swift; sourceTree = "<group>"; };
+		894FB4702D622E492DFF2355 /* WealthTheme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WealthTheme.swift; path = Views/WealthTheme.swift; sourceTree = "<group>"; };
+		96E22027BB753F6CD84E81F0 /* PhoneWatchBridge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PhoneWatchBridge.swift; sourceTree = "<group>"; };
+		976A7CAD75069778DEE16411 /* WealthOneRecovery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WealthOneRecovery.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF4D07DBF31365528C6F82BC /* PremiumUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PremiumUITests.swift; sourceTree = "<group>"; };
+		AFA5B5C0ACDBECF7585342F1 /* WatchPayload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchPayload.swift; sourceTree = "<group>"; };
+		BB28D9F865455731F67A3398 /* CloudEventTransport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CloudEventTransport.swift; sourceTree = "<group>"; };
+		BB9CBC192C5BD090F96C188C /* WealthOneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WealthOneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC2EDDDF653B12B3BCE13999 /* NetWorthComplication.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetWorthComplication.swift; sourceTree = "<group>"; };
+		C594F945F197B0180049E29C /* WealthOneComplication.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WealthOneComplication.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF2A757701EA6306FC178720 /* WealthOneApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WealthOneApp.swift; sourceTree = "<group>"; };
+		D09C5EEDFDD8EF1C8E5487C3 /* ExchangeRateProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExchangeRateProvider.swift; sourceTree = "<group>"; };
+		D493704DE0F878D667324D68 /* LegacyMigration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LegacyMigration.swift; sourceTree = "<group>"; };
+		D606FBA2D31EEB3A6C2AFEFE /* LegacyRecoveryBrowser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LegacyRecoveryBrowser.swift; path = Views/LegacyRecoveryBrowser.swift; sourceTree = "<group>"; };
+		E096E80D7C6B2821060F4229 /* WatchViews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchViews.swift; sourceTree = "<group>"; };
+		E5357EE01916D6E51C763343 /* WealthOneWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WealthOneWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E671A27F6CD8130D410D1C3E /* LegacyRecoveryHost.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LegacyRecoveryHost.swift; path = Views/LegacyRecoveryHost.swift; sourceTree = "<group>"; };
+		E94E6A7452C7DD84E318A4E9 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EFC16749A4AF3924705FEACB /* AppleStyleTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppleStyleTests.swift; sourceTree = "<group>"; };
+		F5A14E4F62617D760F95A752 /* WatchModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchModel.swift; sourceTree = "<group>"; };
+		FB0A31D5274F1BB6228CCBB2 /* SettingsViews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SettingsViews.swift; path = Views/SettingsViews.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		049976B416A01207686E0F23 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C8D6A237D642C52269153FBA /* Foundation.framework in Frameworks */,
+				957CADD211D870E0001B907E /* WealthOneCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0BA267534E271D428640227D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5858A4919026438B25A0912 /* Foundation.framework in Frameworks */,
+				4F98F45B559D1BF484F58B13 /* WealthOneCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		583358733D3FC2A3C401D3E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				526C1BA7CEFD7CCB88C927DB /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		71E4CB562A932FD41B076751 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3200AC3A38ABC5F5ABF40883 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5F9A7AB940B876E35219A02 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAB0A02237CD98C6724B4680 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0B7F353B472BB74717DCDE71 /* Complication */ = {
+			isa = PBXGroup;
+			children = (
+				BC2EDDDF653B12B3BCE13999 /* NetWorthComplication.swift */,
+			);
+			path = Complication;
+			sourceTree = "<group>";
+		};
+		271A6910894F564D375861B6 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA00A6C5E2DABAA9822023 /* SnapshotFreshness.swift */,
+				AFA5B5C0ACDBECF7585342F1 /* WatchPayload.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		2F8C4AFC9A695E5C41B1CF68 /* RecoveryApp */ = {
+			isa = PBXGroup;
+			children = (
+				3D9496055CF511E11F8C5A1A /* WealthOneRecoveryApp.swift */,
+			);
+			name = RecoveryApp;
+			path = RecoveryApp;
+			sourceTree = "<group>";
+		};
+		367EC17C952116A3B049EC6E /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				586D279E62AE97FB90F379E1 /* WealthOneUITests.swift */,
+				85F4E3924665B8527A3A7EAF /* HIGReviewTests.swift */,
+				AF4D07DBF31365528C6F82BC /* PremiumUITests.swift */,
+				EFC16749A4AF3924705FEACB /* AppleStyleTests.swift */,
+				3F877A511A5082BACAB6DAE4 /* ChartRefinementTests.swift */,
+				526298698A3B5A5BA2C44E8F /* LegacyRecoveryUITests.swift */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
+		383556029DAFA634572F5D2F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BBE7F2ED6F0AFA750C185FE3 /* iOS */,
+				48E234C7767006A71B420EC0 /* watchOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		48E234C7767006A71B420EC0 /* watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				05D1E5ED02CB3A6409453523 /* Foundation.framework */,
+			);
+			name = watchOS;
+			sourceTree = "<group>";
+		};
+		4EC101294ECCAF31F17188D6 = {
+			isa = PBXGroup;
+			children = (
+				746D48D41B9C05B3DDD84893 /* Products */,
+				383556029DAFA634572F5D2F /* Frameworks */,
+				6F77D53D4FBFA1728ECEA783 /* App */,
+				B5475D5924B77FF190927708 /* Watch */,
+				0B7F353B472BB74717DCDE71 /* Complication */,
+				271A6910894F564D375861B6 /* Shared */,
+				367EC17C952116A3B049EC6E /* UITests */,
+				2F8C4AFC9A695E5C41B1CF68 /* RecoveryApp */,
+			);
+			sourceTree = "<group>";
+		};
+		6F77D53D4FBFA1728ECEA783 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				83B776F5F60B2F67CE496397 /* AppModel.swift */,
+				61CCF3D3286E1B76C570A8B9 /* BrandAssets.swift */,
+				BB28D9F865455731F67A3398 /* CloudEventTransport.swift */,
+				D493704DE0F878D667324D68 /* LegacyMigration.swift */,
+				96E22027BB753F6CD84E81F0 /* PhoneWatchBridge.swift */,
+				32DC18473DB160B97E99F176 /* AnalysisViews.swift */,
+				138EBE81B0FFED16651BF92E /* PortfolioViews.swift */,
+				FB0A31D5274F1BB6228CCBB2 /* SettingsViews.swift */,
+				894FB4702D622E492DFF2355 /* WealthTheme.swift */,
+				CF2A757701EA6306FC178720 /* WealthOneApp.swift */,
+				44CF84EF2A3E10C5F21AD87E /* Assets.xcassets */,
+				D606FBA2D31EEB3A6C2AFEFE /* LegacyRecoveryBrowser.swift */,
+				E671A27F6CD8130D410D1C3E /* LegacyRecoveryHost.swift */,
+				D09C5EEDFDD8EF1C8E5487C3 /* ExchangeRateProvider.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		746D48D41B9C05B3DDD84893 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6F46358102C4A42134E60806 /* WealthOne.app */,
+				E5357EE01916D6E51C763343 /* WealthOneWatch.app */,
+				C594F945F197B0180049E29C /* WealthOneComplication.appex */,
+				BB9CBC192C5BD090F96C188C /* WealthOneUITests.xctest */,
+				976A7CAD75069778DEE16411 /* WealthOneRecovery.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B5475D5924B77FF190927708 /* Watch */ = {
+			isa = PBXGroup;
+			children = (
+				F5A14E4F62617D760F95A752 /* WatchModel.swift */,
+				E096E80D7C6B2821060F4229 /* WatchViews.swift */,
+				35D8F36C7A08A1D7A72E18EB /* WealthOneWatchApp.swift */,
+				E94E6A7452C7DD84E318A4E9 /* Assets.xcassets */,
+			);
+			path = Watch;
+			sourceTree = "<group>";
+		};
+		BBE7F2ED6F0AFA750C185FE3 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				82988D7DB4CC707C2806E52B /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0E30BC818C35E917D98A4785 /* WealthOne */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2239C5A446DD72C61840B824 /* Build configuration list for PBXNativeTarget "WealthOne" */;
+			buildPhases = (
+				D7BABC92515A73EB131DA1C0 /* Sources */,
+				049976B416A01207686E0F23 /* Frameworks */,
+				3FD9ADFDD8D4BA8FE39DB8A7 /* Resources */,
+				FC55A051FE325311C09C1F03 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3EF8BEB92344AC0CEBFFE9F2 /* PBXTargetDependency */,
+			);
+			name = WealthOne;
+			packageProductDependencies = (
+				7F7AAB6F6951B74AD145D969 /* WealthOneCore */,
+			);
+			productName = WealthOne;
+			productReference = 6F46358102C4A42134E60806 /* WealthOne.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4177B488B695AF2D97DC41C3 /* WealthOneComplication */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0C5F3DF3B9FEFA3674F96208 /* Build configuration list for PBXNativeTarget "WealthOneComplication" */;
+			buildPhases = (
+				1E6FAFFD75275AA1C459AD17 /* Sources */,
+				583358733D3FC2A3C401D3E9 /* Frameworks */,
+				1A618BD0E175A4BA713218B8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WealthOneComplication;
+			productName = WealthOneComplication;
+			productReference = C594F945F197B0180049E29C /* WealthOneComplication.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		4BE745D3AC1C0E336EE990E9 /* WealthOneUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 511B60735E27F8A95DD10762 /* Build configuration list for PBXNativeTarget "WealthOneUITests" */;
+			buildPhases = (
+				1888CC4B6B0D37E9F1EBD40F /* Sources */,
+				E5F9A7AB940B876E35219A02 /* Frameworks */,
+				670817F6A1503E014EFD3832 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FFC30019BF00FCAECE8B79D8 /* PBXTargetDependency */,
+			);
+			name = WealthOneUITests;
+			productName = WealthOneUITests;
+			productReference = BB9CBC192C5BD090F96C188C /* WealthOneUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		BAFA65073275E4D7E43E2546 /* WealthOneWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1C046F721EB68C7C8E68CA51 /* Build configuration list for PBXNativeTarget "WealthOneWatch" */;
+			buildPhases = (
+				0BADAF39E390ADEF4A9C349E /* Sources */,
+				71E4CB562A932FD41B076751 /* Frameworks */,
+				BCFD346F8791BF383160C762 /* Resources */,
+				C796DE0F54AC206234DCC828 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE3B11498B858A795CC769F3 /* PBXTargetDependency */,
+			);
+			name = WealthOneWatch;
+			productName = WealthOneWatch;
+			productReference = E5357EE01916D6E51C763343 /* WealthOneWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BC451B763182BFBA626D7770 /* WealthOneRecovery */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F0097391832B217B95E05AB9 /* Build configuration list for PBXNativeTarget "WealthOneRecovery" */;
+			buildPhases = (
+				C5D012E33119683C0282AB07 /* Sources */,
+				0BA267534E271D428640227D /* Frameworks */,
+				A2D4279E6BA9D965D4A84D5E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WealthOneRecovery;
+			packageProductDependencies = (
+				F180EE93CBE2E34C9CD6B6E6 /* WealthOneCore */,
+			);
+			productName = WealthOneRecovery;
+			productReference = 976A7CAD75069778DEE16411 /* WealthOneRecovery.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		394B413D1ED4F1461BBBA0AA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 2700;
+			};
+			buildConfigurationList = 67087F788E17959E63B3D7A1 /* Build configuration list for PBXProject "WealthOne" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4EC101294ECCAF31F17188D6;
+			packageReferences = (
+				796339759141BE59195B23E8 /* XCLocalSwiftPackageReference "." */,
+			);
+			productRefGroup = 746D48D41B9C05B3DDD84893 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0E30BC818C35E917D98A4785 /* WealthOne */,
+				BAFA65073275E4D7E43E2546 /* WealthOneWatch */,
+				4177B488B695AF2D97DC41C3 /* WealthOneComplication */,
+				4BE745D3AC1C0E336EE990E9 /* WealthOneUITests */,
+				BC451B763182BFBA626D7770 /* WealthOneRecovery */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1A618BD0E175A4BA713218B8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3FD9ADFDD8D4BA8FE39DB8A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				542099ECAEA8F0CD1891CFA8 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		670817F6A1503E014EFD3832 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2D4279E6BA9D965D4A84D5E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BF3915DD7AD9ED14D93A181 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCFD346F8791BF383160C762 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C2AE7ECD3262FBA78150731 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0BADAF39E390ADEF4A9C349E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3326FA8410EF6B7E25BB0737 /* WatchModel.swift in Sources */,
+				4D493BB8DEC21339CCA54999 /* WatchViews.swift in Sources */,
+				CCAD8E896D18DDC4F576F88A /* WealthOneWatchApp.swift in Sources */,
+				EA9A643C3E97CAA37D278AEB /* SnapshotFreshness.swift in Sources */,
+				43EC30FAC533117A48A9EA3B /* WatchPayload.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1888CC4B6B0D37E9F1EBD40F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8187B7D7F11AD391E10AAC3 /* WealthOneUITests.swift in Sources */,
+				75D492AE6427DA2CDBDABE97 /* HIGReviewTests.swift in Sources */,
+				22CD8DEC1560474C34998096 /* PremiumUITests.swift in Sources */,
+				95EE45C47CB713EB99C0BE67 /* AppleStyleTests.swift in Sources */,
+				0175F6482499AF73EF0395F2 /* ChartRefinementTests.swift in Sources */,
+				E62F1761A9697028527C7A7A /* LegacyRecoveryUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1E6FAFFD75275AA1C459AD17 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B7F3665658D9CF1410C69F2 /* NetWorthComplication.swift in Sources */,
+				803B8733AA02BD64199045BE /* SnapshotFreshness.swift in Sources */,
+				B865B410671E54CE4DB15669 /* WatchPayload.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5D012E33119683C0282AB07 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55233390B5B528340DC3DA57 /* WealthOneRecoveryApp.swift in Sources */,
+				03C1B5C0B35452A9717D8950 /* LegacyMigration.swift in Sources */,
+				CA6DD4C08484F3471BF89E55 /* LegacyRecoveryBrowser.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7BABC92515A73EB131DA1C0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26B5215A6CEFA8D736A62E2A /* AppModel.swift in Sources */,
+				98F8D431A53E8BD1E5B4CAA0 /* BrandAssets.swift in Sources */,
+				D277CC8F437A7E923D49A3A1 /* CloudEventTransport.swift in Sources */,
+				805FB7D306B55E1B9762A088 /* LegacyMigration.swift in Sources */,
+				89668D22E75F28EE6B1E54B6 /* PhoneWatchBridge.swift in Sources */,
+				72F1DF7A48E4412F3867A179 /* AnalysisViews.swift in Sources */,
+				1F9EF69390BBF7F708BD81DF /* PortfolioViews.swift in Sources */,
+				0A10640E6C3A5A6967E8E655 /* SettingsViews.swift in Sources */,
+				72602E5A15BAEAD4A4558B5F /* WealthTheme.swift in Sources */,
+				0A9A8486F2F0A5D9323DD0A2 /* WealthOneApp.swift in Sources */,
+				04BE14B14C47B39E3AECB907 /* SnapshotFreshness.swift in Sources */,
+				F4D781D92BDF36A6BD1CEEAA /* WatchPayload.swift in Sources */,
+				6E9A079885333C2694BE4B23 /* LegacyRecoveryBrowser.swift in Sources */,
+				4A7E3CAE6AF768A1E70F43BE /* LegacyRecoveryHost.swift in Sources */,
+				BE4228AC394DAF54185A2BBA /* ExchangeRateProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3EF8BEB92344AC0CEBFFE9F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WealthOneWatch;
+			target = BAFA65073275E4D7E43E2546 /* WealthOneWatch */;
+			targetProxy = 5078EAAF22B149AF5EC8A69F /* PBXContainerItemProxy */;
+		};
+		CE3B11498B858A795CC769F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WealthOneComplication;
+			target = 4177B488B695AF2D97DC41C3 /* WealthOneComplication */;
+			targetProxy = 921A475579D57F3A7103BD64 /* PBXContainerItemProxy */;
+		};
+		FFC30019BF00FCAECE8B79D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WealthOne;
+			target = 0E30BC818C35E917D98A4785 /* WealthOne */;
+			targetProxy = C5DBCF1B52CE5A1FAF48A11E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		02CC057B5DC588037B7E88BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = RecoveryApp/Recovery.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 2LG9PUJ57N;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RecoveryApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.mymojo.wealthone;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0327456672DA3A650345EA17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = App/WealthOne.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 2LG9PUJ57N;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = App/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.mymojo.wealthone.native;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		163DE6ACCF387570F9F51A97 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		3239F288324509586F2C409D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		3A21B92E4BAC74D0934CD047 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Complication/Shared.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 2LG9PUJ57N;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Complication/Info.plist;
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.mymojo.wealthone.native.watchkitapp.networthwidget;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Release;
+		};
+		469EAFD36D27F28DCF97DB23 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Watch/Shared.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 2LG9PUJ57N;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Watch/Info.plist;
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.mymojo.wealthone.native.watchkitapp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Release;
+		};
+		560215482ABA9F02D08396B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = App/WealthOne.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 2LG9PUJ57N;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = App/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.mymojo.wealthone.native;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6378D51A463FBD4FF6FFA563 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.mymojo.wealthone.native.uitests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TEST_TARGET_NAME = WealthOne;
+			};
+			name = Debug;
+		};
+		861882CAAC843A834681A696 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Watch/Shared.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 2LG9PUJ57N;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Watch/Info.plist;
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.mymojo.wealthone.native.watchkitapp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Debug;
+		};
+		ACFE7A1D6D7F973EC6C6EDFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Complication/Shared.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 2LG9PUJ57N;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Complication/Info.plist;
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.mymojo.wealthone.native.watchkitapp.networthwidget;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Debug;
+		};
+		C2016354ED73F57547EB4F73 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = RecoveryApp/Recovery.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 2LG9PUJ57N;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RecoveryApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.mymojo.wealthone;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FF30CA420411BEEAE0352C08 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.mymojo.wealthone.native.uitests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TEST_TARGET_NAME = WealthOne;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0C5F3DF3B9FEFA3674F96208 /* Build configuration list for PBXNativeTarget "WealthOneComplication" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A21B92E4BAC74D0934CD047 /* Release */,
+				ACFE7A1D6D7F973EC6C6EDFD /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1C046F721EB68C7C8E68CA51 /* Build configuration list for PBXNativeTarget "WealthOneWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				469EAFD36D27F28DCF97DB23 /* Release */,
+				861882CAAC843A834681A696 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2239C5A446DD72C61840B824 /* Build configuration list for PBXNativeTarget "WealthOne" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				560215482ABA9F02D08396B6 /* Release */,
+				0327456672DA3A650345EA17 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		511B60735E27F8A95DD10762 /* Build configuration list for PBXNativeTarget "WealthOneUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF30CA420411BEEAE0352C08 /* Release */,
+				6378D51A463FBD4FF6FFA563 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		67087F788E17959E63B3D7A1 /* Build configuration list for PBXProject "WealthOne" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				163DE6ACCF387570F9F51A97 /* Debug */,
+				3239F288324509586F2C409D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F0097391832B217B95E05AB9 /* Build configuration list for PBXNativeTarget "WealthOneRecovery" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02CC057B5DC588037B7E88BC /* Release */,
+				C2016354ED73F57547EB4F73 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		796339759141BE59195B23E8 /* XCLocalSwiftPackageReference "." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = .;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7F7AAB6F6951B74AD145D969 /* WealthOneCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 796339759141BE59195B23E8 /* XCLocalSwiftPackageReference "." */;
+			productName = WealthOneCore;
+		};
+		F180EE93CBE2E34C9CD6B6E6 /* WealthOneCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 796339759141BE59195B23E8 /* XCLocalSwiftPackageReference "." */;
+			productName = WealthOneCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 394B413D1ED4F1461BBBA0AA /* Project object */;
+}
